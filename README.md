@@ -61,7 +61,7 @@ You need a Windows computer with PowerShell, MinGW (g++), and Python with pandas
 **2. Open PowerShell in the project folder and make the compiler visible:**
 
 ```powershell
-$env:Path = "C:\msys64\mingw64\bin;$env:Path"
+$env:Path = "C:\msys64\mingw64\bin;C:\msys64\usr\bin;$env:Path"
 New-Item -ItemType Directory -Force build | Out-Null
 ```
 

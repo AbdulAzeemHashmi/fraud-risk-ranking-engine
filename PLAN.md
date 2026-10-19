@@ -24,7 +24,7 @@ The brief requires Problems A to H, source plus tests and README, `results.csv`,
 |---|---|---|
 | A | Python and C++ profiling outputs and the risk band histogram are present. The report records the main distributions, amount ties, fraud counts, and raw C1 property. | Reconcile report figures against the saved profile after final measurements. |
 | B | All required algorithms exist. The current small tests cover empty and singleton inputs, duplicate-heavy data, and other edge cases, but do not test every algorithm on an all-equal input. The experiment runner previously checked only that full-sort output was ordered, not that every input row was preserved and that total-order results matched a trusted reference. | Add or run the full required correctness matrix before submission. The runner now does ordered-permutation checks and exact reference checks for C1 to C5; C6 allows ties under its band-only key. |
-| C | Required plots, predictions, and summary data exist. The saved measurements used a 30 second cutoff rather than the brief's five minutes. | Runner default is now five minutes. Re-run all C rounds with the default and replace the preliminary tables, plots, prediction outcomes, and report values. |
+| C | Required plots, predictions, and summary data exist from the old run. A new five-minute run was started but stopped during the 100,000 row rounds because the complete matrix takes a long time. Its partial files are in `results/experiments_5min_partial` and are not final. | Run all C rounds to completion with the five minute default and replace the preliminary tables, plots, prediction outcomes, and report values. |
 | D | Required methods, K values, conditions, and fraud capture analysis are present. The saved measurements also used the shorter 30 second cutoff. | Re-run the full D matrix with the five minute default and regenerate summaries, capture costs, plots, and report values. |
 | E | Both window sizes and all three strategies have saved time and memory outputs. Memory is an algorithm storage estimate and excludes loaded data and input windows. | Re-run after C/D work if time permits, then reconcile report values and explain the estimate scope. |
 | F and H | Existing report pages contain F derivations and H recommendations, but the user said Claude is handling these sections. | Wait for Claude's handoff, then check the supplied work against the brief and the final measurements without taking over authorship. |
@@ -35,16 +35,16 @@ The brief requires Problems A to H, source plus tests and README, `results.csv`,
 
 1. Changed the experiment runner's default DNF cutoff from 30 to 300 seconds and added `--timeout-seconds N` for an explicit alternate limit.
 2. Added C-result correctness checks outside the timer. C1 to C5 are checked against a trusted reference; C6 is checked for band order and preservation of all transaction IDs because equal bands do not have a unique order.
-3. Updated README and experiment notes to mark the saved C and D measurements as preliminary 30 second runs and to require a full rerun with the five minute default.
+3. Rebuilt the runner with the MinGW and MSYS folders on PATH and confirmed its new timeout option using a smoke run. Updated the README compile setup to include both folders.
+4. Marked the saved C and D measurements as preliminary 30 second runs. A correct five-minute C run was started, but the full matrix was stopped before completion. Its partial files are kept separately and must not be used as final measurements.
 
 ## Remaining execution plan
 
-1. Build the updated runner and perform a small smoke run to catch integration issues.
-2. Re-run Problem C with the five minute default into a clean results folder. Review DNF rows, all 24 prediction outcomes, plots, and summaries.
-3. Re-run Problem D with the five minute default. Review every required K/size/condition/method row and regenerate fraud-capture cost outputs.
-4. Reconcile Problem A, C, D, and E values between the output files, `results/experiments/REPORT.md`, and the report PDF. Preserve the five page maximum.
-5. Receive and review the separately assigned F and H sections. Do not work on Problem G per the user's request.
-6. Package source, tests, README, report, and `results.csv` with the required naming pattern. Exclude `creditcard.csv`, build products, and unrelated smoke/debug outputs.
+1. Re-run Problem C to completion with the five minute default into a clean results folder. Review DNF rows, all 24 prediction outcomes, plots, and summaries.
+2. Re-run Problem D with the five minute default. Review every required K/size/condition/method row and regenerate fraud-capture cost outputs.
+3. Reconcile Problem A, C, D, and E values between the output files, `results/experiments/REPORT.md`, and the report PDF. Preserve the five page maximum.
+4. Receive and review the separately assigned F and H sections. Do not work on Problem G per the user's request.
+5. Package source, tests, README, report, and `results.csv` with the required naming pattern. Exclude `creditcard.csv`, build products, and unrelated smoke/debug outputs.
 
 ## Current measurements are preliminary
 
