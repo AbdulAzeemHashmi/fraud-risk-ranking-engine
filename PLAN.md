@@ -18,19 +18,35 @@ Required work:
 | H | Evidence-based recommendations for batch ranking, shift queue and live refresh, including assumptions and failure conditions |
 | Submission | C++ source/tests/README, `results.csv`, <=5-page PDF report, prediction log appendix, AI-use disclosure, live demo/viva preparation |
 
+## Repository audit against the assignment
+
+| Requirement | Current state | Limitation / next action |
+|---|---|---|
+| C++ build and common key | Present; MinGW compile works after adding its `bin` folder to `PATH` | CMake is described but is not installed on this machine; make direct compiler commands primary or install CMake later |
+| Problem A data profile | Python pandas/NumPy script, CSV table, JSON summary and histogram generated | Need write the profile and data-quality note into final report; declare `ddof=0` explicitly |
+| Problem B full-sort algorithms | All five required algorithms are implemented; tests now exercise each on empty, singleton, duplicate-heavy total-order input, and C6 band-only ordering | Still add larger randomized, sorted and reverse-sorted cases; clarify/count element moves consistently before reporting metrics |
+| Problem B Top-K | Heap and bounded insertion implementations exist; differential checks pass for K=0, K<=n and K>n on mixed-priority records | Expand Top-K checks to repeated-key and larger inputs |
+| Dataset processing | C++ and Python loaders compute full-file risk bands; local Kaggle CSV is available and ignored by Git | Validate Class values and row IDs robustly; keep `Class` isolated to evaluation |
+| C1–C6 input conditions | C++ sample/condition builders now exist; tests check seeded sampling, Time order, pre-ranked/reverse order, record preservation, C5 displacement and C6 comparator | Integrate them into a complete benchmark driver and document C5's random-position procedure |
+| Problems C–E experiments | Not implemented | Produce all size/condition/top-K/live-window runs, medians, timeout/DNF handling, memory estimates and `results.csv` |
+| Plots and prediction log | Only Problem A histogram exists | Generate requested labelled plots from measurements and fill prediction log before each benchmark round |
+| Problem F derivations | Not written | Derive all eight items and compare count predictions with measured runs |
+| Problems G and H | Not written | G depends on a later course-portal change; H depends on measured evidence |
+| Final submission | No five-page report or complete results file | Generate report source/PDF, include AI-use disclosure and prediction-log appendix, then check page limit |
+
 ## Plan and status
 
-1. **Project foundation (in progress):** C++17 build, common transaction/key/metrics model, algorithms, and correctness tests.
-2. **Input pipeline:** CSV parser, full-file standardization/risk bands, stable row IDs, profiling and input-condition builders. Require the locally downloaded Kaggle file; do not bundle it.
-3. **Benchmark design:** reproducible seeded samples and transformations; count comparisons and moves with one documented definition; five-run medians; guard each run at five minutes and report DNF.
-4. **Problems C–E:** generate every requested measurement and machine-readable results; generate clearly labelled plots with axes/units, legends and captions from measured results.
-5. **Problem F:** write derivations and connect predictions/crossovers to actual counts and timings.
-6. **Problems G–H and report:** integrate posted change request when available, write evidence-based recommendations and AI-use disclosure, fit report to five pages, and prepare viva notes.
-7. **Reproduction pass:** document exact build/run commands, verify outputs and package source/tests without the dataset.
+1. **Foundation and Problem A:** core sort/selection implementations, dataset loader, Problem A analysis, and profile outputs are present. Expand differential tests and finalize count semantics.
+2. **Experiment inputs (in progress):** C++ sampling and C1–C6 condition construction are implemented and covered by deterministic unit tests.
+3. **Benchmark driver:** run fresh copies, record comparison/move counts, median of five timings, extra memory/stability and 5-minute DNF. Provide a fast smoke mode and the full assignment matrix.
+4. **Problems C–E:** generate `results.csv`, prediction log, charts, top-K fraud-capture results, and live-feed timing/memory results.
+5. **Problem F:** derive and document all required recurrences and selection/feed cost models, checking where the measurements agree or differ.
+6. **Problems G–H and report:** incorporate the posted change request when supplied; base recommendations on the measured results; write a <=5-page report with AI-use disclosure.
+7. **Reproduction pass:** verify build/run commands, keep the dataset out of Git, and prepare a source ZIP and viva notes.
 
 ## Measurement integrity and open dependencies
 
-- No dataset is present in the repository; dataset-specific profiling and results must wait for `creditcard.csv` at run time.
+- `creditcard.csv` is available in the local workspace but is intentionally excluded from Git and all submission packages.
 - Problem G's change request is posted later by the course and cannot be inferred in advance.
 - The assignment's 5-run medians and performance charts will only be reported after running the code on the user's machine and dataset. Never substitute invented measurements.
 - The requested PDF report requires a rendering tool; keep source report content editable and record the final page count when generated.

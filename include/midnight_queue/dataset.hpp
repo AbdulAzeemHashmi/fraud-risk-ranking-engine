@@ -75,7 +75,10 @@ inline Dataset load_dataset(const std::string& path) {
             squares[j] += static_cast<long double>(row.v[j]) * row.v[j];
         }
         row.amount = parse_number(f[29], id + 1);
-        row.fraud = static_cast<int>(parse_number(f[30], id + 1));
+        const double class_value = parse_number(f[30], id + 1);
+        if (class_value != 0.0 && class_value != 1.0)
+            throw std::runtime_error("Class must be 0 or 1 on line " + std::to_string(id + 1));
+        row.fraud = static_cast<int>(class_value);
         raw.push_back(row);
     }
     if (raw.empty()) throw std::runtime_error("Dataset has a header but no transaction rows");
