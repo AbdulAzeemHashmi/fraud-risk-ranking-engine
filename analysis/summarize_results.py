@@ -27,20 +27,22 @@ def main() -> int:
     with args.results_csv.open(newline="", encoding="utf-8-sig") as stream:
         records = list(csv.DictReader(stream))
 
-    c_fields = ["condition", "n", "algorithm", "median_seconds", "comparisons",
+    c_fields = ["condition", "n", "algorithm", "seconds", "comparisons",
                 "moves", "extra_memory_bytes", "stable", "status"]
     c_rows = [
-        {key: row[key] for key in c_fields}
+        {("median_seconds" if key == "seconds" else key): row[key] for key in c_fields}
         for row in records if row["problem"] == "C" and row["status"] == "median"
     ]
+    c_fields[3] = "median_seconds"
     write_csv(out_dir / "C_summary.csv", c_fields, c_rows)
 
-    d_fields = ["condition", "n", "k", "algorithm", "median_seconds", "comparisons",
+    d_fields = ["condition", "n", "k", "algorithm", "seconds", "comparisons",
                 "moves", "extra_memory_bytes", "stable", "captured_frauds", "status"]
     d_rows = [
-        {key: row[key] for key in d_fields}
+        {("median_seconds" if key == "seconds" else key): row[key] for key in d_fields}
         for row in records if row["problem"] == "D" and row["status"] == "median"
     ]
+    d_fields[4] = "median_seconds"
     write_csv(out_dir / "D_summary.csv", d_fields, d_rows)
 
     e_groups: dict[tuple[str, str], list[dict[str, str]]] = defaultdict(list)
