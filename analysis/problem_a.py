@@ -63,12 +63,12 @@ def main() -> None:
 
     fig, ax = plt.subplots(figsize=(8.5, 4.8), constrained_layout=True)
     ax.bar(profile["band"], profile["transactions"], color="#2864a5", label="Transactions")
-    ax.set_xlabel("Risk band (unitless, 0–9)")
+    ax.set_xlabel("Risk band (unitless, 0 to 9)")
     ax.set_ylabel("Transactions (count)")
     ax.set_xticks(range(10))
-    ax.set_title("Problem A — Distribution of risk bands")
+    ax.set_title("Problem A: Distribution of risk bands")
     ax.legend()
-    fig.text(0.01, -0.025, "Figure A1. Full-file risk-band distribution; bands use population standard deviation (ddof=0).")
+    fig.text(0.01, -0.025, "Figure A1. Full file risk band distribution. Bands use population standard deviation (ddof=0).")
     fig.savefig(args.out / "risk_band_histogram.png", dpi=180, bbox_inches="tight")
     plt.close(fig)
 
