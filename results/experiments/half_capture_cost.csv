@@ -1,0 +1,7 @@
+condition,n,K,method,median_seconds,comparisons,moves,extra_memory_bytes,status
+C1,284807,2068,Full Sort (Merge Sort),0.101678,4792310,10343704,9113824,median
+C1,284807,2068,Size-K Min-Heap,0.0040564,527362,367438,66176,median
+C1,284807,2068,Bounded Insertion Buffer,5.10336,574512669,12345601,66176,median
+C2,284807,2068,Full Sort (Merge Sort),0.187153,4804507,10343704,9113824,median
+C2,284807,2068,Size-K Min-Heap,0.0066692,518861,354179,66176,median
+C2,284807,2068,Bounded Insertion Buffer,5.08382,575157234,11700656,66176,median
