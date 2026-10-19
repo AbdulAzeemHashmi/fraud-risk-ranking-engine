@@ -1,121 +1,121 @@
-﻿"condition","n","algorithm","median_seconds","comparisons","moves","extra_memory_bytes","stable","status"
-"C1","1000","Insertion Sort","0.0013721","253900","254906","0","true","median"
-"C1","1000","Merge Sort","0.0002184","8687","19952","32000","true","median"
-"C1","1000","Naive Quick Sort","0.0001673","11869","12060","320","false","median"
-"C1","1000","Hardened Quick Sort","0.0002327","16771","24054","320","false","median"
-"C1","1000","Heap Sort","0.0001482","16766","27000","0","false","median"
-"C2","1000","Insertion Sort","0.0013955","256404","257411","0","true","median"
-"C2","1000","Merge Sort","0.0002184","8726","19952","32000","true","median"
-"C2","1000","Naive Quick Sort","0.0001525","10083","12591","320","false","median"
-"C2","1000","Hardened Quick Sort","0.0002263","16431","22257","320","false","median"
-"C2","1000","Heap Sort","0.0001524","16857","27159","0","false","median"
-"C3","1000","Insertion Sort","1.13e-05","999","1998","0","true","median"
-"C3","1000","Merge Sort","0.0001206","4932","19952","32000","true","median"
-"C3","1000","Naive Quick Sort","0.0023566","499500","0","320","false","median"
-"C3","1000","Hardened Quick Sort","0.0002788","38638","51186","320","false","median"
-"C3","1000","Heap Sort","0.0001509","17583","29124","0","false","median"
-"C4","1000","Insertion Sort","0.002784","499500","501498","0","true","median"
-"C4","1000","Merge Sort","0.0001145","5044","19952","32000","true","median"
-"C4","1000","Naive Quick Sort","0.0023625","499500","1500","320","false","median"
-"C4","1000","Hardened Quick Sort","0.0002198","29734","36990","320","false","median"
-"C4","1000","Heap Sort","0.0001488","15965","24948","0","false","median"
-"C5","1000","Insertion Sort","2.79e-05","3893","4892","0","true","median"
-"C5","1000","Merge Sort","0.0001382","6233","19952","32000","true","median"
-"C5","1000","Naive Quick Sort","0.0022353","479826","8556","320","false","median"
-"C5","1000","Hardened Quick Sort","0.0002156","28369","37638","320","false","median"
-"C5","1000","Heap Sort","0.0001385","17245","28728","0","false","median"
-"C6","1000","Insertion Sort","0.0010017","179795","180797","0","true","median"
-"C6","1000","Merge Sort","0.0001731","8375","19952","32000","true","median"
-"C6","1000","Naive Quick Sort","0.0008714","162599","7668","320","false","median"
-"C6","1000","Hardened Quick Sort","3.21e-05","3288","2217","320","false","median"
-"C6","1000","Heap Sort","0.0001169","13588","20778","0","false","median"
-"C1","10000","Insertion Sort","0.1318166","25096178","25106185","0","true","median"
-"C1","10000","Merge Sort","0.0033275","120099","267232","320000","true","median"
-"C1","10000","Naive Quick Sort","0.0032689","148695","218409","448","false","median"
-"C1","10000","Hardened Quick Sort","0.0057333","225309","338181","448","false","median"
-"C1","10000","Heap Sort","0.0041675","235457","372315","0","false","median"
-"C2","10000","Insertion Sort","0.1764851","25305648","25315653","0","true","median"
-"C2","10000","Merge Sort","0.0028995","120480","267232","320000","true","median"
-"C2","10000","Naive Quick Sort","0.0020814","157855","191805","448","false","median"
-"C2","10000","Hardened Quick Sort","0.0028865","227342","334641","448","false","median"
-"C2","10000","Heap Sort","0.0020628","235389","372417","0","false","median"
-"C3","10000","Insertion Sort","0.000123","9999","19998","0","true","median"
-"C3","10000","Merge Sort","0.001488","64608","267232","320000","true","median"
-"C3","10000","Naive Quick Sort","0.2685893","49995000","0","448","false","median"
-"C3","10000","Hardened Quick Sort","0.0096275","1130711","1628010","448","false","median"
-"C3","10000","Heap Sort","0.0022128","244460","395868","0","false","median"
-"C4","10000","Insertion Sort","0.3759057","49995000","50014998","0","true","median"
-"C4","10000","Merge Sort","0.0022894","69008","267232","320000","true","median"
-"C4","10000","Naive Quick Sort","0.4231992","49995000","15000","448","false","median"
-"C4","10000","Hardened Quick Sort","0.0095414","829764","1169472","448","false","median"
-"C4","10000","Heap Sort","0.0031097","226682","350088","0","false","median"
-"C5","10000","Insertion Sort","0.0029991","332588","342587","0","true","median"
-"C5","10000","Merge Sort","0.0023361","92468","267232","320000","true","median"
-"C5","10000","Naive Quick Sort","0.0262845","3225958","73683","448","false","median"
-"C5","10000","Hardened Quick Sort","0.0047723","385145","506157","448","false","median"
-"C5","10000","Heap Sort","0.0031037","244174","394353","0","false","median"
-"C6","10000","Insertion Sort","0.1370095","17446844","17456846","0","true","median"
-"C6","10000","Merge Sort","0.0028426","114017","267232","320000","true","median"
-"C6","10000","Naive Quick Sort","0.1518837","15959396","59829","448","false","median"
-"C6","10000","Hardened Quick Sort","0.0005082","33228","22881","448","false","median"
-"C6","10000","Heap Sort","0.0050641","188699","286707","0","false","median"
-"C1","100000","Insertion Sort","nan","0","0","0","true","DNF"
-"C1","100000","Merge Sort","0.0709357","1532635","3337856","3200000","true","median"
-"C1","100000","Naive Quick Sort","0.0747751","2221050","2764911","544","false","median"
-"C1","100000","Hardened Quick Sort","0.0707414","2974300","4563945","544","false","median"
-"C1","100000","Heap Sort","0.0927628","3018956","4716099","0","false","median"
-"C2","100000","Insertion Sort","nan","0","0","0","true","DNF"
-"C2","100000","Merge Sort","0.0609764","1536058","3337856","3200000","true","median"
-"C2","100000","Naive Quick Sort","0.0535929","2022191","2934693","544","false","median"
-"C2","100000","Hardened Quick Sort","0.0736085","2941547","4454985","544","false","median"
-"C2","100000","Heap Sort","0.0867474","3020072","4725993","0","false","median"
-"C3","100000","Insertion Sort","0.0022447","99999","199998","0","true","median"
-"C3","100000","Merge Sort","0.0352814","815024","3337856","3200000","true","median"
-"C3","100000","Naive Quick Sort","nan","0","0","544","false","DNF"
-"C3","100000","Hardened Quick Sort","0.4170547","34257220","50703156","544","false","median"
-"C3","100000","Heap Sort","0.0407386","3112517","4952562","0","false","median"
-"C4","100000","Insertion Sort","nan","0","0","0","true","DNF"
-"C4","100000","Merge Sort","0.0307562","853904","3337856","3200000","true","median"
-"C4","100000","Naive Quick Sort","nan","0","0","544","false","DNF"
-"C4","100000","Hardened Quick Sort","0.3043478","24622475","36175992","544","false","median"
-"C4","100000","Heap Sort","0.0439378","2926640","4492302","0","false","median"
-"C5","100000","Insertion Sort","0.4433035","34980908","35080907","0","true","median"
-"C5","100000","Merge Sort","0.0394422","1244293","3337856","3200000","true","median"
-"C5","100000","Naive Quick Sort","0.7508266","64801749","1028427","544","false","median"
-"C5","100000","Hardened Quick Sort","0.1396706","4752228","6454623","544","false","median"
-"C5","100000","Heap Sort","0.0755863","3098356","4927185","0","false","median"
-"C6","100000","Insertion Sort","18.6235664","1740521151","1740621154","0","true","median"
-"C6","100000","Merge Sort","0.0350255","1454495","3337856","3200000","true","median"
-"C6","100000","Naive Quick Sort","16.3381718","1592991850","747768","544","false","median"
-"C6","100000","Hardened Quick Sort","0.0031108","327864","223623","544","false","median"
-"C6","100000","Heap Sort","0.0165521","2429400","3681216","0","false","median"
-"C1","284807","Insertion Sort","nan","0","0","0","true","DNF"
-"C1","284807","Merge Sort","0.0961016","4792310","10343704","9113824","true","median"
-"C1","284807","Naive Quick Sort","0.0780971","6601882","9212013","608","false","median"
-"C1","284807","Hardened Quick Sort","0.1379936","8900526","13494651","608","false","median"
-"C1","284807","Heap Sort","0.1365273","9443022","14699337","0","false","median"
-"C2","284807","Insertion Sort","nan","0","0","0","true","DNF"
-"C2","284807","Merge Sort","0.102978","4803714","10343704","9113824","true","median"
-"C2","284807","Naive Quick Sort","0.0752463","6159714","8858112","608","false","median"
-"C2","284807","Hardened Quick Sort","0.1057571","8881633","13829832","608","false","median"
-"C2","284807","Heap Sort","0.1437046","9448845","14729370","0","false","median"
-"C3","284807","Insertion Sort","0.0042424","284806","569612","0","true","median"
-"C3","284807","Merge Sort","0.0540909","2541548","10343704","9113824","true","median"
-"C3","284807","Naive Quick Sort","nan","0","0","608","false","DNF"
-"C3","284807","Hardened Quick Sort","1.1412305","162660574","242051586","608","false","median"
-"C3","284807","Heap Sort","0.0702514","9704825","15337668","0","false","median"
-"C4","284807","Insertion Sort","nan","0","0","0","true","DNF"
-"C4","284807","Merge Sort","0.0540978","2630304","10343704","9113824","true","median"
-"C4","284807","Naive Quick Sort","nan","0","0","608","false","DNF"
-"C4","284807","Hardened Quick Sort","1.5573649","116334430","172343505","608","false","median"
-"C4","284807","Heap Sort","0.1389253","9210463","14105817","0","false","median"
-"C5","284807","Insertion Sort","2.9466575","262358434","262643240","0","true","median"
-"C5","284807","Merge Sort","0.1338582","4011966","10343704","9113824","true","median"
-"C5","284807","Naive Quick Sort","1.5174673","157023630","3062490","608","false","median"
-"C5","284807","Hardened Quick Sort","0.2216633","16315646","23661360","608","false","median"
-"C5","284807","Heap Sort","0.1565742","9559945","15107454","0","false","median"
-"C6","284807","Insertion Sort","nan","0","0","0","true","DNF"
-"C6","284807","Merge Sort","0.0778312","4545070","10343704","9113824","true","median"
-"C6","284807","Naive Quick Sort","nan","0","0","608","false","DNF"
-"C6","284807","Hardened Quick Sort","0.0239049","1013599","929064","608","false","median"
-"C6","284807","Heap Sort","0.1034121","7389529","11178285","0","false","median"
+condition,n,algorithm,median_seconds,comparisons,moves,extra_memory_bytes,stable,status
+C1,1000,Insertion Sort,0.0010102,253900,254906,0,true,median
+C1,1000,Merge Sort,0.0001562,8687,19952,32000,true,median
+C1,1000,Naive Quick Sort,0.0001324,11869,12060,320,false,median
+C1,1000,Hardened Quick Sort,0.0001825,16771,24054,320,false,median
+C1,1000,Heap Sort,0.0001094,16766,27000,0,false,median
+C2,1000,Insertion Sort,0.0009088,256404,257411,0,true,median
+C2,1000,Merge Sort,0.0001481,8726,19952,32000,true,median
+C2,1000,Naive Quick Sort,0.0001452,10083,12591,320,false,median
+C2,1000,Hardened Quick Sort,0.0002209,16431,22257,320,false,median
+C2,1000,Heap Sort,8.79e-05,16857,27159,0,false,median
+C3,1000,Insertion Sort,9.8e-06,999,1998,0,true,median
+C3,1000,Merge Sort,8.82e-05,4932,19952,32000,true,median
+C3,1000,Naive Quick Sort,0.0015088,499500,0,320,false,median
+C3,1000,Hardened Quick Sort,0.000199,38638,51186,320,false,median
+C3,1000,Heap Sort,0.0001016,17583,29124,0,false,median
+C4,1000,Insertion Sort,0.002149,499500,501498,0,true,median
+C4,1000,Merge Sort,0.0001045,5044,19952,32000,true,median
+C4,1000,Naive Quick Sort,0.0022018,499500,1500,320,false,median
+C4,1000,Hardened Quick Sort,0.0001723,29734,36990,320,false,median
+C4,1000,Heap Sort,0.0001028,15965,24948,0,false,median
+C5,1000,Insertion Sort,2.27e-05,3893,4892,0,true,median
+C5,1000,Merge Sort,9.21e-05,6233,19952,32000,true,median
+C5,1000,Naive Quick Sort,0.0021742,479826,8556,320,false,median
+C5,1000,Hardened Quick Sort,0.0002773,28369,37638,320,false,median
+C5,1000,Heap Sort,0.0001459,17245,28728,0,false,median
+C6,1000,Insertion Sort,0.0006392,179795,180797,0,true,median
+C6,1000,Merge Sort,0.0001103,8375,19952,32000,true,median
+C6,1000,Naive Quick Sort,0.0008128,162599,7668,320,false,median
+C6,1000,Hardened Quick Sort,2.27e-05,3288,2217,320,false,median
+C6,1000,Heap Sort,8.57e-05,13588,20778,0,false,median
+C1,10000,Insertion Sort,0.1437249,25096178,25106185,0,true,median
+C1,10000,Merge Sort,0.0023331,120099,267232,320000,true,median
+C1,10000,Naive Quick Sort,0.0020408,148695,218409,448,false,median
+C1,10000,Hardened Quick Sort,0.0029288,225309,338181,448,false,median
+C1,10000,Heap Sort,0.0021372,235457,372315,0,false,median
+C2,10000,Insertion Sort,0.116344,25305648,25315653,0,true,median
+C2,10000,Merge Sort,0.0029496,120480,267232,320000,true,median
+C2,10000,Naive Quick Sort,0.0022026,157855,191805,448,false,median
+C2,10000,Hardened Quick Sort,0.0033029,227342,334641,448,false,median
+C2,10000,Heap Sort,0.0020846,235389,372417,0,false,median
+C3,10000,Insertion Sort,0.0001229,9999,19998,0,true,median
+C3,10000,Merge Sort,0.0014963,64608,267232,320000,true,median
+C3,10000,Naive Quick Sort,0.2348992,49995000,0,448,false,median
+C3,10000,Hardened Quick Sort,0.0064345,1130711,1628010,448,false,median
+C3,10000,Heap Sort,0.001527,244460,395868,0,false,median
+C4,10000,Insertion Sort,0.2410466,49995000,50014998,0,true,median
+C4,10000,Merge Sort,0.0010232,69008,267232,320000,true,median
+C4,10000,Naive Quick Sort,0.2186198,49995000,15000,448,false,median
+C4,10000,Hardened Quick Sort,0.0061684,829764,1169472,448,false,median
+C4,10000,Heap Sort,0.0018021,226682,350088,0,false,median
+C5,10000,Insertion Sort,0.0017136,332588,342587,0,true,median
+C5,10000,Merge Sort,0.001383,92468,267232,320000,true,median
+C5,10000,Naive Quick Sort,0.0147772,3225958,73683,448,false,median
+C5,10000,Hardened Quick Sort,0.0022812,385145,506157,448,false,median
+C5,10000,Heap Sort,0.0014543,244174,394353,0,false,median
+C6,10000,Insertion Sort,0.0811637,17446844,17456846,0,true,median
+C6,10000,Merge Sort,0.0013092,114017,267232,320000,true,median
+C6,10000,Naive Quick Sort,0.0788527,15959396,59829,448,false,median
+C6,10000,Hardened Quick Sort,0.0002553,33228,22881,448,false,median
+C6,10000,Heap Sort,0.0016261,188699,286707,0,false,median
+C1,100000,Insertion Sort,13.9586705,2505084551,2505184559,0,true,median
+C1,100000,Merge Sort,0.0239231,1532635,3337856,3200000,true,median
+C1,100000,Naive Quick Sort,0.0228315,2221050,2764911,544,false,median
+C1,100000,Hardened Quick Sort,0.0294915,2974300,4563945,544,false,median
+C1,100000,Heap Sort,0.0529866,3018956,4716099,0,false,median
+C2,100000,Insertion Sort,16.0948947,2507957604,2508057617,0,true,median
+C2,100000,Merge Sort,0.0266999,1536058,3337856,3200000,true,median
+C2,100000,Naive Quick Sort,0.0198671,2022191,2934693,544,false,median
+C2,100000,Hardened Quick Sort,0.0288602,2941547,4454985,544,false,median
+C2,100000,Heap Sort,0.0410585,3020072,4725993,0,false,median
+C3,100000,Insertion Sort,0.001132,99999,199998,0,true,median
+C3,100000,Merge Sort,0.0237641,815024,3337856,3200000,true,median
+C3,100000,Naive Quick Sort,27.4061968,4999950000,0,544,false,median
+C3,100000,Hardened Quick Sort,0.2402765,34257220,50703156,544,false,median
+C3,100000,Heap Sort,0.0299109,3112517,4952562,0,false,median
+C4,100000,Insertion Sort,28.9004139,4999950000,5000149998,0,true,median
+C4,100000,Merge Sort,0.0131171,853904,3337856,3200000,true,median
+C4,100000,Naive Quick Sort,20.7954447,4999950000,150000,544,false,median
+C4,100000,Hardened Quick Sort,0.1190679,24622475,36175992,544,false,median
+C4,100000,Heap Sort,0.0167684,2926640,4492302,0,false,median
+C5,100000,Insertion Sort,0.1343667,34980908,35080907,0,true,median
+C5,100000,Merge Sort,0.0142007,1244293,3337856,3200000,true,median
+C5,100000,Naive Quick Sort,0.2289067,64801749,1028427,544,false,median
+C5,100000,Hardened Quick Sort,0.0253589,4752228,6454623,544,false,median
+C5,100000,Heap Sort,0.0160108,3098356,4927185,0,false,median
+C6,100000,Insertion Sort,6.1229584,1740521151,1740621154,0,true,median
+C6,100000,Merge Sort,0.0150152,1454495,3337856,3200000,true,median
+C6,100000,Naive Quick Sort,5.818728,1592991850,747768,544,false,median
+C6,100000,Hardened Quick Sort,0.0022028,327864,223623,544,false,median
+C6,100000,Heap Sort,0.0116572,2429400,3681216,0,false,median
+C1,284807,Insertion Sort,116.195713,20303265737,20303550553,0,true,median
+C1,284807,Merge Sort,0.084647,4792310,10343704,9113824,true,median
+C1,284807,Naive Quick Sort,0.059564,6601882,9212013,608,false,median
+C1,284807,Hardened Quick Sort,0.0772997,8900526,13494651,608,false,median
+C1,284807,Heap Sort,0.0841218,9443022,14699337,0,false,median
+C2,284807,Insertion Sort,111.0786556,20283484568,20283769382,0,true,median
+C2,284807,Merge Sort,0.090557,4803714,10343704,9113824,true,median
+C2,284807,Naive Quick Sort,0.0625472,6159714,8858112,608,false,median
+C2,284807,Hardened Quick Sort,0.0890576,8881633,13829832,608,false,median
+C2,284807,Heap Sort,0.1568371,9448845,14729370,0,false,median
+C3,284807,Insertion Sort,0.0034865,284806,569612,0,true,median
+C3,284807,Merge Sort,0.0607887,2541548,10343704,9113824,true,median
+C3,284807,Naive Quick Sort,197.6488553,40557371221,0,608,false,median
+C3,284807,Hardened Quick Sort,1.1188706,162660574,242051586,608,false,median
+C3,284807,Heap Sort,0.06269,9704825,15337668,0,false,median
+C4,284807,Insertion Sort,235.8432988,40557371221,40557940833,0,true,median
+C4,284807,Merge Sort,0.0526795,2630304,10343704,9113824,true,median
+C4,284807,Naive Quick Sort,210.9232529,40557371221,427209,608,false,median
+C4,284807,Hardened Quick Sort,0.8305298,116334430,172343505,608,false,median
+C4,284807,Heap Sort,0.0947799,9210463,14105817,0,false,median
+C5,284807,Insertion Sort,1.5030884,262358434,262643240,0,true,median
+C5,284807,Merge Sort,0.059877,4011966,10343704,9113824,true,median
+C5,284807,Naive Quick Sort,0.8284022,157023630,3062490,608,false,median
+C5,284807,Hardened Quick Sort,0.1174228,16315646,23661360,608,false,median
+C5,284807,Heap Sort,0.074958,9559945,15107454,0,false,median
+C6,284807,Insertion Sort,102.4175572,14090071382,14090356193,0,true,median
+C6,284807,Merge Sort,0.0669382,4545070,10343704,9113824,true,median
+C6,284807,Naive Quick Sort,113.8423376,12928111215,1824462,608,false,median
+C6,284807,Hardened Quick Sort,0.0160537,1013599,929064,608,false,median
+C6,284807,Heap Sort,0.078185,7389529,11178285,0,false,median

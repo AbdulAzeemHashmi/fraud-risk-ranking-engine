@@ -1,82 +1,68 @@
-# Problems C, D, and E Results
+# Experiment results: Problems C, D, and E
 
-## Data and run settings
+## Run setup
 
-The experiments use all 284,807 rows in `creditcard.csv` unless a sample size is named. The random seed is 2013, and the personal queue size is K = 230. The `Class` column is used only to evaluate fraud capture after ranking. It is never read by the ranking comparator.
+All experiments use roll number and random seed 2013. Personal K is 230. The complete dataset has 284,807 rows and 492 frauds. Runs used C++17, MinGW GCC 16.2.0, `-O2 -Wall -Wextra -Wpedantic`, five trials, and the default 300 second per-trial timeout for C and D. C produced 120 median rows with no DNF rows. D produced 78 median rows with no DNF rows. E used five trials at each window size. Dataset reading and condition construction are outside the timers. `Class` is used only to evaluate queue capture.
 
-The programs were built as C++17 with MinGW GCC 16.2.0, using `-O2 -Wall -Wextra -Wpedantic`. The host reports Windows NT 10.0.26300.0, x64, and an Intel64 Family 6 Model 142 CPU with 8 logical processors. The hardware query for installed RAM was blocked, so no RAM amount is reported.
+The runner checks full ordering and row preservation after every C run. C1 to C5 also match a `std::sort` reference; C6 checks band order and row preservation because equal bands may have any internal order. Comparisons count comparator calls. Moves count record-slot assignments. Memory values are algorithm storage estimates, not process RAM.
 
-These saved C and D measurements use five trials and the earlier 30 second cutoff. They are preliminary, not final assignment runs. The current runner defaults to the brief's five minute cutoff. Rerun C and D with that default before using the updated results in a final report. A run over the selected cutoff is marked `DNF` and is never used as a median. Problem E runs five complete trials without that cutoff. Dataset loading and condition construction are outside the timers. In C and D, the common working copy is prepared before timing. In E, window construction is outside timing, while per-window copies and ranking work are timed. Problem C and D memory figures estimate algorithm auxiliary storage. Problem E memory figures estimate peak extra vector storage and exclude the preloaded dataset and window inputs. They are storage estimates, not operating system memory readings.
+## Problem C: full ranking tournament
 
-The current C runner also verifies each completed result outside the timer. It checks ordering and that the input transaction IDs are preserved. For C1 to C5, it also checks the exact order against a trusted `std::sort` reference. C6 sorts by band alone, so equal-band records may appear in any order; it checks the band ordering and transaction preservation instead.
+There are 24 prediction rounds. The predicted winner was correct in 10/24 rounds and the predicted loser in 18/24 rounds. The full per-run prediction and result log is `prediction_log.csv`.
 
-The `comparisons` column counts calls to the ranking comparator. The `moves` column counts assignments to algorithm-owned record slots. In C and D summary rows, `trial=0` marks the median row. The detailed trial rows remain in `results.csv`.
+Median seconds on C2, the seeded shuffle:
 
-## Problem C: Full Ranking Tournament
-
-All five sorting methods were run on C1 through C6 at n = 1,000, 10,000, 100,000, and 284,807. The C summary table has 120 rows, including DNF rows. `results.csv` contains the individual trials and the median rows. The prediction log has a prediction before every round and a result afterward. The predicted winner was correct in 9 of 24 rounds, and the predicted loser was correct in 20 of 24 rounds.
-
-Median time in seconds for C2, the seeded shuffled input:
-
-| n | Insertion Sort | Merge Sort | Naive Quick Sort | Hardened Quick Sort | Heap Sort |
+| n | Insertion | Merge | Naive quicksort | Hardened quicksort | Heap |
 |---:|---:|---:|---:|---:|---:|
-| 1,000 | 0.0013955 | 0.0002184 | 0.0001525 | 0.0002263 | 0.0001524 |
-| 10,000 | 0.1764851 | 0.0028995 | 0.0020814 | 0.0028865 | 0.0020628 |
-| 100,000 | DNF | 0.0609764 | 0.0535929 | 0.0736085 | 0.0867474 |
-| 284,807 | DNF | 0.1029780 | 0.0752463 | 0.1057571 | 0.1437046 |
+| 1,000 | 0.0009088 | 0.0001481 | 0.0001452 | 0.0002209 | 8.79e-05 |
+| 10,000 | 0.116344 | 0.0029496 | 0.0022026 | 0.0033029 | 0.0020846 |
+| 100,000 | 16.0949 | 0.0266999 | 0.0198671 | 0.0288602 | 0.0410585 |
+| 284,807 | 111.079 | 0.090557 | 0.0625472 | 0.0890576 | 0.156837 |
 
-At the larger shuffled sizes, Naive Quick Sort had the lowest measured median among methods that completed. Insertion Sort exceeded the 30 second limit. The winner varies with size and condition, so one input case does not predict every round.
+Naive Quick Sort had the lowest C2 median at n = 100,000 and 284,807. Across all conditions and sizes, the fastest method varied. On C3, insertion sort was fastest because records were already in exact triage order. The reverse-input C4 made Merge Sort the fastest full-size method. All trials completed within the five minute limit.
 
-The C plots are:
+Required plots: `C2_time_vs_n.svg`, `time_at_10000_by_condition.svg`, `C2_comparisons_vs_n.svg`, `C2_moves_vs_n.svg`, `C2_time_over_nlogn.svg`, and `C2_time_over_n_squared.svg`. The complete method by condition and size table is `C_summary.csv`.
 
-- `C2_time_vs_n.svg`: log-log execution time versus n.
-- `time_at_10000_by_condition.svg`: grouped bars for all six conditions.
-- `C2_comparisons_vs_n.svg` and `C2_moves_vs_n.svg`: operation counts versus n.
-- `C2_time_over_nlogn.svg` and `C2_time_over_n_squared.svg`: normalized time curves.
+## Problem D: top K queue
 
-The summary table is `C_summary.csv`. It reports median time, comparisons, moves, estimated extra memory, stability, and status for every method, condition, and size. DNF methods have no median time. Their timed out trial is in `results.csv`.
+D compares Merge Sort then take K, a size-K min heap, and the bounded insertion buffer on C1 and C2 at n = 100,000 and 284,807. K includes 10, 50, personal K=230, 500, 5,000, n/10, and K=2,068, the smallest measured queue capturing at least half the frauds. Every required row completed.
 
-## Problem D: The Shift Queue
+The size-K min heap was fastest at every tested K. No method crossover appeared in this range. The bounded buffer became less suitable as K grew: at full n, its median took 5.28 to 5.37 seconds at K=2,068, 6.15 to 9.47 seconds at K=5,000, and 56.67 to 72.82 seconds at K=28,480. The 2,068 queue captures at least half of all 492 frauds under the required triage score.
 
-The full matrix compares Merge Sort followed by taking K, a size-K min heap, and a bounded insertion buffer. It covers C1 and C2 at n = 100,000 and n = 284,807. K is 10, 50, 230, 500, 5,000, and n/10. `D_summary.csv` contains one summary row for every condition, size, K, and method. Rows marked DNF have no five-trial median.
-
-The size-K min heap was the fastest method at every tested point where the methods completed. No crossover away from the heap was observed, even at K = n/10. The bounded buffer was slower than the heap at K = 10 and its time grew quickly as K increased. At n = 284,807 it reached the 30 second cutoff on C2 with K = 5,000 and on both conditions with K = 28,480. The results do not establish what happens when K is closer to n.
-
-Under the triage order, the first queue to capture at least half of the 492 frauds has K = 2,068. The measured costs at full data size were:
-
-| Condition | Method | Median seconds | Comparisons | Moves | Estimated extra memory |
+| Condition | Method | Seconds | Comparisons | Moves | Extra bytes |
 |---|---|---:|---:|---:|---:|
-| C1 | Full Sort (Merge Sort) | 0.101678 | 4,792,310 | 10,343,704 | 9,113,824 bytes |
-| C1 | Size-K Min-Heap | 0.004056 | 527,362 | 367,438 | 66,176 bytes |
-| C1 | Bounded Insertion Buffer | 5.103360 | 574,512,669 | 12,345,601 | 66,176 bytes |
-| C2 | Full Sort (Merge Sort) | 0.187153 | 4,804,507 | 10,343,704 | 9,113,824 bytes |
-| C2 | Size-K Min-Heap | 0.006669 | 518,861 | 354,179 | 66,176 bytes |
-| C2 | Bounded Insertion Buffer | 5.083820 | 575,157,234 | 11,700,656 | 66,176 bytes |
+| C1 | Full Sort (Merge Sort) | 0.187189 | 4,792,310 | 10,343,704 | 9,113,824 |
+| C1 | Size-K Min-Heap | 0.0087385 | 527,362 | 367,438 | 66,176 |
+| C1 | Bounded Insertion Buffer | 5.27561 | 574,512,669 | 12,345,601 | 66,176 |
+| C2 | Full Sort (Merge Sort) | 0.195027 | 4,804,507 | 10,343,704 | 9,113,824 |
+| C2 | Size-K Min-Heap | 0.0070421 | 518,861 | 354,179 | 66,176 |
+| C2 | Bounded Insertion Buffer | 5.37372 | 575,157,234 | 11,700,656 | 66,176 |
 
-The fraud capture data is in `fraud_capture_curve.csv`; the plot is `fraud_capture_vs_k.svg`. The label is used only for this evaluation.
+The complete matrix is `D_summary.csv`. Fraud capture by K is in `fraud_capture_curve.csv` and `fraud_capture_vs_k.svg`; the cost to produce the half-capture queue is in `half_capture_cost.csv`.
 
-## Problem E: The Live Feed
+## Problem E: live feed
 
-The full dataset was split into 48 one-hour windows and 288 ten-minute windows by Time. The three strategies were run in five trials. `E_cumulative_time_1_hour.svg` and `E_cumulative_time_10_minute.svg` plot median cumulative time against window number. `E_summary.csv` reports final cumulative time and peak extra memory.
+The data is split into 48 one-hour windows or 288 ten-minute windows by Time. The heap fed only with new records had the lowest cumulative time and lowest extra memory in both cases. Re-ranking everything was slowest; sorting each new window and merging into the top-K queue was between the two.
 
-| Window size | Strategy | Final cumulative time, median seconds | Peak extra memory |
+| Window | Strategy | Final cumulative seconds | Peak extra bytes |
 |---|---|---:|---:|
-| 1 hour | Re-rank All with Merge Sort | 2.221135 | 35,006,336 bytes |
-| 1 hour | Maintain Size-K Min-Heap | 0.006033 | 14,720 bytes |
-| 1 hour | Merge Sorted Window into Top-K | 0.098345 | 1,055,936 bytes |
-| 10 minutes | Re-rank All with Merge Sort | 7.777350 | 20,364,160 bytes |
-| 10 minutes | Maintain Size-K Min-Heap | 0.008182 | 14,720 bytes |
-| 10 minutes | Merge Sorted Window into Top-K | 0.056847 | 269,504 bytes |
+| 1-hour | Maintain Size-K Min-Heap | 0.0045345 | 14,720 |
+| 1-hour | Merge Sorted Window into Top-K | 0.126549 | 1,055,936 |
+| 1-hour | Re-rank All with Merge Sort | 2.59802 | 35,006,336 |
+| 10-minute | Maintain Size-K Min-Heap | 0.0080495 | 14,720 |
+| 10-minute | Merge Sorted Window into Top-K | 0.0658661 | 269,504 |
+| 10-minute | Re-rank All with Merge Sort | 8.66813 | 20,364,160 |
 
-Maintaining the heap was fastest and used the least extra memory for both window sizes. Sorting each new window and merging it into the current queue was faster than re-ranking the full feed. More frequent ten-minute updates increased the total cost of full re-ranking.
+Cumulative plots: `E_cumulative_time_1_hour.svg` and `E_cumulative_time_10_minute.svg`. `E_summary.csv` and `live_feed_peak_memory.csv` contain the summary values.
 
-The optional Analyst Console is a local web page for selecting Full Sort with Merge Sort, Size-K Min-Heap, or Bounded Insertion Buffer and setting K. It displays the top transactions with their risk band, Amount, and Time, plus the run time and comparison count. The page calls a C++ queue builder, so the ranking stays in C++. Bonus marks are conditional on Problems A to H being complete; Problems F and H are being handled separately, and the instructor has not shared Problem G yet, so bonus eligibility is pending.
+## Complexity review and recommendations
 
-## Output files
+Insertion Sort takes O(n squared) time in the general case and O(1) auxiliary storage. Merge Sort takes O(n log n) time and O(n) auxiliary storage. Naive Quick Sort has average O(n log n), worst O(n squared), and recursion storage up to O(n). The hardened three-way Quick Sort improves duplicate handling and pivot choice, but still has a quadratic worst case. Heap Sort takes O(n log n) time and O(1) auxiliary storage. The size-K queue heap takes O(n log K) time and O(K) storage; the bounded buffer can take O(nK) time and O(K) storage. For this workload, use Merge Sort for predictable full ranking, a size-K min heap for selective queues, and a heap fed by each new window for live updates.
 
-- `results.csv`: trial-level results and median rows for C, D, and E.
-- `C_summary.csv`, `D_summary.csv`, and `E_summary.csv`: compact problem summary tables.
-- `prediction_log.csv`: prediction and outcome rows for each C round.
-- `half_capture_cost.csv`: cost to produce the smallest queue that captures half the frauds.
-- `live_feed_peak_memory.csv`: peak memory estimate for each live-feed strategy.
-- SVG files: requested plots, with labels and captions included in each chart.
+## Scope note
+
+The separately assigned F and H sections were reviewed against the updated measurements. This report includes their complexity and recommendation conclusions. Problem G is omitted from this project work as requested. The optional console is present, but its bonus eligibility depends on the instructor's complete A to H assessment.
+
+## Output structure
+
+`results.csv` contains trial and median rows. `C_summary.csv`, `D_summary.csv`, and `E_summary.csv` provide compact tables. Six C plots, two E plots, and the D fraud-capture plot are saved as SVG files in this folder. `prediction_log.csv` records predictions and outcomes.

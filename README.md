@@ -145,34 +145,35 @@ Sample sizes are 1,000, 10,000, 100,000, and 284,807 (the full file). Every algo
 
 ## Results
 
-Saved measurements are in `results/experiments`. The run used MinGW GCC 16.2.0, C++17, `-O2`, on Windows 11 x64.
+The refreshed five-trial measurements are in `results/experiments_final_v2` and the submission copy is `results.csv`. The run used MinGW GCC 16.2.0, C++17, `-O2`, on Windows 11 x64.
 
 ### Building a top 230 queue
 
-<p align="center">
-  <img src="assets/topk_bars.svg" alt="Animated bars comparing the size K heap, full sort, and insertion buffer" width="100%">
-</p>
-
-The size K min heap was the fastest method at every tested point, even when K was one tenth of n. The bounded insertion buffer beats a full sort only for small K, and it hit the 30 second limit for large K.
+The size K min heap was the fastest method at every tested point, including K = n/10. Every five-trial run completed within the five minute limit. At n = 284,807, the bounded insertion buffer took 5.28 to 5.37 seconds for K = 2,068, 6.15 to 9.47 seconds for K = 5,000, and 56.67 to 72.82 seconds for K = 28,480.
 
 ### Full sort on 284,807 shuffled transactions
 
 | Algorithm | Median time |
 |---|---|
-| Naive Quick Sort | 0.075 s |
-| Merge Sort | 0.103 s |
-| Hardened Quick Sort | 0.106 s |
-| Heap Sort | 0.144 s |
-| Insertion Sort | Did not finish (over 30 s) |
+| Naive Quick Sort | 0.063 s |
+| Merge Sort | 0.091 s |
+| Hardened Quick Sort | 0.089 s |
+| Heap Sort | 0.157 s |
+| Insertion Sort | 111.079 s |
 
-Merge Sort finished every input condition at the full size, between 0.054 s and 0.134 s. Naive Quick Sort did not finish on three of the six conditions.
+All five methods finished every condition at the full size. The fastest method varied by condition. Naive Quick Sort led on C1 and C2, Merge Sort led on C4 and C5, and Hardened Quick Sort led on C6.
 
 ### Live feed over 48 hours (1 hour windows)
 
 | Strategy | Final cumulative time | Peak extra memory |
 |---|---|---|
-| Re-rank everything with Merge Sort | 2.22 s | 35,006,336 bytes |
-| Merge Sort each window, merge into top K | 0.098 s | 1,055,936 bytes |
+| Re-rank everything with Merge Sort | 2.60 s | 35,006,336 bytes |
+| Maintain a size K min heap | 0.0045 s | 14,720 bytes |
+| Merge Sort each window, merge into top K | 0.127 s | 1,055,936 bytes |
+
+For 10 minute windows, the final cumulative times were 8.67 seconds for full re-ranking, 0.0080 seconds for the heap, and 0.0659 seconds for sorting each window and merging. The heap also used the least extra memory.
+
+The final C, D, and E tables, SVG plots, prediction log, and detailed report are in `results/experiments_final_v2`. The report PDF is `2013-A2-A.pdf`.
 | Size K min heap fed with new records | 0.006 s | 14,720 bytes |
 
 ### How many frauds does the queue catch?
@@ -239,7 +240,7 @@ Run all experiments into a new folder. The runner uses the assignment's five min
 .\build\queue_experiments.exe .\creditcard.csv --problem all --out results\experiments_new
 ```
 
-For a short development run, you can choose a smaller limit, for example `--timeout-seconds 30`. Do not use that shorter limit for final assignment measurements. The currently saved C and D results were collected with the earlier 30 second setting. They must be regenerated with the default five minute limit before treating their DNF rows as final.
+For a short development run, you can choose a smaller limit, for example `--timeout-seconds 30`. Do not use that shorter limit for final assignment measurements. The final C and D results were collected with the default five minute limit. All trials completed, with no DNF rows.
 
 Or run one part at a time. Use the same output folder so each part adds its rows:
 
@@ -264,10 +265,12 @@ The `--smoke` option runs a small sample to check that everything works. Smoke r
 fraud-risk-ranking-engine/
 |-- analysis/
 |   |-- analyst_console.py
-|   `-- problem_a.py
+|   |-- build_report.py
+|   |-- package_submission.py
+|   |-- problem_a.py
+|   `-- summarize_results.py
 |-- assets/
-|   |-- header.svg
-|   `-- topk_bars.svg
+|   `-- header.svg
 |-- include/
 |   `-- midnight_queue/
 |       |-- algorithms.hpp
@@ -276,13 +279,14 @@ fraud-risk-ranking-engine/
 |       |-- record.hpp
 |       `-- svg_plot.hpp
 |-- results/
-|   |-- experiments/
+|   |-- experiments_final_v2/
 |   |   |-- C_summary.csv
 |   |   |-- D_summary.csv
 |   |   |-- E_summary.csv
 |   |   |-- REPORT.md
 |   |   |-- prediction_log.csv
-|   |   `-- results.csv
+|   |   |-- results.csv
+|   |   `-- requested SVG plots
 |   `-- problem_a/
 |       |-- risk_band_distribution.csv
 |       |-- risk_band_histogram.png
@@ -294,6 +298,9 @@ fraud-risk-ranking-engine/
 |-- tests/
 |   `-- test_algorithms.cpp
 |-- CMakeLists.txt
+|-- 2013-A2-A.pdf
+|-- 2013-A2-A.zip
+|-- results.csv
 |-- PLAN.md
 `-- README.md
 ```
@@ -311,12 +318,17 @@ fraud-risk-ranking-engine/
 | `tests/test_algorithms.cpp` | Correctness tests |
 | `analysis/analyst_console.py` | Local web page server |
 | `analysis/problem_a.py` | Data checks, statistics, and the risk band histogram |
-| `results/experiments/results.csv` | Every trial and median measurement |
-| `results/experiments/C_summary.csv` | Full sort summary by condition and size |
-| `results/experiments/D_summary.csv` | Top K summary by condition, size, K, and method |
-| `results/experiments/E_summary.csv` | Live feed final time and peak memory |
-| `results/experiments/prediction_log.csv` | Prediction before and result after each full sort round |
-| `results/experiments/REPORT.md` | Plain language summary of the experiment results |
+| `analysis/summarize_results.py` | Creates compact C, D, and E result tables |
+| `analysis/build_report.py` | Rebuilds the experiment report and charts |
+| `analysis/package_submission.py` | Creates the curated source ZIP without data or build files |
+| `results/experiments_final_v2/results.csv` | Every trial and median measurement |
+| `results/experiments_final_v2/C_summary.csv` | Full sort summary by condition and size |
+| `results/experiments_final_v2/D_summary.csv` | Top K summary by condition, size, K, and method |
+| `results/experiments_final_v2/E_summary.csv` | Live feed final time and peak memory |
+| `results/experiments_final_v2/prediction_log.csv` | Prediction before and result after each full sort round |
+| `results/experiments_final_v2/REPORT.md` | Plain language summary of refreshed C, D, and E results |
+| `analysis/build_report.py` | Rebuilds the report and its figures from saved results |
+| `2013-A2-A.pdf` | Five page report for roll 2013, section A |
 | `results/problem_a/` | Risk band table, summary file, and histogram |
 | `PLAN.md` | Project notes and known limits |
 
@@ -425,9 +437,9 @@ At the `pdb` prompt: `n` runs the next line, `s` steps into a function, `p name`
 ## Limits and notes
 
 - `creditcard.csv` stays out of Git and out of any source package.
-- New full sort and Top K runs stop after five minutes by default, as required by the brief. The saved C and D measurements use the earlier 30 second limit and need a full rerun before final submission.
+- Full sort and Top K runs stop after five minutes by default, as required by the brief. The final C and D result set has no timed out trials.
 - Memory values are estimates of algorithm storage. They are not operating system readings.
-- Hardened Quick Sort was slow on ranked input in these tests (1.1 to 1.6 s at the full size, against 0.054 s for Merge Sort). It handles many equal keys well, but not ranked input.
-- With the current ranking rule, a queue of 230 catches only 3 of 492 frauds. The algorithm choice cannot fix this. A different ranking rule would be needed.
+- On exact triage order, insertion sort was fastest because the input was already ordered. On reverse order, Merge Sort was fastest among the full sorts.
+- With the current ranking rule, a queue of 230 catches 34 of 492 frauds. The smallest tested queue that catches at least half is K = 2,068.
 - Results depend on the computer. Run the experiments again on your own machine to compare.
 - No machine learning model, extra dataset, or library sort is used.

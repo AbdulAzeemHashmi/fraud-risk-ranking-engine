@@ -201,7 +201,7 @@ def main() -> None:
     small = pstyle(body, "small", fontSize=6.3, leading=7.5, spaceAfter=1)
     story = [Paragraph("Fraud Risk Ranking Engine", title), Paragraph("Results report | Roll number 2013 | Section A", body),
              Paragraph("Problem A: know the data", h1),
-             Paragraph("The file has 284,807 transactions and 492 frauds. There are no missing, nonnumeric, or non-finite cells. There are 1,081 duplicate full rows; they were kept. Amount has 32,767 distinct values, and the ten most frequent values account for 16.29% of rows. Time is nondecreasing in the raw file. The raw file is neither triage sorted nor its exact reverse. C2, C4, C5, and C6 are constructed experiment conditions.", body)]
+             Paragraph("The file has 284,807 transactions and 492 frauds. There are no missing, nonnumeric, or non-finite cells. There are 1,081 duplicate full rows; they were kept. Amount has 32,767 distinct values, and the ten most frequent values account for 16.29% of rows. Time is nondecreasing in the raw file. The raw file is neither triage sorted nor its exact reverse. C2 to C6 are constructed conditions; the raw file is C1.", body)]
     band_data = [["Band", "Transactions", "Share", "Frauds", "Fraud share"]] + [[x["band"], f'{int(x["transactions"]):,}', f'{float(x["transaction_share"])*100:.2f}%', x["frauds"], f'{float(x["fraud_share"])*100:.2f}%'] for x in bands]
     story += [table_data(band_data, [0.55*inch, 1.0*inch, .72*inch, .55*inch, .78*inch], 6.4), Spacer(1, 4),
               Image(str(ROOT / "results" / "problem_a" / "risk_band_histogram.png"), width=4.2*inch, height=2.25*inch),
@@ -257,10 +257,10 @@ def main() -> None:
               Paragraph("AI use disclosure: AI assistance was used to inspect and edit code, organize experiment outputs, and prepare documentation. The student should review the source, measurements, and report before submission and can explain the implementation.", body), PageBreak(),
               Paragraph("Prediction log appendix", h1),
               Paragraph("Each prediction was recorded before its tournament round. The result rows below show the predicted and actual winner and loser. Complete reasoning text is preserved in `prediction_log.csv`.", small)]
-    pdata = [["Round", "n", "Condition", "Pred winner", "Actual winner", "Pred loser", "Actual loser"]]
+    pdata = [["Round", "n", "Condition", "Pred winner", "Actual winner", "Pred loser", "Actual loser", "Reason"]]
     for r in outcomes:
-        pdata.append([r["round"], f'{int(r["n"]):,}', r["condition"], r["predicted_winner"], r["actual_winner"], r["predicted_loser"], r["actual_loser"]])
-    story.append(table_data(pdata, [.48*inch, .55*inch, .5*inch, 1.05*inch, 1.05*inch, 1.05*inch, 1.05*inch], 5.4))
+        pdata.append([r["round"], f'{int(r["n"]):,}', r["condition"], r["predicted_winner"], r["actual_winner"], r["predicted_loser"], r["actual_loser"], Paragraph(r["reason"], small)])
+    story.append(table_data(pdata, [.38*inch, .48*inch, .42*inch, .78*inch, .78*inch, .78*inch, .78*inch, 3.0*inch], 5.1))
     story += [Spacer(1, 6), Paragraph(f"Prediction score: {correct_w} of 24 winners and {correct_l} of 24 losers predicted correctly. Each round had a written reason in the source log.", body)]
 
     def footer(canvas, doc):
