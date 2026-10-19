@@ -2,49 +2,55 @@
 
 ## Goal
 
-Build and study a C++ transaction ranking engine. The system should rank transactions by risk and support full sorting, Top K selection, and later updates from a live feed. Results must come from running the code on the local credit card data.
+Build and study a C++ transaction ranking engine. It ranks transactions by risk and supports full sorting, Top K selection, and live feed updates. Measurements come from the local credit card data file.
 
 ## Fixed settings
 
 - Roll number and random seed: `2013`
-- Queue size: `K = 230`
-- Full dataset size: 284,807 transactions
-- Fraud count in the current data file: 492
+- Personal queue size: `K = 230`
+- Full data size: 284,807 transactions
+- Fraud count: 492
 - Risk features: V1 through V28
-- Sort order: risk band descending, Amount descending, Time ascending, transaction ID ascending
-- Class is used only to count frauds after ranking.
+- Sort order: risk band from high to low, Amount from high to low, Time from early to late, then transaction ID from low to high
+- Class is used only to evaluate fraud capture after ranking.
 
-## Current progress
+## Progress
 
 | Area | Progress | Remaining work |
 |---|---|---|
-| Problem A: Know Your Data | Done. The Python profile checks data quality, reports risk bands and fraud counts, reports Amount statistics, and saves a labelled histogram. | Add the profile findings to the final report. |
-| Problem B: Build the Contenders | The five full sort methods, size K heap, and bounded insertion buffer are implemented in C++. The tests cover empty input, one item, repeated keys, Top K sizes, seeded sampling, and C1 to C6 construction. | Add larger randomized, sorted, and reverse sorted test cases. Review comparison and move counts before using them in result tables. |
-| Experiment inputs | The C++ code samples rows in Time order and builds C1 to C6 with the personal seed. | Add these inputs to the benchmark program. |
-| Problem C: Full Ranking Tournament | Not started. | Run all five full sort methods for all required input conditions and sizes. Save five run medians, counts, memory estimates, stability, and predictions. |
-| Problem D: Shift Queue | Not started. | Compare full sorting, the size K heap, and the bounded buffer across the required queue sizes, data sizes, and input conditions. Measure fraud capture. |
-| Problem E: Live Feed | Not started. | Compare full re-ranking, a maintained heap, and sorting plus merging for one hour and ten minute windows. Save cumulative time and extra memory. |
-| Problem F: Mathematical Case | Not started. | Write all eight derivations and compare theoretical predictions with measured counts and times. |
-| Problem G: Change Request | Waiting for the course portal to provide the change. | Add the requested report update and new measurements after the change is posted. |
-| Problem H: Recommendation | Not started. | Recommend methods for daily ranking, the shift queue, and live refresh using measured results. State assumptions and cases where each choice could be wrong. |
-| Final files | README, source code, tests, and Problem A outputs are present. | Create `results.csv`, the prediction log, requested charts, and a report of no more than five pages. Include a short AI use note and prepare for the demonstration. |
+| Problem A: Know Your Data | Done. The Python profile checks data quality, reports risk bands, frauds, and Amount values, and saves a histogram. | Add the profile findings to the final report. |
+| Problem B: Build the Contenders | Done. Five full sort methods, a size K heap, a bounded insertion buffer, and C1 to C6 input builders are implemented in C++. Existing tests pass. | Add broader randomized and edge case coverage if time allows. |
+| Problem C: Full Ranking Tournament | Done. All five sort contenders ran on C1 to C6 at n = 1,000, 10,000, 100,000, and 284,807. Trial data, medians, predictions, and requested charts are saved. | Use the measurements in the final conclusions. |
+| Problem D: Shift Queue | Done. Full sort, size K heap, and bounded insertion buffer ran on C1 and C2 for both required data sizes and K values. Fraud capture and half capture costs are saved. | Use the measured crossover results in the final conclusions. |
+| Problem E: Live Feed | Done. All three strategies ran with one hour and ten minute windows. Cumulative time plots and peak memory estimates are saved. | Use the results in the final recommendation. |
+| Problem F: Mathematical Case | Not started. | Write all eight derivations and compare theoretical counts with measured counts and times. |
+| Problem G: Change Request | Waiting for the course portal to provide the new requirement. | Add the requested update and measurements after the change is available. |
+| Problem H: Recommendation | Partly supported by the C, D, and E results. | Recommend methods for daily ranking, shift queues, and live refresh. State assumptions and limits. |
+| Final files | Source, tests, Problem A output, C to E measurements, plots, summaries, and report are present. | Complete Problems F and H, add Problem G when available, prepare the final report and demonstration, and check the package. |
+
+## Experiment findings
+
+- Problem C ran 24 condition and size rounds. The prediction log contains a prediction before each round and an outcome after it.
+- Problem D found no method crossover from the size K heap within the tested K values. The heap was fastest for all completed points. The bounded buffer reached the 30 second limit for K = n/10 at n = 284,807.
+- Under the ranking score, the smallest queue that captured half of the 492 frauds had K = 2,068.
+- Problem E found that maintaining the heap had the lowest cumulative time and extra memory for both window sizes.
+- See `results/experiments/REPORT.md` for exact measurements and limits.
 
 ## Limits and decisions
 
-- The local `creditcard.csv` file is not tracked in Git and must not be included in the source package.
-- The profile uses population standard deviation with `ddof=0`. It checks for missing, nonnumeric, and nonfinite data and does not silently remove or fill rows.
-- The current profile found 32,767 distinct Amount values. The ten most common Amount values cover 16.291032 percent of all transactions.
-- The raw data is in nondecreasing Time order. It is not already sorted by the complete triage key and is not the exact reverse of that order.
-- The C++ programs use MinGW. Add `C:\msys64\mingw64\bin` to PowerShell `PATH` so MinGW can find its runtime libraries.
-- Problem G cannot be completed until the course provides its new requirement.
-- No benchmark result, prediction, or recommendation should be invented. Record the computer and software details when the full runs are performed.
+- `creditcard.csv` stays out of Git and must not be included in a source package.
+- The profile uses population standard deviation with `ddof=0`. It checks for missing, nonnumeric, and nonfinite values and does not silently remove or fill rows.
+- The profile found 32,767 distinct Amount values. The ten most common values cover 16.291032 percent of rows.
+- The raw data is in nondecreasing Time order. It is not already ordered by the full triage key or by its exact reverse.
+- The full sort and Top K measurements stop at 30 seconds per run and mark unfinished runs as DNF. These entries are not measured medians.
+- Memory values are algorithm storage estimates. The operating system memory amount was not available to the experiment process.
+- The programs use MinGW GCC 16.2.0 with C++17 and `-O2 -Wall -Wextra -Wpedantic` for the reported runs.
+- No benchmark result, prediction, or recommendation should be invented. Base conclusions on the saved output files.
 
 ## Next steps
 
-1. Expand the correctness tests and confirm the comparison and move counting rules.
-2. Build a benchmark program that uses fresh input copies, runs five trials, records median time, and stops a run after five minutes.
-3. Run Problems C, D, and E. Save all measurements in `results.csv` and record predictions before each run.
-4. Create the requested plots from measured data. Every plot needs clear axis labels and units, a legend, and a caption.
-5. Write the Problem F derivations and use the results to support Problem H recommendations.
-6. Add the Problem G update after the new requirement is posted.
-7. Write and check the final report, package source and tests without the data file, and prepare for the live demonstration.
+1. Complete the eight Problem F derivations.
+2. Use C, D, and E measurements to write and check the Problem H recommendations.
+3. Add Problem G after the course portal provides the change request.
+4. Finish a final report within the required length, include the AI use note, and prepare for the demonstration.
+5. Check the source package and make sure it does not contain the data file.

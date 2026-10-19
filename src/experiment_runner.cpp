@@ -196,8 +196,8 @@ std::vector<CMedian> run_problem_c(const Dataset& dataset, bool smoke,
                         break;
                     }
                 }
-                const double time = median(times);
-                const auto cmp = median(comparisons), mv = median(moves);
+                const double time = dnf ? std::numeric_limits<double>::quiet_NaN() : median(times);
+                const auto cmp = dnf ? 0 : median(comparisons), mv = dnf ? 0 : median(moves);
                 summaries.push_back({condition, n, method.name, time, cmp, mv,
                     estimated_sort_memory(method.name, n), method.stable, dnf});
                 ResultRow summary{"C", condition_id(condition), method.name, dnf ? "DNF" : "median",
@@ -354,8 +354,8 @@ std::vector<DSummary> run_d_trials(const std::vector<Record>& input, std::size_t
             }
         }
         const std::string status = dnf ? "DNF" : "median";
-        const double med_time = median(times);
-        const auto med_comparisons = median(comps), med_moves = median(moves);
+        const double med_time = dnf ? std::numeric_limits<double>::quiet_NaN() : median(times);
+        const auto med_comparisons = dnf ? 0 : median(comps), med_moves = dnf ? 0 : median(moves);
         const auto memory = estimated_top_memory(method.name, n, k);
         write_csv_row(results, ResultRow{"D", condition, method.name, status, n, k, 0, 0, 0,
             med_time, 0, med_comparisons, med_moves, memory, method.stable, captured});
