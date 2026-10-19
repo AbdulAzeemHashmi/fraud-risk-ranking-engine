@@ -43,7 +43,7 @@ The C++ library includes these implementations:
 - Top K using a size K min heap
 - Top K using a bounded insertion buffer
 
-The C++ condition builder creates time ordered samples and the C1 through C6 input conditions with random seed 2013. Unit tests check the sorting methods, Top K selection, sample repeatability, and condition construction.
+The C++ condition builder creates time ordered samples and the C1 through C6 input conditions with random seed 2013. The C++ experiment runner measures the sort and Top K methods and the live feed strategies. Unit tests check the sorting methods, Top K selection, sample repeatability, and condition construction.
 
 ### Input condition methods
 
@@ -56,7 +56,13 @@ For each required sample size, the builder selects rows uniformly without replac
 - C5: C3 with one percent of records selected and placed at different random positions. Other records keep their relative order.
 - C6: the C1 input with a band-only comparison key.
 
-The benchmark driver for these conditions is still to be written.
+The benchmark driver runs all five sorting methods on each condition and size. It records five trial times, medians, comparisons, moves, estimated extra memory, stability, and prediction results. A run that takes longer than 30 seconds is marked DNF.
+
+### Problems C, D, and E results
+
+The completed run is in `results/experiments`. Problem C includes C1 through C6 and n = 1,000, 10,000, 100,000, and 284,807. Problem D compares full sorting, a size K min heap, and a bounded insertion buffer for the requested K values. Problem E compares three live feed strategies with one hour and ten minute windows.
+
+The files `results.csv`, `C_summary.csv`, `D_summary.csv`, and `E_summary.csv` contain measurements. The prediction log records the prediction before each C round and its result afterward. SVG charts contain the requested timing, operation count, and fraud capture plots. `results/experiments/REPORT.md` explains the findings and limits.
 
 ### Problem A profile
 
@@ -81,6 +87,7 @@ Add the MinGW folder to `PATH` so the compiler and its runtime libraries can be 
 ```powershell
 g++ -std=c++17 -O2 -Wall -Wextra -Wpedantic -I include src\profile.cpp -o build\queue_profile.exe
 g++ -std=c++17 -O2 -Wall -Wextra -Wpedantic -I include tests\test_algorithms.cpp -o build\queue_tests.exe
+g++ -std=c++17 -O2 -Wall -Wextra -Wpedantic -I include src\experiment_runner.cpp -o build\queue_experiments.exe
 ```
 
 Run the tests, the C++ data profile, and the Python profile:
@@ -94,6 +101,22 @@ python analysis\problem_a.py creditcard.csv --out results\problem_a
 The C++ profile program prints the transaction count, fraud count, Amount statistics, risk band counts, and checks the triage ordering. The Python command recreates the Problem A table, summary, and histogram.
 
 The project also has a `CMakeLists.txt` for CMake 3.16 or newer. Direct MinGW commands above work without CMake.
+
+Run the C, D, and E experiments from PowerShell:
+
+```powershell
+.\build\queue_experiments.exe .\creditcard.csv --problem all --out results\experiments_new
+```
+
+Use a new output folder for a fresh run. If you run the problems separately, use the same output folder so each problem appends its rows:
+
+```powershell
+.\build\queue_experiments.exe .\creditcard.csv --problem C --out results\experiments_new
+.\build\queue_experiments.exe .\creditcard.csv --problem D --out results\experiments_new
+.\build\queue_experiments.exe .\creditcard.csv --problem E --out results\experiments_new
+```
+
+The `--smoke` option runs a small data sample to check that the commands and output files work. Smoke results are not assignment measurements.
 
 ## Debug C++ code
 
@@ -110,6 +133,7 @@ Compile the program or tests with debug symbols. The `-g` option adds symbols, a
 ```powershell
 g++ -std=c++17 -O0 -g -Wall -Wextra -Wpedantic -I include src\profile.cpp -o build\queue_profile_debug.exe
 g++ -std=c++17 -O0 -g -Wall -Wextra -Wpedantic -I include tests\test_algorithms.cpp -o build\queue_tests_debug.exe
+g++ -std=c++17 -O0 -g -Wall -Wextra -Wpedantic -I include src\experiment_runner.cpp -o build\queue_experiments_debug.exe
 ```
 
 Run the program or test executable directly to see its output in the terminal:
@@ -117,6 +141,7 @@ Run the program or test executable directly to see its output in the terminal:
 ```powershell
 .\build\queue_tests_debug.exe
 .\build\queue_profile_debug.exe .\creditcard.csv
+.\build\queue_experiments_debug.exe .\creditcard.csv --problem C --smoke --out results\debug_run
 ```
 
 To step through code in VS Code:
@@ -186,13 +211,22 @@ fraud-risk-ranking-engine/
 |       |-- algorithms.hpp
 |       |-- dataset.hpp
 |       |-- experiment_data.hpp
+|       |-- svg_plot.hpp
 |       `-- record.hpp
 |-- results/
+|   |-- experiments/
+|   |   |-- C_summary.csv
+|   |   |-- D_summary.csv
+|   |   |-- E_summary.csv
+|   |   |-- REPORT.md
+|   |   |-- results.csv
+|   |   `-- prediction_log.csv
 |   `-- problem_a/
 |       |-- risk_band_distribution.csv
 |       |-- risk_band_histogram.png
 |       `-- summary.json
 |-- src/
+|   |-- experiment_runner.cpp
 |   `-- profile.cpp
 |-- tests/
 |   `-- test_algorithms.cpp
@@ -210,16 +244,23 @@ fraud-risk-ranking-engine/
 | `include/midnight_queue/algorithms.hpp` | Sorting algorithms, Top K methods, and comparison and move counters |
 | `include/midnight_queue/dataset.hpp` | CSV loading, feature standardization, risk score, and risk band calculation |
 | `include/midnight_queue/experiment_data.hpp` | Seeded sampling and C1 through C6 input condition construction |
+| `include/midnight_queue/svg_plot.hpp` | SVG line and grouped bar charts for the experiments |
 | `src/profile.cpp` | C++ profile command line program |
+| `src/experiment_runner.cpp` | C++ benchmark runner for Problems C, D, and E |
 | `tests/test_algorithms.cpp` | C++ correctness tests |
 | `analysis/problem_a.py` | Python data checks, Problem A statistics, and histogram creation |
 | `results/problem_a/risk_band_distribution.csv` | Risk band and fraud count table |
 | `results/problem_a/summary.json` | Dataset checks, Amount statistics, and input order evidence |
 | `results/problem_a/risk_band_histogram.png` | Labelled risk band chart |
+| `results/experiments/results.csv` | Trial measurements and median rows for Problems C, D, and E |
+| `results/experiments/C_summary.csv` | Full sort summary by condition and size |
+| `results/experiments/D_summary.csv` | Top K summary by condition, size, K, and method |
+| `results/experiments/E_summary.csv` | Final live feed time and peak memory summary |
+| `results/experiments/REPORT.md` | Plain language summary of the experiment results |
 | `CMakeLists.txt` | Optional CMake build setup |
 | `PLAN.md` | Work completed, known limits, and remaining work |
 | `.gitignore` | Keeps the dataset and local build files out of Git |
 
 ## Work still needed
 
-The full benchmark program is not ready. The requested experiments for Problems C, D, and E, the full measurement file, prediction log, additional plots, mathematical explanations, recommendations, and final report still need to be completed. See [PLAN.md](PLAN.md) for the full checklist. Do not treat missing measurements as completed results.
+Problems C, D, and E are complete and their measured outputs are in `results/experiments`. Problems F, G, and H remain. Problem G depends on a change request from the course portal. See [PLAN.md](PLAN.md) for the remaining work.

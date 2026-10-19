@@ -1,0 +1,7 @@
+condition,window_count,algorithm,median_final_cumulative_seconds,peak_extra_memory_bytes
+1-hour,48,Maintain Size-K Min-Heap,0.0060325,14720
+1-hour,48,Merge Sorted Window into Top-K,0.0983451,1055936
+1-hour,48,Re-rank All with Merge Sort,2.2211346,35006336
+10-minute,288,Maintain Size-K Min-Heap,0.0081819,14720
+10-minute,288,Merge Sorted Window into Top-K,0.0568474,269504
+10-minute,288,Re-rank All with Merge Sort,7.7773503,20364160
