@@ -40,3 +40,5 @@ C19,result,284807,C1,Merge Sort,Insertion Sort,The arrival order has no known re
 C20,prediction,284807,C2,Hardened Quick Sort,Insertion Sort,The shuffle removes existing order; three way partitioning protects Quick Sort and insertion can shift many records.,,,,
 C20,result,284807,C2,Hardened Quick Sort,Insertion Sort,The shuffle removes existing order; three way partitioning protects Quick Sort and insertion can shift many records.,Naive Quick Sort,Insertion Sort,false,true
 C21,prediction,284807,C3,Insertion Sort,Naive Quick Sort,"A ranked input should need few insertion shifts, while the last pivot on sorted data creates unbalanced partitions.",,,,
+C21,result,284807,C3,Insertion Sort,Naive Quick Sort,"A ranked input should need few insertion shifts, while the last pivot on sorted data creates unbalanced partitions.",Insertion Sort,Naive Quick Sort,true,true
+C22,prediction,284807,C4,Heap Sort,Naive Quick Sort,Heap Sort keeps n log n work; reverse order is a worst case pattern for the last pivot.,,,,
