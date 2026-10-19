@@ -95,6 +95,86 @@ The C++ profile program prints the transaction count, fraud count, Amount statis
 
 The project also has a `CMakeLists.txt` for CMake 3.16 or newer. Direct MinGW commands above work without CMake.
 
+## Debug C++ code
+
+Use a debug build when you want readable error messages and to step through the C++ code. In the VS Code terminal, open PowerShell in the project folder and add MinGW to `PATH`:
+
+```powershell
+cd "C:\Users\Azeem\Documents\fraud-risk-ranking-engine"
+$env:Path = "C:\msys64\mingw64\bin;$env:Path"
+New-Item -ItemType Directory -Force build | Out-Null
+```
+
+Compile the program or tests with debug symbols. The `-g` option adds symbols, and `-O0` keeps the code easier to follow while debugging:
+
+```powershell
+g++ -std=c++17 -O0 -g -Wall -Wextra -Wpedantic -I include src\profile.cpp -o build\queue_profile_debug.exe
+g++ -std=c++17 -O0 -g -Wall -Wextra -Wpedantic -I include tests\test_algorithms.cpp -o build\queue_tests_debug.exe
+```
+
+Run the program or test executable directly to see its output in the terminal:
+
+```powershell
+.\build\queue_tests_debug.exe
+.\build\queue_profile_debug.exe .\creditcard.csv
+```
+
+To step through code in VS Code:
+
+1. Install the Microsoft C/C++ extension and make sure the MinGW debugger `C:\msys64\mingw64\bin\gdb.exe` exists.
+2. Open the C++ file you want to inspect and click next to a line number to add a breakpoint.
+3. Open Run and Debug, choose the C++ debug configuration, and select the debug executable as the program.
+4. Set program arguments when needed. For the profile program, use `creditcard.csv`.
+5. Start debugging. Use Continue, Step Over, Step Into, and Step Out to follow the program. Check variables in the Variables panel and output in the Debug Console or terminal.
+
+If VS Code does not have a MinGW launch configuration, create `.vscode/launch.json` with this configuration. Run it from the project root:
+
+```json
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Debug transaction profile",
+      "type": "cppdbg",
+      "request": "launch",
+      "program": "${workspaceFolder}/build/queue_profile_debug.exe",
+      "args": ["${workspaceFolder}/creditcard.csv"],
+      "stopAtEntry": false,
+      "cwd": "${workspaceFolder}",
+      "environment": [],
+      "externalConsole": false,
+      "MIMode": "gdb",
+      "miDebuggerPath": "C:/msys64/mingw64/bin/gdb.exe",
+      "setupCommands": [
+        {
+          "description": "Enable GDB pretty printing",
+          "text": "-enable-pretty-printing",
+          "ignoreFailures": true
+        }
+      ]
+    }
+  ]
+}
+```
+
+To debug the tests instead, change `program` to `${workspaceFolder}/build/queue_tests_debug.exe` and remove the `args` field. Header files are compiled through the `.cpp` program or test that includes them. Add breakpoints in a header and start the matching `.cpp` debug configuration.
+
+### Debug the Python profile
+
+Install the Python extension in VS Code and select the Python environment that has pandas, NumPy, and Matplotlib. Open `analysis/problem_a.py`, click next to a line number to add a breakpoint, and choose Debug Python File. Set these script arguments in the launch settings:
+
+```text
+creditcard.csv --out results/problem_a
+```
+
+You can also use Python's command line debugger from PowerShell:
+
+```powershell
+python -m pdb analysis\problem_a.py creditcard.csv --out results\problem_a
+```
+
+At the `pdb` prompt, enter `n` to run the next line, `s` to enter a function, `p variable_name` to print a value, and `c` to continue to the next breakpoint or program end.
+
 ## Project files
 
 ```text
