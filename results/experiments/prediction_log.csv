@@ -1,4 +1,4 @@
-
+round,phase,n,condition,predicted_winner,predicted_loser,reason,actual_winner,actual_loser,winner_prediction_correct,loser_prediction_correct
 C1,prediction,1000,C1,Merge Sort,Insertion Sort,The arrival order has no known relation to the complete triage key. Merge Sort keeps n log n work.,,,,
 C1,result,1000,C1,Merge Sort,Insertion Sort,The arrival order has no known relation to the complete triage key. Merge Sort keeps n log n work.,Heap Sort,Insertion Sort,false,true
 C2,prediction,1000,C2,Hardened Quick Sort,Insertion Sort,The shuffle removes existing order; three way partitioning protects Quick Sort and insertion can shift many records.,,,,
@@ -46,3 +46,4 @@ C22,result,284807,C4,Heap Sort,Naive Quick Sort,Heap Sort keeps n log n work; re
 C23,prediction,284807,C5,Insertion Sort,Naive Quick Sort,"Only one percent of records were moved, so insertion shifts should stay limited; the last pivot remains sensitive to long ordered runs.",,,,
 C23,result,284807,C5,Insertion Sort,Naive Quick Sort,"Only one percent of records were moved, so insertion shifts should stay limited; the last pivot remains sensitive to long ordered runs.",Merge Sort,Insertion Sort,false,false
 C24,prediction,284807,C6,Hardened Quick Sort,Naive Quick Sort,Band-only keys have many ties; three way partition handles equal keys while Lomuto can repeatedly split off one item.,,,,
+C24,result,284807,C6,Hardened Quick Sort,Naive Quick Sort,Band-only keys have many ties; three way partition handles equal keys while Lomuto can repeatedly split off one item.,Hardened Quick Sort,Naive Quick Sort,true,true

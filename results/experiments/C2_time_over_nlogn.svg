@@ -4,19 +4,19 @@
 <line x1="100" y1="70" x2="100" y2="520" stroke="#e3e3e3"/>
 <line x1="100" y1="70" x2="700" y2="70" stroke="#e3e3e3"/>
 <text x="100" y="544" text-anchor="middle" font-family="Arial" font-size="12">1e+03</text>
-<text x="88" y="74" text-anchor="end" font-family="Arial" font-size="12">8.45e-06</text>
+<text x="88" y="74" text-anchor="end" font-family="Arial" font-size="12">1.33e-06</text>
 <line x1="250" y1="70" x2="250" y2="520" stroke="#e3e3e3"/>
 <line x1="100" y1="182" x2="700" y2="182" stroke="#e3e3e3"/>
 <text x="250" y="544" text-anchor="middle" font-family="Arial" font-size="12">4.11e+03</text>
-<text x="88" y="186" text-anchor="end" font-family="Arial" font-size="12">6.34e-06</text>
+<text x="88" y="186" text-anchor="end" font-family="Arial" font-size="12">1e-06</text>
 <line x1="400" y1="70" x2="400" y2="520" stroke="#e3e3e3"/>
 <line x1="100" y1="295" x2="700" y2="295" stroke="#e3e3e3"/>
 <text x="400" y="544" text-anchor="middle" font-family="Arial" font-size="12">1.69e+04</text>
-<text x="88" y="299" text-anchor="end" font-family="Arial" font-size="12">4.23e-06</text>
+<text x="88" y="299" text-anchor="end" font-family="Arial" font-size="12">6.71e-07</text>
 <line x1="550" y1="70" x2="550" y2="520" stroke="#e3e3e3"/>
 <line x1="100" y1="408" x2="700" y2="408" stroke="#e3e3e3"/>
 <text x="550" y="544" text-anchor="middle" font-family="Arial" font-size="12">6.93e+04</text>
-<text x="88" y="412" text-anchor="end" font-family="Arial" font-size="12">2.12e-06</text>
+<text x="88" y="412" text-anchor="end" font-family="Arial" font-size="12">3.43e-07</text>
 <line x1="700" y1="70" x2="700" y2="520" stroke="#e3e3e3"/>
 <line x1="100" y1="520" x2="700" y2="520" stroke="#e3e3e3"/>
 <text x="700" y="544" text-anchor="middle" font-family="Arial" font-size="12">2.85e+05</text>
@@ -25,47 +25,45 @@
 <line x1="100" y1="70" x2="100" y2="520" stroke="black"/>
 <text x="400" y="574" text-anchor="middle" font-family="Arial" font-size="15">Input size, n (transactions)</text>
 <text x="22" y="295" transform="rotate(-90 22 295)" text-anchor="middle" font-family="Arial" font-size="15">Time / (n log2 n), seconds per operation unit</text>
-<circle cx="100" cy="514" r="3" fill="#2455a4"/>
-<line x1="100" y1="514" x2="344" y2="450" stroke="#2455a4" stroke-width="2"/>
-<circle cx="344" cy="450" r="3" fill="#2455a4"/>
-<line x1="344" y1="450" x2="589" y2="70" stroke="#2455a4" stroke-width="2"/>
-<circle cx="589" cy="70" r="3" fill="#2455a4"/>
+<circle cx="100" cy="477" r="3" fill="#2455a4"/>
+<line x1="100" y1="477" x2="344" y2="70" stroke="#2455a4" stroke-width="2"/>
+<circle cx="344" cy="70" r="3" fill="#2455a4"/>
 <line x1="740" y1="92" x2="765" y2="92" stroke="#2455a4" stroke-width="3"/>
 <text x="773" y="97" font-family="Arial" font-size="13">Insertion Sort</text>
-<circle cx="100" cy="520" r="3" fill="#dc7927"/>
-<line x1="100" y1="520" x2="344" y2="520" stroke="#dc7927" stroke-width="2"/>
-<circle cx="344" cy="520" r="3" fill="#dc7927"/>
-<line x1="344" y1="520" x2="589" y2="520" stroke="#dc7927" stroke-width="2"/>
-<circle cx="589" cy="520" r="3" fill="#dc7927"/>
-<line x1="589" y1="520" x2="700" y2="519" stroke="#dc7927" stroke-width="2"/>
-<circle cx="700" cy="519" r="3" fill="#dc7927"/>
+<circle cx="100" cy="517" r="3" fill="#dc7927"/>
+<line x1="100" y1="517" x2="344" y2="518" stroke="#dc7927" stroke-width="2"/>
+<circle cx="344" cy="518" r="3" fill="#dc7927"/>
+<line x1="344" y1="518" x2="589" y2="512" stroke="#dc7927" stroke-width="2"/>
+<circle cx="589" cy="512" r="3" fill="#dc7927"/>
+<line x1="589" y1="512" x2="700" y2="518" stroke="#dc7927" stroke-width="2"/>
+<circle cx="700" cy="518" r="3" fill="#dc7927"/>
 <line x1="740" y1="117" x2="765" y2="117" stroke="#dc7927" stroke-width="3"/>
 <text x="773" y="122" font-family="Arial" font-size="13">Merge Sort</text>
 <circle cx="100" cy="520" r="3" fill="#2a8f55"/>
 <line x1="100" y1="520" x2="344" y2="520" stroke="#2a8f55" stroke-width="2"/>
 <circle cx="344" cy="520" r="3" fill="#2a8f55"/>
-<line x1="344" y1="520" x2="589" y2="520" stroke="#2a8f55" stroke-width="2"/>
-<circle cx="589" cy="520" r="3" fill="#2a8f55"/>
-<line x1="589" y1="520" x2="700" y2="520" stroke="#2a8f55" stroke-width="2"/>
+<line x1="344" y1="520" x2="589" y2="514" stroke="#2a8f55" stroke-width="2"/>
+<circle cx="589" cy="514" r="3" fill="#2a8f55"/>
+<line x1="589" y1="514" x2="700" y2="520" stroke="#2a8f55" stroke-width="2"/>
 <circle cx="700" cy="520" r="3" fill="#2a8f55"/>
 <line x1="740" y1="142" x2="765" y2="142" stroke="#2a8f55" stroke-width="3"/>
 <text x="773" y="147" font-family="Arial" font-size="13">Naive Quick Sort</text>
-<circle cx="100" cy="520" r="3" fill="#a23a8b"/>
-<line x1="100" y1="520" x2="344" y2="520" stroke="#a23a8b" stroke-width="2"/>
-<circle cx="344" cy="520" r="3" fill="#a23a8b"/>
-<line x1="344" y1="520" x2="589" y2="520" stroke="#a23a8b" stroke-width="2"/>
-<circle cx="589" cy="520" r="3" fill="#a23a8b"/>
-<line x1="589" y1="520" x2="700" y2="519" stroke="#a23a8b" stroke-width="2"/>
-<circle cx="700" cy="519" r="3" fill="#a23a8b"/>
+<circle cx="100" cy="517" r="3" fill="#a23a8b"/>
+<line x1="100" y1="517" x2="344" y2="518" stroke="#a23a8b" stroke-width="2"/>
+<circle cx="344" cy="518" r="3" fill="#a23a8b"/>
+<line x1="344" y1="518" x2="589" y2="510" stroke="#a23a8b" stroke-width="2"/>
+<circle cx="589" cy="510" r="3" fill="#a23a8b"/>
+<line x1="589" y1="510" x2="700" y2="518" stroke="#a23a8b" stroke-width="2"/>
+<circle cx="700" cy="518" r="3" fill="#a23a8b"/>
 <line x1="740" y1="167" x2="765" y2="167" stroke="#a23a8b" stroke-width="3"/>
 <text x="773" y="172" font-family="Arial" font-size="13">Hardened Quick Sort</text>
 <circle cx="100" cy="520" r="3" fill="#555b66"/>
 <line x1="100" y1="520" x2="344" y2="520" stroke="#555b66" stroke-width="2"/>
 <circle cx="344" cy="520" r="3" fill="#555b66"/>
-<line x1="344" y1="520" x2="589" y2="520" stroke="#555b66" stroke-width="2"/>
-<circle cx="589" cy="520" r="3" fill="#555b66"/>
-<line x1="589" y1="520" x2="700" y2="519" stroke="#555b66" stroke-width="2"/>
-<circle cx="700" cy="519" r="3" fill="#555b66"/>
+<line x1="344" y1="520" x2="589" y2="507" stroke="#555b66" stroke-width="2"/>
+<circle cx="589" cy="507" r="3" fill="#555b66"/>
+<line x1="589" y1="507" x2="700" y2="515" stroke="#555b66" stroke-width="2"/>
+<circle cx="700" cy="515" r="3" fill="#555b66"/>
 <line x1="740" y1="192" x2="765" y2="192" stroke="#555b66" stroke-width="3"/>
 <text x="773" y="197" font-family="Arial" font-size="13">Heap Sort</text>
 <text x="500" y="615" text-anchor="middle" font-family="Arial" font-size="12">Figure C4. A flatter curve is consistent with n log n growth. DNF results are omitted.</text>

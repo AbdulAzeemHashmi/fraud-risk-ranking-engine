@@ -4,19 +4,19 @@
 <line x1="100" y1="70" x2="100" y2="520" stroke="#e3e3e3"/>
 <line x1="100" y1="70" x2="700" y2="70" stroke="#e3e3e3"/>
 <text x="100" y="544" text-anchor="middle" font-family="Arial" font-size="12">1e+03</text>
-<text x="88" y="74" text-anchor="end" font-family="Arial" font-size="12">2.51e+09</text>
+<text x="88" y="74" text-anchor="end" font-family="Arial" font-size="12">2.53e+07</text>
 <line x1="250" y1="70" x2="250" y2="520" stroke="#e3e3e3"/>
 <line x1="100" y1="182" x2="700" y2="182" stroke="#e3e3e3"/>
 <text x="250" y="544" text-anchor="middle" font-family="Arial" font-size="12">4.11e+03</text>
-<text x="88" y="186" text-anchor="end" font-family="Arial" font-size="12">1.08e+08</text>
+<text x="88" y="186" text-anchor="end" font-family="Arial" font-size="12">3.45e+06</text>
 <line x1="400" y1="70" x2="400" y2="520" stroke="#e3e3e3"/>
 <line x1="100" y1="295" x2="700" y2="295" stroke="#e3e3e3"/>
 <text x="400" y="544" text-anchor="middle" font-family="Arial" font-size="12">1.69e+04</text>
-<text x="88" y="299" text-anchor="end" font-family="Arial" font-size="12">4.68e+06</text>
+<text x="88" y="299" text-anchor="end" font-family="Arial" font-size="12">4.7e+05</text>
 <line x1="550" y1="70" x2="550" y2="520" stroke="#e3e3e3"/>
 <line x1="100" y1="408" x2="700" y2="408" stroke="#e3e3e3"/>
 <text x="550" y="544" text-anchor="middle" font-family="Arial" font-size="12">6.93e+04</text>
-<text x="88" y="412" text-anchor="end" font-family="Arial" font-size="12">2.02e+05</text>
+<text x="88" y="412" text-anchor="end" font-family="Arial" font-size="12">6.4e+04</text>
 <line x1="700" y1="70" x2="700" y2="520" stroke="#e3e3e3"/>
 <line x1="100" y1="520" x2="700" y2="520" stroke="#e3e3e3"/>
 <text x="700" y="544" text-anchor="middle" font-family="Arial" font-size="12">2.85e+05</text>
@@ -25,47 +25,45 @@
 <line x1="100" y1="70" x2="100" y2="520" stroke="black"/>
 <text x="400" y="574" text-anchor="middle" font-family="Arial" font-size="15">Input size, n (transactions)</text>
 <text x="22" y="295" transform="rotate(-90 22 295)" text-anchor="middle" font-family="Arial" font-size="15">Key comparisons (count)</text>
-<circle cx="100" cy="399" r="3" fill="#2455a4"/>
-<line x1="100" y1="399" x2="344" y2="235" stroke="#2455a4" stroke-width="2"/>
-<circle cx="344" cy="235" r="3" fill="#2455a4"/>
-<line x1="344" y1="235" x2="589" y2="70" stroke="#2455a4" stroke-width="2"/>
-<circle cx="589" cy="70" r="3" fill="#2455a4"/>
+<circle cx="100" cy="329" r="3" fill="#2455a4"/>
+<line x1="100" y1="329" x2="344" y2="70" stroke="#2455a4" stroke-width="2"/>
+<circle cx="344" cy="70" r="3" fill="#2455a4"/>
 <line x1="740" y1="92" x2="765" y2="92" stroke="#2455a4" stroke-width="3"/>
 <text x="773" y="97" font-family="Arial" font-size="13">Insertion Sort</text>
 <circle cx="100" cy="520" r="3" fill="#dc7927"/>
-<line x1="100" y1="520" x2="344" y2="426" stroke="#dc7927" stroke-width="2"/>
-<circle cx="344" cy="426" r="3" fill="#dc7927"/>
-<line x1="344" y1="426" x2="589" y2="335" stroke="#dc7927" stroke-width="2"/>
-<circle cx="589" cy="335" r="3" fill="#dc7927"/>
-<line x1="589" y1="335" x2="700" y2="294" stroke="#dc7927" stroke-width="2"/>
-<circle cx="700" cy="294" r="3" fill="#dc7927"/>
+<line x1="100" y1="520" x2="344" y2="372" stroke="#dc7927" stroke-width="2"/>
+<circle cx="344" cy="372" r="3" fill="#dc7927"/>
+<line x1="344" y1="372" x2="589" y2="228" stroke="#dc7927" stroke-width="2"/>
+<circle cx="589" cy="228" r="3" fill="#dc7927"/>
+<line x1="589" y1="228" x2="700" y2="164" stroke="#dc7927" stroke-width="2"/>
+<circle cx="700" cy="164" r="3" fill="#dc7927"/>
 <line x1="740" y1="117" x2="765" y2="117" stroke="#dc7927" stroke-width="3"/>
 <text x="773" y="122" font-family="Arial" font-size="13">Merge Sort</text>
-<circle cx="100" cy="515" r="3" fill="#2a8f55"/>
-<line x1="100" y1="515" x2="344" y2="416" stroke="#2a8f55" stroke-width="2"/>
-<circle cx="344" cy="416" r="3" fill="#2a8f55"/>
-<line x1="344" y1="416" x2="589" y2="325" stroke="#2a8f55" stroke-width="2"/>
-<circle cx="589" cy="325" r="3" fill="#2a8f55"/>
-<line x1="589" y1="325" x2="700" y2="285" stroke="#2a8f55" stroke-width="2"/>
-<circle cx="700" cy="285" r="3" fill="#2a8f55"/>
+<circle cx="100" cy="512" r="3" fill="#2a8f55"/>
+<line x1="100" y1="512" x2="344" y2="357" stroke="#2a8f55" stroke-width="2"/>
+<circle cx="344" cy="357" r="3" fill="#2a8f55"/>
+<line x1="344" y1="357" x2="589" y2="213" stroke="#2a8f55" stroke-width="2"/>
+<circle cx="589" cy="213" r="3" fill="#2a8f55"/>
+<line x1="589" y1="213" x2="700" y2="150" stroke="#2a8f55" stroke-width="2"/>
+<circle cx="700" cy="150" r="3" fill="#2a8f55"/>
 <line x1="740" y1="142" x2="765" y2="142" stroke="#2a8f55" stroke-width="3"/>
 <text x="773" y="147" font-family="Arial" font-size="13">Naive Quick Sort</text>
-<circle cx="100" cy="497" r="3" fill="#a23a8b"/>
-<line x1="100" y1="497" x2="344" y2="403" stroke="#a23a8b" stroke-width="2"/>
-<circle cx="344" cy="403" r="3" fill="#a23a8b"/>
-<line x1="344" y1="403" x2="589" y2="312" stroke="#a23a8b" stroke-width="2"/>
-<circle cx="589" cy="312" r="3" fill="#a23a8b"/>
-<line x1="589" y1="312" x2="700" y2="272" stroke="#a23a8b" stroke-width="2"/>
-<circle cx="700" cy="272" r="3" fill="#a23a8b"/>
+<circle cx="100" cy="484" r="3" fill="#a23a8b"/>
+<line x1="100" y1="484" x2="344" y2="336" stroke="#a23a8b" stroke-width="2"/>
+<circle cx="344" cy="336" r="3" fill="#a23a8b"/>
+<line x1="344" y1="336" x2="589" y2="191" stroke="#a23a8b" stroke-width="2"/>
+<circle cx="589" cy="191" r="3" fill="#a23a8b"/>
+<line x1="589" y1="191" x2="700" y2="129" stroke="#a23a8b" stroke-width="2"/>
+<circle cx="700" cy="129" r="3" fill="#a23a8b"/>
 <line x1="740" y1="167" x2="765" y2="167" stroke="#a23a8b" stroke-width="3"/>
 <text x="773" y="172" font-family="Arial" font-size="13">Hardened Quick Sort</text>
-<circle cx="100" cy="496" r="3" fill="#555b66"/>
-<line x1="100" y1="496" x2="344" y2="402" stroke="#555b66" stroke-width="2"/>
-<circle cx="344" cy="402" r="3" fill="#555b66"/>
-<line x1="344" y1="402" x2="589" y2="311" stroke="#555b66" stroke-width="2"/>
-<circle cx="589" cy="311" r="3" fill="#555b66"/>
-<line x1="589" y1="311" x2="700" y2="270" stroke="#555b66" stroke-width="2"/>
-<circle cx="700" cy="270" r="3" fill="#555b66"/>
+<circle cx="100" cy="483" r="3" fill="#555b66"/>
+<line x1="100" y1="483" x2="344" y2="334" stroke="#555b66" stroke-width="2"/>
+<circle cx="344" cy="334" r="3" fill="#555b66"/>
+<line x1="344" y1="334" x2="589" y2="190" stroke="#555b66" stroke-width="2"/>
+<circle cx="589" cy="190" r="3" fill="#555b66"/>
+<line x1="589" y1="190" x2="700" y2="126" stroke="#555b66" stroke-width="2"/>
+<circle cx="700" cy="126" r="3" fill="#555b66"/>
 <line x1="740" y1="192" x2="765" y2="192" stroke="#555b66" stroke-width="3"/>
 <text x="773" y="197" font-family="Arial" font-size="13">Heap Sort</text>
 <text x="500" y="615" text-anchor="middle" font-family="Arial" font-size="12">Figure C2. Median key comparisons. DNF results are omitted.</text>
