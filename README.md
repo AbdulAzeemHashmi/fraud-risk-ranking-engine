@@ -56,7 +56,7 @@ For each required sample size, the builder selects rows uniformly without replac
 - C5: C3 with one percent of records selected and placed at different random positions. Other records keep their relative order.
 - C6: the C1 input with a band-only comparison key.
 
-The benchmark driver runs all five sorting methods on each condition and size. It records five trial times, medians, comparisons, moves, estimated extra memory, stability, and prediction results. A run that takes longer than 30 seconds is marked DNF.
+The benchmark driver runs all five sorting methods on each condition and size. It records up to five trial times, medians, comparisons, moves, estimated extra memory, stability, and prediction results. A run that takes longer than 30 seconds is marked DNF.
 
 ### Problems C, D, and E results
 

@@ -6,7 +6,7 @@ The experiments use all 284,807 rows in `creditcard.csv` unless a sample size is
 
 The programs were built as C++17 with MinGW GCC 16.2.0, using `-O2 -Wall -Wextra -Wpedantic`. The host reports Windows NT 10.0.26300.0, x64, and an Intel64 Family 6 Model 142 CPU with 8 logical processors. The hardware query for installed RAM was blocked, so no RAM amount is reported.
 
-Problems C and D use five trials and report the median. A single run stops after 30 seconds and is marked `DNF` if it has not finished. Problem E runs five complete trials without that cutoff. Timing excludes dataset loading and the common input copy. Problem C and D memory figures estimate algorithm auxiliary storage. Problem E memory figures estimate peak extra vector storage and exclude the preloaded dataset and window inputs. They are storage estimates, not operating system memory readings.
+Problems C and D use five trials and report the median. A single run stops after 30 seconds and is marked `DNF` if it has not finished. Problem E runs five complete trials without that cutoff. Dataset loading and condition construction are outside the timers. In C and D, the common working copy is prepared before timing. In E, window construction is outside timing, while per-window copies and ranking work are timed. Problem C and D memory figures estimate algorithm auxiliary storage. Problem E memory figures estimate peak extra vector storage and exclude the preloaded dataset and window inputs. They are storage estimates, not operating system memory readings.
 
 The `comparisons` column counts calls to the ranking comparator. The `moves` column counts assignments to algorithm-owned record slots. In C and D summary rows, `trial=0` marks the median row. The detailed trial rows remain in `results.csv`.
 
@@ -36,9 +36,9 @@ The summary table is `C_summary.csv`. It reports median time, comparisons, moves
 
 ## Problem D: The Shift Queue
 
-The full matrix compares Merge Sort followed by taking K, a size-K min heap, and a bounded insertion buffer. It covers C1 and C2 at n = 100,000 and n = 284,807. K is 10, 50, 230, 500, 5,000, and n/10. `D_summary.csv` contains the median result for every condition, size, K, and method.
+The full matrix compares Merge Sort followed by taking K, a size-K min heap, and a bounded insertion buffer. It covers C1 and C2 at n = 100,000 and n = 284,807. K is 10, 50, 230, 500, 5,000, and n/10. `D_summary.csv` contains one summary row for every condition, size, K, and method. Rows marked DNF have no five-trial median.
 
-The size-K min heap was the fastest method at every tested point where the methods completed. No crossover away from the heap was observed, even at K = n/10. The bounded buffer was slower than the heap at K = 10 and its time grew quickly as K increased. At n = 284,807 and K = 28,480, it reached the 30 second cutoff on both conditions. The results do not establish what happens when K is closer to n.
+The size-K min heap was the fastest method at every tested point where the methods completed. No crossover away from the heap was observed, even at K = n/10. The bounded buffer was slower than the heap at K = 10 and its time grew quickly as K increased. At n = 284,807 it reached the 30 second cutoff on C2 with K = 5,000 and on both conditions with K = 28,480. The results do not establish what happens when K is closer to n.
 
 Under the triage order, the first queue to capture at least half of the 492 frauds has K = 2,068. The measured costs at full data size were:
 
