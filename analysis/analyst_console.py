@@ -100,7 +100,7 @@ form.addEventListener('submit', async (event) => {
   results.hidden = true;
   statusLine.textContent = 'Building the queue in C++. Large K values can take longer.';
   try {
-    const response = await fetch('/run', { method: 'POST', body: new FormData(form) });
+    const response = await fetch('/run', { method: 'POST', body: new URLSearchParams(new FormData(form)) });
     const message = await response.json();
     if (!response.ok) throw new Error(message.error || 'The run failed.');
     const data = message.data;
