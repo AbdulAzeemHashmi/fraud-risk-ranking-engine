@@ -24,3 +24,9 @@ C11,result,10000,C5,Insertion Sort,Naive Quick Sort,"Only one percent of records
 C12,prediction,10000,C6,Hardened Quick Sort,Naive Quick Sort,Band-only keys have many ties; three way partition handles equal keys while Lomuto can repeatedly split off one item.,,,,
 C12,result,10000,C6,Hardened Quick Sort,Naive Quick Sort,Band-only keys have many ties; three way partition handles equal keys while Lomuto can repeatedly split off one item.,Hardened Quick Sort,Insertion Sort,true,false
 C13,prediction,100000,C1,Merge Sort,Insertion Sort,The arrival order has no known relation to the complete triage key. Merge Sort keeps n log n work.,,,,
+C13,result,100000,C1,Merge Sort,Insertion Sort,The arrival order has no known relation to the complete triage key. Merge Sort keeps n log n work.,Naive Quick Sort,Insertion Sort,false,true
+C14,prediction,100000,C2,Hardened Quick Sort,Insertion Sort,The shuffle removes existing order; three way partitioning protects Quick Sort and insertion can shift many records.,,,,
+C14,result,100000,C2,Hardened Quick Sort,Insertion Sort,The shuffle removes existing order; three way partitioning protects Quick Sort and insertion can shift many records.,Naive Quick Sort,Insertion Sort,false,true
+C15,prediction,100000,C3,Insertion Sort,Naive Quick Sort,"A ranked input should need few insertion shifts, while the last pivot on sorted data creates unbalanced partitions.",,,,
+C15,result,100000,C3,Insertion Sort,Naive Quick Sort,"A ranked input should need few insertion shifts, while the last pivot on sorted data creates unbalanced partitions.",Insertion Sort,Naive Quick Sort,true,true
+C16,prediction,100000,C4,Heap Sort,Naive Quick Sort,Heap Sort keeps n log n work; reverse order is a worst case pattern for the last pivot.,,,,
