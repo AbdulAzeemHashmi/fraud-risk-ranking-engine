@@ -28,7 +28,7 @@ using Clock = std::chrono::steady_clock;
 constexpr int kRoll = 2013;
 constexpr int kPersonalK = 230;
 constexpr int kTrials = 5;
-constexpr int kTimeoutSeconds = 300;
+constexpr int kTimeoutSeconds = 30;
 
 struct ResultRow {
     std::string problem, condition, algorithm, status;
@@ -52,6 +52,7 @@ void write_csv_row(std::ostream& out, const ResultRow& r) {
         << std::setprecision(10) << r.seconds << ',' << r.cumulative_seconds << ','
         << r.comparisons << ',' << r.moves << ',' << r.extra_memory_bytes << ',' << (r.stable ? "true" : "false") << ','
         << r.status << ',' << r.captured_frauds << ',' << r.peak_memory_bytes << '\n';
+    out.flush();
 }
 
 struct SortMethod {
@@ -533,7 +534,6 @@ void run_problem_e(const Dataset& dataset, bool smoke, const std::filesystem::pa
             std::array<std::vector<std::uint64_t>, kTrials> peak_by_trial;
             for (int trial = 1; trial <= kTrials; ++trial) {
                 Metrics metrics;
-                metrics.set_time_limit(std::chrono::seconds(kTimeoutSeconds));
                 std::vector<Record> seen, current_top;
                 PersistentTopK heap(k, &metrics);
                 double cumulative = 0;
@@ -632,12 +632,16 @@ int main(int argc, char** argv) {
     try {
         std::filesystem::create_directories(outdir);
         const auto dataset = load_dataset(argv[1]); // Loading and score calculation are outside experiment timers.
-        std::ofstream results(outdir / "results.csv");
+        const auto results_path = outdir / "results.csv";
+        const bool write_results_header = !std::filesystem::exists(results_path) || std::filesystem::file_size(results_path) == 0;
+        std::ofstream results(results_path, std::ios::app);
         if (!results) throw std::runtime_error("Cannot create results.csv");
-        results << "problem,condition,n,k,window_minutes,window_index,algorithm,trial,seconds,cumulative_seconds,comparisons,moves,extra_memory_bytes,stable,status,captured_frauds,peak_extra_memory_bytes\n";
-        std::ofstream predictions(outdir / "prediction_log.csv");
+        if (write_results_header) results << "problem,condition,n,k,window_minutes,window_index,algorithm,trial,seconds,cumulative_seconds,comparisons,moves,extra_memory_bytes,stable,status,captured_frauds,peak_extra_memory_bytes\n";
+        const auto predictions_path = outdir / "prediction_log.csv";
+        const bool write_prediction_header = !std::filesystem::exists(predictions_path) || std::filesystem::file_size(predictions_path) == 0;
+        std::ofstream predictions(predictions_path, std::ios::app);
         if (!predictions) throw std::runtime_error("Cannot create prediction_log.csv");
-        predictions << "round,phase,n,condition,predicted_winner,predicted_loser,reason,actual_winner,actual_loser,winner_prediction_correct,loser_prediction_correct\n";
+        if (write_prediction_header) predictions << "round,phase,n,condition,predicted_winner,predicted_loser,reason,actual_winner,actual_loser,winner_prediction_correct,loser_prediction_correct\n";
 
         if (problem == "all" || problem == "C") {
             auto c = run_problem_c(dataset, smoke, results, predictions);

@@ -1,0 +1,72 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="640" viewBox="0 0 1000 640">
+<rect width="100%" height="100%" fill="white"/>
+<text x="500" y="34" text-anchor="middle" font-family="Arial" font-size="22">Element Moves vs Input Size on C2</text>
+<line x1="100" y1="70" x2="100" y2="520" stroke="#e3e3e3"/>
+<line x1="100" y1="70" x2="700" y2="70" stroke="#e3e3e3"/>
+<text x="100" y="544" text-anchor="middle" font-family="Arial" font-size="12">1e+03</text>
+<text x="88" y="74" text-anchor="end" font-family="Arial" font-size="12">2.51e+09</text>
+<line x1="250" y1="70" x2="250" y2="520" stroke="#e3e3e3"/>
+<line x1="100" y1="182" x2="700" y2="182" stroke="#e3e3e3"/>
+<text x="250" y="544" text-anchor="middle" font-family="Arial" font-size="12">4.11e+03</text>
+<text x="88" y="186" text-anchor="end" font-family="Arial" font-size="12">1.19e+08</text>
+<line x1="400" y1="70" x2="400" y2="520" stroke="#e3e3e3"/>
+<line x1="100" y1="295" x2="700" y2="295" stroke="#e3e3e3"/>
+<text x="400" y="544" text-anchor="middle" font-family="Arial" font-size="12">1.69e+04</text>
+<text x="88" y="299" text-anchor="end" font-family="Arial" font-size="12">5.62e+06</text>
+<line x1="550" y1="70" x2="550" y2="520" stroke="#e3e3e3"/>
+<line x1="100" y1="408" x2="700" y2="408" stroke="#e3e3e3"/>
+<text x="550" y="544" text-anchor="middle" font-family="Arial" font-size="12">6.93e+04</text>
+<text x="88" y="412" text-anchor="end" font-family="Arial" font-size="12">2.66e+05</text>
+<line x1="700" y1="70" x2="700" y2="520" stroke="#e3e3e3"/>
+<line x1="100" y1="520" x2="700" y2="520" stroke="#e3e3e3"/>
+<text x="700" y="544" text-anchor="middle" font-family="Arial" font-size="12">2.85e+05</text>
+<text x="88" y="524" text-anchor="end" font-family="Arial" font-size="12">1.26e+04</text>
+<line x1="100" y1="520" x2="700" y2="520" stroke="black"/>
+<line x1="100" y1="70" x2="100" y2="520" stroke="black"/>
+<text x="400" y="574" text-anchor="middle" font-family="Arial" font-size="15">Input size, n (transactions)</text>
+<text x="22" y="295" transform="rotate(-90 22 295)" text-anchor="middle" font-family="Arial" font-size="15">Element moves (count)</text>
+<circle cx="100" cy="409" r="3" fill="#2455a4"/>
+<line x1="100" y1="409" x2="344" y2="239" stroke="#2455a4" stroke-width="2"/>
+<circle cx="344" cy="239" r="3" fill="#2455a4"/>
+<line x1="344" y1="239" x2="589" y2="70" stroke="#2455a4" stroke-width="2"/>
+<circle cx="589" cy="70" r="3" fill="#2455a4"/>
+<line x1="740" y1="92" x2="765" y2="92" stroke="#2455a4" stroke-width="3"/>
+<text x="773" y="97" font-family="Arial" font-size="13">Insertion Sort</text>
+<circle cx="100" cy="503" r="3" fill="#dc7927"/>
+<line x1="100" y1="503" x2="344" y2="407" stroke="#dc7927" stroke-width="2"/>
+<circle cx="344" cy="407" r="3" fill="#dc7927"/>
+<line x1="344" y1="407" x2="589" y2="314" stroke="#dc7927" stroke-width="2"/>
+<circle cx="589" cy="314" r="3" fill="#dc7927"/>
+<line x1="589" y1="314" x2="700" y2="272" stroke="#dc7927" stroke-width="2"/>
+<circle cx="700" cy="272" r="3" fill="#dc7927"/>
+<line x1="740" y1="117" x2="765" y2="117" stroke="#dc7927" stroke-width="3"/>
+<text x="773" y="122" font-family="Arial" font-size="13">Merge Sort</text>
+<circle cx="100" cy="520" r="3" fill="#2a8f55"/>
+<line x1="100" y1="520" x2="344" y2="420" stroke="#2a8f55" stroke-width="2"/>
+<circle cx="344" cy="420" r="3" fill="#2a8f55"/>
+<line x1="344" y1="420" x2="589" y2="319" stroke="#2a8f55" stroke-width="2"/>
+<circle cx="589" cy="319" r="3" fill="#2a8f55"/>
+<line x1="589" y1="319" x2="700" y2="278" stroke="#2a8f55" stroke-width="2"/>
+<circle cx="700" cy="278" r="3" fill="#2a8f55"/>
+<line x1="740" y1="142" x2="765" y2="142" stroke="#2a8f55" stroke-width="3"/>
+<text x="773" y="147" font-family="Arial" font-size="13">Naive Quick Sort</text>
+<circle cx="100" cy="499" r="3" fill="#a23a8b"/>
+<line x1="100" y1="499" x2="344" y2="399" stroke="#a23a8b" stroke-width="2"/>
+<circle cx="344" cy="399" r="3" fill="#a23a8b"/>
+<line x1="344" y1="399" x2="589" y2="304" stroke="#a23a8b" stroke-width="2"/>
+<circle cx="589" cy="304" r="3" fill="#a23a8b"/>
+<line x1="589" y1="304" x2="700" y2="262" stroke="#a23a8b" stroke-width="2"/>
+<circle cx="700" cy="262" r="3" fill="#a23a8b"/>
+<line x1="740" y1="167" x2="765" y2="167" stroke="#a23a8b" stroke-width="3"/>
+<text x="773" y="172" font-family="Arial" font-size="13">Hardened Quick Sort</text>
+<circle cx="100" cy="492" r="3" fill="#555b66"/>
+<line x1="100" y1="492" x2="344" y2="395" stroke="#555b66" stroke-width="2"/>
+<circle cx="344" cy="395" r="3" fill="#555b66"/>
+<line x1="344" y1="395" x2="589" y2="301" stroke="#555b66" stroke-width="2"/>
+<circle cx="589" cy="301" r="3" fill="#555b66"/>
+<line x1="589" y1="301" x2="700" y2="259" stroke="#555b66" stroke-width="2"/>
+<circle cx="700" cy="259" r="3" fill="#555b66"/>
+<line x1="740" y1="192" x2="765" y2="192" stroke="#555b66" stroke-width="3"/>
+<text x="773" y="197" font-family="Arial" font-size="13">Heap Sort</text>
+<text x="500" y="615" text-anchor="middle" font-family="Arial" font-size="12">Figure C3. Median element moves. DNF results are omitted.</text>
+</svg>
