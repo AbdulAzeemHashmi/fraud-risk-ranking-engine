@@ -1,0 +1,32 @@
+{
+  "rows":284807,
+  "frauds":492,
+  "missing_cells":0,
+  "non_numeric_cells":0,
+  "non_finite_cells":0,
+  "duplicate_full_rows":1081,
+  "distinct_amount_values":32767,
+  "top_10_amount_value_share":0.1629103217,
+  "amount_top_10_values_and_counts":{
+    "1.0":13688,
+    "1.98":6044,
+    "0.89":4872,
+    "9.99":4747,
+    "15.0":3280,
+    "0.76":2998,
+    "10.0":2950,
+    "1.29":2892,
+    "1.79":2623,
+    "0.99":2304
+  },
+  "roll_number":2013,
+  "K":230,
+  "std_convention":"population standard deviation (NumPy ddof=0)",
+  "raw_time_nondecreasing_C1":true,
+  "raw_exact_triage_rank_C3":false,
+  "raw_exact_reverse_triage_rank_C4":false,
+  "raw_records_out_of_triage_position":284806,
+  "raw_fraction_in_same_triage_position":0.0000035111,
+  "C2_to_C6":"constructed conditions; not intrinsic raw-file properties",
+  "raw_condition_evidence":"Time is nondecreasing=True; raw equals triage order=False; raw equals its exact reverse=False. C2 (seeded shuffle), C4 (exact reverse), C5 (1% displacement), and C6 (band-only key) are experiment constructions from the same records."
+}

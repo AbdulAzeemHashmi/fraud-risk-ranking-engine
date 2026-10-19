@@ -2,7 +2,7 @@
 
 ## Specification summary
 
-The assignment requests a reproducible investigation of a triage order over the ULB credit-card transactions. The key is band descending, Amount descending, Time ascending, txn_id ascending; Class is evaluation-only. The score uses full-file standardization for V1–V28, squared z-score sum, then `min(9,max(0,floor(log2(risk))))`. Personal parameters are roll number `s=2013`, random seed 2013, and `K=46`.
+The assignment requests a reproducible investigation of a triage order over the ULB credit-card transactions. The key is band descending, Amount descending, Time ascending, txn_id ascending; Class is evaluation-only. The score uses full-file standardization for V1–V28, squared z-score sum, then `min(9,max(0,floor(log2(risk))))`. Personal parameters are roll number `s=2013`, random seed 2013, and `K=230`.
 
 Required work:
 

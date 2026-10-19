@@ -5,7 +5,7 @@ C++ implementation and experiments for the Design and Analysis of Algorithms ass
 ## Personal parameters
 
 - Roll number / random seed: `2013`
-- Shift capacity: `K = 25 + (2013 mod 226) = 46`
+- Shift capacity: `K = 25 + (2013 mod 226) = 230`
 - Dataset: obtain `creditcard.csv` from the Kaggle page in the assignment. Do not commit or include the dataset.
 
 ## Build
@@ -18,8 +18,12 @@ cmake --build build --config Release
 ctest --test-dir build --output-on-failure
 ```
 
-The experiment runner will accept the dataset path as a command-line argument. Results are generated locally as `results.csv`; measured data is never fabricated or committed.
+The Problem A profiler accepts the dataset path as a command-line argument. Benchmark commands and `results.csv` generation will be added in the next phase; measured data is never fabricated or committed.
 
 ## Status
 
 See [PLAN.md](PLAN.md) for requirement mapping, implementation sequence, and remaining data-dependent work.
+
+## Problem A profile
+
+Run `python analysis/problem_a.py creditcard.csv --out results/problem_a` to regenerate the pandas/NumPy profile and labelled histogram. This is the explicitly permitted Python analysis/visualization step; ranking algorithms remain C++. The script makes no silent row drops or imputations and records its standard-deviation convention in the output.
