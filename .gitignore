@@ -1,0 +1,6 @@
+/build/
+/creditcard.csv
+/results.csv
+/report.pdf
+*.png
+*.svg
