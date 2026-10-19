@@ -233,11 +233,13 @@ python analysis\analyst_console.py --data .\creditcard.csv --exe .\build\analyst
 
 ## Run the experiments
 
-Run all experiments into a new folder:
+Run all experiments into a new folder. The runner uses the assignment's five minute per-run DNF limit by default:
 
 ```powershell
 .\build\queue_experiments.exe .\creditcard.csv --problem all --out results\experiments_new
 ```
+
+For a short development run, you can choose a smaller limit, for example `--timeout-seconds 30`. Do not use that shorter limit for final assignment measurements. The currently saved C and D results were collected with the earlier 30 second setting. They must be regenerated with the default five minute limit before treating their DNF rows as final.
 
 Or run one part at a time. Use the same output folder so each part adds its rows:
 
@@ -423,7 +425,7 @@ At the `pdb` prompt: `n` runs the next line, `s` steps into a function, `p name`
 ## Limits and notes
 
 - `creditcard.csv` stays out of Git and out of any source package.
-- Full sort and Top K runs stop at 30 seconds. A run that does not finish is marked DNF and is never used as a median.
+- New full sort and Top K runs stop after five minutes by default, as required by the brief. The saved C and D measurements use the earlier 30 second limit and need a full rerun before final submission.
 - Memory values are estimates of algorithm storage. They are not operating system readings.
 - Hardened Quick Sort was slow on ranked input in these tests (1.1 to 1.6 s at the full size, against 0.054 s for Merge Sort). It handles many equal keys well, but not ranked input.
 - With the current ranking rule, a queue of 230 catches only 3 of 492 frauds. The algorithm choice cannot fix this. A different ranking rule would be needed.

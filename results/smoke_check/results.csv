@@ -1,0 +1,181 @@
+problem,condition,n,k,window_minutes,window_index,algorithm,trial,seconds,cumulative_seconds,comparisons,moves,extra_memory_bytes,stable,status,captured_frauds,peak_extra_memory_bytes
+C,C1,1000,0,0,0,Insertion Sort,1,0.0012935,0,253900,254906,0,true,ok,0,0
+C,C1,1000,0,0,0,Insertion Sort,2,0.0013326,0,253900,254906,0,true,ok,0,0
+C,C1,1000,0,0,0,Insertion Sort,3,0.0012945,0,253900,254906,0,true,ok,0,0
+C,C1,1000,0,0,0,Insertion Sort,4,0.0012114,0,253900,254906,0,true,ok,0,0
+C,C1,1000,0,0,0,Insertion Sort,5,0.0012978,0,253900,254906,0,true,ok,0,0
+C,C1,1000,0,0,0,Insertion Sort,0,0.0012945,0,253900,254906,0,true,median,0,0
+C,C1,1000,0,0,0,Merge Sort,1,0.0002161,0,8687,19952,32000,true,ok,0,0
+C,C1,1000,0,0,0,Merge Sort,2,0.000217,0,8687,19952,32000,true,ok,0,0
+C,C1,1000,0,0,0,Merge Sort,3,0.0002115,0,8687,19952,32000,true,ok,0,0
+C,C1,1000,0,0,0,Merge Sort,4,0.0002054,0,8687,19952,32000,true,ok,0,0
+C,C1,1000,0,0,0,Merge Sort,5,0.000203,0,8687,19952,32000,true,ok,0,0
+C,C1,1000,0,0,0,Merge Sort,0,0.0002115,0,8687,19952,32000,true,median,0,0
+C,C1,1000,0,0,0,Naive Quick Sort,1,0.0001777,0,11869,12060,320,false,ok,0,0
+C,C1,1000,0,0,0,Naive Quick Sort,2,0.0001612,0,11869,12060,320,false,ok,0,0
+C,C1,1000,0,0,0,Naive Quick Sort,3,0.0001599,0,11869,12060,320,false,ok,0,0
+C,C1,1000,0,0,0,Naive Quick Sort,4,0.0001584,0,11869,12060,320,false,ok,0,0
+C,C1,1000,0,0,0,Naive Quick Sort,5,0.000159,0,11869,12060,320,false,ok,0,0
+C,C1,1000,0,0,0,Naive Quick Sort,0,0.0001599,0,11869,12060,320,false,median,0,0
+C,C1,1000,0,0,0,Hardened Quick Sort,1,0.0002257,0,16771,24054,320,false,ok,0,0
+C,C1,1000,0,0,0,Hardened Quick Sort,2,0.000252,0,16771,24054,320,false,ok,0,0
+C,C1,1000,0,0,0,Hardened Quick Sort,3,0.000257,0,16771,24054,320,false,ok,0,0
+C,C1,1000,0,0,0,Hardened Quick Sort,4,0.0002622,0,16771,24054,320,false,ok,0,0
+C,C1,1000,0,0,0,Hardened Quick Sort,5,0.0002687,0,16771,24054,320,false,ok,0,0
+C,C1,1000,0,0,0,Hardened Quick Sort,0,0.000257,0,16771,24054,320,false,median,0,0
+C,C1,1000,0,0,0,Heap Sort,1,0.0002329,0,16766,27000,0,false,ok,0,0
+C,C1,1000,0,0,0,Heap Sort,2,0.0001993,0,16766,27000,0,false,ok,0,0
+C,C1,1000,0,0,0,Heap Sort,3,0.0001446,0,16766,27000,0,false,ok,0,0
+C,C1,1000,0,0,0,Heap Sort,4,0.0001612,0,16766,27000,0,false,ok,0,0
+C,C1,1000,0,0,0,Heap Sort,5,0.0001433,0,16766,27000,0,false,ok,0,0
+C,C1,1000,0,0,0,Heap Sort,0,0.0001612,0,16766,27000,0,false,median,0,0
+C,C2,1000,0,0,0,Insertion Sort,1,0.0013749,0,256404,257411,0,true,ok,0,0
+C,C2,1000,0,0,0,Insertion Sort,2,0.0013334,0,256404,257411,0,true,ok,0,0
+C,C2,1000,0,0,0,Insertion Sort,3,0.001351,0,256404,257411,0,true,ok,0,0
+C,C2,1000,0,0,0,Insertion Sort,4,0.0013099,0,256404,257411,0,true,ok,0,0
+C,C2,1000,0,0,0,Insertion Sort,5,0.0012318,0,256404,257411,0,true,ok,0,0
+C,C2,1000,0,0,0,Insertion Sort,0,0.0013334,0,256404,257411,0,true,median,0,0
+C,C2,1000,0,0,0,Merge Sort,1,0.0002025,0,8726,19952,32000,true,ok,0,0
+C,C2,1000,0,0,0,Merge Sort,2,0.0002169,0,8726,19952,32000,true,ok,0,0
+C,C2,1000,0,0,0,Merge Sort,3,0.000202,0,8726,19952,32000,true,ok,0,0
+C,C2,1000,0,0,0,Merge Sort,4,0.0002149,0,8726,19952,32000,true,ok,0,0
+C,C2,1000,0,0,0,Merge Sort,5,0.0002144,0,8726,19952,32000,true,ok,0,0
+C,C2,1000,0,0,0,Merge Sort,0,0.0002144,0,8726,19952,32000,true,median,0,0
+C,C2,1000,0,0,0,Naive Quick Sort,1,0.0001502,0,10083,12591,320,false,ok,0,0
+C,C2,1000,0,0,0,Naive Quick Sort,2,0.0001467,0,10083,12591,320,false,ok,0,0
+C,C2,1000,0,0,0,Naive Quick Sort,3,0.0001441,0,10083,12591,320,false,ok,0,0
+C,C2,1000,0,0,0,Naive Quick Sort,4,0.0001504,0,10083,12591,320,false,ok,0,0
+C,C2,1000,0,0,0,Naive Quick Sort,5,0.000171,0,10083,12591,320,false,ok,0,0
+C,C2,1000,0,0,0,Naive Quick Sort,0,0.0001502,0,10083,12591,320,false,median,0,0
+C,C2,1000,0,0,0,Hardened Quick Sort,1,0.0002191,0,16431,22257,320,false,ok,0,0
+C,C2,1000,0,0,0,Hardened Quick Sort,2,0.000218,0,16431,22257,320,false,ok,0,0
+C,C2,1000,0,0,0,Hardened Quick Sort,3,0.0002224,0,16431,22257,320,false,ok,0,0
+C,C2,1000,0,0,0,Hardened Quick Sort,4,0.0002145,0,16431,22257,320,false,ok,0,0
+C,C2,1000,0,0,0,Hardened Quick Sort,5,0.0002138,0,16431,22257,320,false,ok,0,0
+C,C2,1000,0,0,0,Hardened Quick Sort,0,0.000218,0,16431,22257,320,false,median,0,0
+C,C2,1000,0,0,0,Heap Sort,1,0.0001471,0,16857,27159,0,false,ok,0,0
+C,C2,1000,0,0,0,Heap Sort,2,0.0001461,0,16857,27159,0,false,ok,0,0
+C,C2,1000,0,0,0,Heap Sort,3,0.0001444,0,16857,27159,0,false,ok,0,0
+C,C2,1000,0,0,0,Heap Sort,4,0.0001438,0,16857,27159,0,false,ok,0,0
+C,C2,1000,0,0,0,Heap Sort,5,0.0001444,0,16857,27159,0,false,ok,0,0
+C,C2,1000,0,0,0,Heap Sort,0,0.0001444,0,16857,27159,0,false,median,0,0
+C,C3,1000,0,0,0,Insertion Sort,1,1.1e-05,0,999,1998,0,true,ok,0,0
+C,C3,1000,0,0,0,Insertion Sort,2,1.08e-05,0,999,1998,0,true,ok,0,0
+C,C3,1000,0,0,0,Insertion Sort,3,1.08e-05,0,999,1998,0,true,ok,0,0
+C,C3,1000,0,0,0,Insertion Sort,4,1.07e-05,0,999,1998,0,true,ok,0,0
+C,C3,1000,0,0,0,Insertion Sort,5,1.07e-05,0,999,1998,0,true,ok,0,0
+C,C3,1000,0,0,0,Insertion Sort,0,1.08e-05,0,999,1998,0,true,median,0,0
+C,C3,1000,0,0,0,Merge Sort,1,0.0001185,0,4932,19952,32000,true,ok,0,0
+C,C3,1000,0,0,0,Merge Sort,2,0.0001155,0,4932,19952,32000,true,ok,0,0
+C,C3,1000,0,0,0,Merge Sort,3,0.0001147,0,4932,19952,32000,true,ok,0,0
+C,C3,1000,0,0,0,Merge Sort,4,0.0001585,0,4932,19952,32000,true,ok,0,0
+C,C3,1000,0,0,0,Merge Sort,5,0.0001135,0,4932,19952,32000,true,ok,0,0
+C,C3,1000,0,0,0,Merge Sort,0,0.0001155,0,4932,19952,32000,true,median,0,0
+C,C3,1000,0,0,0,Naive Quick Sort,1,0.0028874,0,499500,0,320,false,ok,0,0
+C,C3,1000,0,0,0,Naive Quick Sort,2,0.0025934,0,499500,0,320,false,ok,0,0
+C,C3,1000,0,0,0,Naive Quick Sort,3,0.0020607,0,499500,0,320,false,ok,0,0
+C,C3,1000,0,0,0,Naive Quick Sort,4,0.0019712,0,499500,0,320,false,ok,0,0
+C,C3,1000,0,0,0,Naive Quick Sort,5,0.0020069,0,499500,0,320,false,ok,0,0
+C,C3,1000,0,0,0,Naive Quick Sort,0,0.0020607,0,499500,0,320,false,median,0,0
+C,C3,1000,0,0,0,Hardened Quick Sort,1,0.0002817,0,38638,51186,320,false,ok,0,0
+C,C3,1000,0,0,0,Hardened Quick Sort,2,0.0002473,0,38638,51186,320,false,ok,0,0
+C,C3,1000,0,0,0,Hardened Quick Sort,3,0.0002526,0,38638,51186,320,false,ok,0,0
+C,C3,1000,0,0,0,Hardened Quick Sort,4,0.0002792,0,38638,51186,320,false,ok,0,0
+C,C3,1000,0,0,0,Hardened Quick Sort,5,0.0002392,0,38638,51186,320,false,ok,0,0
+C,C3,1000,0,0,0,Hardened Quick Sort,0,0.0002526,0,38638,51186,320,false,median,0,0
+C,C3,1000,0,0,0,Heap Sort,1,0.0001283,0,17583,29124,0,false,ok,0,0
+C,C3,1000,0,0,0,Heap Sort,2,0.0001201,0,17583,29124,0,false,ok,0,0
+C,C3,1000,0,0,0,Heap Sort,3,0.0001186,0,17583,29124,0,false,ok,0,0
+C,C3,1000,0,0,0,Heap Sort,4,0.0001339,0,17583,29124,0,false,ok,0,0
+C,C3,1000,0,0,0,Heap Sort,5,0.0001204,0,17583,29124,0,false,ok,0,0
+C,C3,1000,0,0,0,Heap Sort,0,0.0001204,0,17583,29124,0,false,median,0,0
+C,C4,1000,0,0,0,Insertion Sort,1,0.0024391,0,499500,501498,0,true,ok,0,0
+C,C4,1000,0,0,0,Insertion Sort,2,0.0027307,0,499500,501498,0,true,ok,0,0
+C,C4,1000,0,0,0,Insertion Sort,3,0.0023059,0,499500,501498,0,true,ok,0,0
+C,C4,1000,0,0,0,Insertion Sort,4,0.002401,0,499500,501498,0,true,ok,0,0
+C,C4,1000,0,0,0,Insertion Sort,5,0.0026209,0,499500,501498,0,true,ok,0,0
+C,C4,1000,0,0,0,Insertion Sort,0,0.0024391,0,499500,501498,0,true,median,0,0
+C,C4,1000,0,0,0,Merge Sort,1,0.0001132,0,5044,19952,32000,true,ok,0,0
+C,C4,1000,0,0,0,Merge Sort,2,0.0001213,0,5044,19952,32000,true,ok,0,0
+C,C4,1000,0,0,0,Merge Sort,3,0.0001091,0,5044,19952,32000,true,ok,0,0
+C,C4,1000,0,0,0,Merge Sort,4,0.0001218,0,5044,19952,32000,true,ok,0,0
+C,C4,1000,0,0,0,Merge Sort,5,0.0001469,0,5044,19952,32000,true,ok,0,0
+C,C4,1000,0,0,0,Merge Sort,0,0.0001213,0,5044,19952,32000,true,median,0,0
+C,C4,1000,0,0,0,Naive Quick Sort,1,0.0021293,0,499500,1500,320,false,ok,0,0
+C,C4,1000,0,0,0,Naive Quick Sort,2,0.0022544,0,499500,1500,320,false,ok,0,0
+C,C4,1000,0,0,0,Naive Quick Sort,3,0.0027688,0,499500,1500,320,false,ok,0,0
+C,C4,1000,0,0,0,Naive Quick Sort,4,0.0023969,0,499500,1500,320,false,ok,0,0
+C,C4,1000,0,0,0,Naive Quick Sort,5,0.0023058,0,499500,1500,320,false,ok,0,0
+C,C4,1000,0,0,0,Naive Quick Sort,0,0.0023058,0,499500,1500,320,false,median,0,0
+C,C4,1000,0,0,0,Hardened Quick Sort,1,0.0002286,0,29734,36990,320,false,ok,0,0
+C,C4,1000,0,0,0,Hardened Quick Sort,2,0.0002324,0,29734,36990,320,false,ok,0,0
+C,C4,1000,0,0,0,Hardened Quick Sort,3,0.0002186,0,29734,36990,320,false,ok,0,0
+C,C4,1000,0,0,0,Hardened Quick Sort,4,0.0002399,0,29734,36990,320,false,ok,0,0
+C,C4,1000,0,0,0,Hardened Quick Sort,5,0.0002108,0,29734,36990,320,false,ok,0,0
+C,C4,1000,0,0,0,Hardened Quick Sort,0,0.0002286,0,29734,36990,320,false,median,0,0
+C,C4,1000,0,0,0,Heap Sort,1,0.0001145,0,15965,24948,0,false,ok,0,0
+C,C4,1000,0,0,0,Heap Sort,2,0.0001121,0,15965,24948,0,false,ok,0,0
+C,C4,1000,0,0,0,Heap Sort,3,0.0001116,0,15965,24948,0,false,ok,0,0
+C,C4,1000,0,0,0,Heap Sort,4,0.0001109,0,15965,24948,0,false,ok,0,0
+C,C4,1000,0,0,0,Heap Sort,5,0.0001104,0,15965,24948,0,false,ok,0,0
+C,C4,1000,0,0,0,Heap Sort,0,0.0001116,0,15965,24948,0,false,median,0,0
+C,C5,1000,0,0,0,Insertion Sort,1,2.64e-05,0,3893,4892,0,true,ok,0,0
+C,C5,1000,0,0,0,Insertion Sort,2,2.61e-05,0,3893,4892,0,true,ok,0,0
+C,C5,1000,0,0,0,Insertion Sort,3,2.52e-05,0,3893,4892,0,true,ok,0,0
+C,C5,1000,0,0,0,Insertion Sort,4,2.46e-05,0,3893,4892,0,true,ok,0,0
+C,C5,1000,0,0,0,Insertion Sort,5,2.43e-05,0,3893,4892,0,true,ok,0,0
+C,C5,1000,0,0,0,Insertion Sort,0,2.52e-05,0,3893,4892,0,true,median,0,0
+C,C5,1000,0,0,0,Merge Sort,1,0.0001046,0,6233,19952,32000,true,ok,0,0
+C,C5,1000,0,0,0,Merge Sort,2,0.000102,0,6233,19952,32000,true,ok,0,0
+C,C5,1000,0,0,0,Merge Sort,3,0.0001175,0,6233,19952,32000,true,ok,0,0
+C,C5,1000,0,0,0,Merge Sort,4,0.0001047,0,6233,19952,32000,true,ok,0,0
+C,C5,1000,0,0,0,Merge Sort,5,0.0001038,0,6233,19952,32000,true,ok,0,0
+C,C5,1000,0,0,0,Merge Sort,0,0.0001046,0,6233,19952,32000,true,median,0,0
+C,C5,1000,0,0,0,Naive Quick Sort,1,0.0022086,0,479826,8556,320,false,ok,0,0
+C,C5,1000,0,0,0,Naive Quick Sort,2,0.0022834,0,479826,8556,320,false,ok,0,0
+C,C5,1000,0,0,0,Naive Quick Sort,3,0.0035558,0,479826,8556,320,false,ok,0,0
+C,C5,1000,0,0,0,Naive Quick Sort,4,0.0039645,0,479826,8556,320,false,ok,0,0
+C,C5,1000,0,0,0,Naive Quick Sort,5,0.0034054,0,479826,8556,320,false,ok,0,0
+C,C5,1000,0,0,0,Naive Quick Sort,0,0.0034054,0,479826,8556,320,false,median,0,0
+C,C5,1000,0,0,0,Hardened Quick Sort,1,0.00023,0,28369,37638,320,false,ok,0,0
+C,C5,1000,0,0,0,Hardened Quick Sort,2,0.0002066,0,28369,37638,320,false,ok,0,0
+C,C5,1000,0,0,0,Hardened Quick Sort,3,0.0002292,0,28369,37638,320,false,ok,0,0
+C,C5,1000,0,0,0,Hardened Quick Sort,4,0.0002122,0,28369,37638,320,false,ok,0,0
+C,C5,1000,0,0,0,Hardened Quick Sort,5,0.0002155,0,28369,37638,320,false,ok,0,0
+C,C5,1000,0,0,0,Hardened Quick Sort,0,0.0002155,0,28369,37638,320,false,median,0,0
+C,C5,1000,0,0,0,Heap Sort,1,0.0001518,0,17245,28728,0,false,ok,0,0
+C,C5,1000,0,0,0,Heap Sort,2,0.000137,0,17245,28728,0,false,ok,0,0
+C,C5,1000,0,0,0,Heap Sort,3,0.000141,0,17245,28728,0,false,ok,0,0
+C,C5,1000,0,0,0,Heap Sort,4,0.0001364,0,17245,28728,0,false,ok,0,0
+C,C5,1000,0,0,0,Heap Sort,5,0.0001365,0,17245,28728,0,false,ok,0,0
+C,C5,1000,0,0,0,Heap Sort,0,0.000137,0,17245,28728,0,false,median,0,0
+C,C6,1000,0,0,0,Insertion Sort,1,0.000835,0,179795,180797,0,true,ok,0,0
+C,C6,1000,0,0,0,Insertion Sort,2,0.0008911,0,179795,180797,0,true,ok,0,0
+C,C6,1000,0,0,0,Insertion Sort,3,0.0007761,0,179795,180797,0,true,ok,0,0
+C,C6,1000,0,0,0,Insertion Sort,4,0.0008468,0,179795,180797,0,true,ok,0,0
+C,C6,1000,0,0,0,Insertion Sort,5,0.000862,0,179795,180797,0,true,ok,0,0
+C,C6,1000,0,0,0,Insertion Sort,0,0.0008468,0,179795,180797,0,true,median,0,0
+C,C6,1000,0,0,0,Merge Sort,1,0.0001511,0,8375,19952,32000,true,ok,0,0
+C,C6,1000,0,0,0,Merge Sort,2,0.0001559,0,8375,19952,32000,true,ok,0,0
+C,C6,1000,0,0,0,Merge Sort,3,0.000265,0,8375,19952,32000,true,ok,0,0
+C,C6,1000,0,0,0,Merge Sort,4,0.0001681,0,8375,19952,32000,true,ok,0,0
+C,C6,1000,0,0,0,Merge Sort,5,0.0002039,0,8375,19952,32000,true,ok,0,0
+C,C6,1000,0,0,0,Merge Sort,0,0.0001681,0,8375,19952,32000,true,median,0,0
+C,C6,1000,0,0,0,Naive Quick Sort,1,0.0009167,0,162599,7668,320,false,ok,0,0
+C,C6,1000,0,0,0,Naive Quick Sort,2,0.0013099,0,162599,7668,320,false,ok,0,0
+C,C6,1000,0,0,0,Naive Quick Sort,3,0.0012921,0,162599,7668,320,false,ok,0,0
+C,C6,1000,0,0,0,Naive Quick Sort,4,0.0012957,0,162599,7668,320,false,ok,0,0
+C,C6,1000,0,0,0,Naive Quick Sort,5,0.0010005,0,162599,7668,320,false,ok,0,0
+C,C6,1000,0,0,0,Naive Quick Sort,0,0.0012921,0,162599,7668,320,false,median,0,0
+C,C6,1000,0,0,0,Hardened Quick Sort,1,3.12e-05,0,3288,2217,320,false,ok,0,0
+C,C6,1000,0,0,0,Hardened Quick Sort,2,2.93e-05,0,3288,2217,320,false,ok,0,0
+C,C6,1000,0,0,0,Hardened Quick Sort,3,2.85e-05,0,3288,2217,320,false,ok,0,0
+C,C6,1000,0,0,0,Hardened Quick Sort,4,2.79e-05,0,3288,2217,320,false,ok,0,0
+C,C6,1000,0,0,0,Hardened Quick Sort,5,2.74e-05,0,3288,2217,320,false,ok,0,0
+C,C6,1000,0,0,0,Hardened Quick Sort,0,2.85e-05,0,3288,2217,320,false,median,0,0
+C,C6,1000,0,0,0,Heap Sort,1,0.0001108,0,13588,20778,0,false,ok,0,0
+C,C6,1000,0,0,0,Heap Sort,2,0.0001164,0,13588,20778,0,false,ok,0,0
+C,C6,1000,0,0,0,Heap Sort,3,0.0001079,0,13588,20778,0,false,ok,0,0
+C,C6,1000,0,0,0,Heap Sort,4,0.0001074,0,13588,20778,0,false,ok,0,0
+C,C6,1000,0,0,0,Heap Sort,5,0.0001254,0,13588,20778,0,false,ok,0,0
+C,C6,1000,0,0,0,Heap Sort,0,0.0001108,0,13588,20778,0,false,median,0,0

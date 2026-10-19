@@ -28,7 +28,8 @@ using Clock = std::chrono::steady_clock;
 constexpr int kRoll = 2013;
 constexpr int kPersonalK = 230;
 constexpr int kTrials = 5;
-constexpr int kTimeoutSeconds = 30;
+constexpr int kDefaultTimeoutSeconds = 300;
+int g_timeout_seconds = kDefaultTimeoutSeconds;
 
 struct ResultRow {
     std::string problem, condition, algorithm, status;
@@ -137,6 +138,18 @@ bool is_sorted_by(const std::vector<Record>& records, HigherPriority comp) {
     return true;
 }
 
+bool same_transaction_ids(const std::vector<Record>& left, const std::vector<Record>& right) {
+    if (left.size() != right.size()) return false;
+    std::vector<std::uint64_t> left_ids, right_ids;
+    left_ids.reserve(left.size());
+    right_ids.reserve(right.size());
+    for (const auto& record : left) left_ids.push_back(record.txn_id);
+    for (const auto& record : right) right_ids.push_back(record.txn_id);
+    std::sort(left_ids.begin(), left_ids.end());
+    std::sort(right_ids.begin(), right_ids.end());
+    return left_ids == right_ids;
+}
+
 void log_prediction(std::ostream& out, const std::string& round, const std::string& phase,
                     std::size_t n, Condition c, const Prediction& p,
                     const std::string& actual_winner = "", const std::string& actual_loser = "",
@@ -165,6 +178,10 @@ std::vector<CMedian> run_problem_c(const Dataset& dataset, bool smoke,
             log_prediction(predictions, round, "prediction", n, condition, prediction);
             const auto input = make_condition(c1, condition, rng);
             const auto comparator = comparator_for(condition);
+            // Correctness verification is outside the timed region. C6 intentionally
+            // compares only bands, so ties may have a different valid order.
+            auto reference = input;
+            std::sort(reference.begin(), reference.end(), comparator);
             struct One { std::string name; double seconds; std::uint64_t comparisons, moves; bool dnf, stable; };
             std::vector<One> observed;
             for (const auto& method : methods) {
@@ -174,13 +191,19 @@ std::vector<CMedian> run_problem_c(const Dataset& dataset, bool smoke,
                 for (int trial = 1; trial <= kTrials; ++trial) {
                     auto working = input; // The fresh copy is outside the timed section.
                     Metrics metrics;
-                    metrics.set_time_limit(std::chrono::seconds(kTimeoutSeconds));
+                    metrics.set_time_limit(std::chrono::seconds(g_timeout_seconds));
                     const auto start = Clock::now();
                     try {
                         method.sort(working, comparator, &metrics);
                         const auto finish = Clock::now();
                         const double seconds = std::chrono::duration<double>(finish - start).count();
-                        if (!is_sorted_by(working, comparator)) throw std::runtime_error("sort result is not ordered");
+                        if (!is_sorted_by(working, comparator) || !same_transaction_ids(working, input))
+                            throw std::runtime_error("sort result is not an ordered permutation of its input");
+                        if (condition != Condition::C6BandOnly) {
+                            for (std::size_t i = 0; i < working.size(); ++i)
+                                if (working[i].txn_id != reference[i].txn_id)
+                                    throw std::runtime_error("sort result differs from trusted reference");
+                        }
                         times.push_back(seconds); comparisons.push_back(metrics.comparisons); moves.push_back(metrics.moves);
                         ResultRow row{"C", condition_id(condition), method.name, "ok", n, 0, 0, 0,
                             static_cast<std::size_t>(trial), seconds, 0, metrics.comparisons, metrics.moves,
@@ -325,12 +348,12 @@ std::vector<DSummary> run_d_trials(const std::vector<Record>& input, std::size_t
             try {
                 if (method.name == "Full Sort (Merge Sort)") {
                     output = input; // Match the fresh-copy rule and keep input preparation out of timing.
-                    metrics.set_time_limit(std::chrono::seconds(kTimeoutSeconds));
+                    metrics.set_time_limit(std::chrono::seconds(g_timeout_seconds));
                     start = Clock::now();
                     merge_sort(output, HigherPriority{}, &metrics);
                     if (output.size() > k) output.resize(k);
                 } else {
-                    metrics.set_time_limit(std::chrono::seconds(kTimeoutSeconds));
+                    metrics.set_time_limit(std::chrono::seconds(g_timeout_seconds));
                     start = Clock::now();
                     output = method.run(input, k, &metrics);
                 }
@@ -612,7 +635,7 @@ void run_problem_e(const Dataset& dataset, bool smoke, const std::filesystem::pa
 
 int main(int argc, char** argv) {
     if (argc < 2) {
-        std::cerr << "Usage: queue_experiments <creditcard.csv> [--problem C|D|E|all] [--smoke] [--out directory]\n";
+        std::cerr << "Usage: queue_experiments <creditcard.csv> [--problem C|D|E|all] [--timeout-seconds N] [--smoke] [--out directory]\n";
         return 2;
     }
     std::string problem = "all";
@@ -622,6 +645,16 @@ int main(int argc, char** argv) {
         const std::string arg = argv[i];
         if (arg == "--smoke") smoke = true;
         else if (arg == "--problem" && i + 1 < argc) problem = argv[++i];
+        else if (arg == "--timeout-seconds" && i + 1 < argc) {
+            try {
+                const int parsed = std::stoi(argv[++i]);
+                if (parsed <= 0) throw std::invalid_argument("must be positive");
+                g_timeout_seconds = parsed;
+            } catch (const std::exception&) {
+                std::cerr << "--timeout-seconds must be a positive integer.\n";
+                return 2;
+            }
+        }
         else if (arg == "--out" && i + 1 < argc) outdir = argv[++i];
         else { std::cerr << "Unknown option: " << arg << '\n'; return 2; }
     }
