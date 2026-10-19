@@ -137,26 +137,26 @@ void heap_sort(std::vector<T>& a, Less less, Metrics* m = nullptr) {
 template <class T, class Less>
 std::vector<T> top_k_heap(const std::vector<T>& input, std::size_t k, Less higher, Metrics* m = nullptr) {
     if (k == 0 || input.empty()) return {};
-    const auto lower = [&](const T& a, const T& b) { return higher(b, a); };
     std::vector<T> heap;
     heap.reserve(k);
     auto sift_up = [&](std::size_t i) {
         while (i > 0) {
             std::size_t p = (i - 1) / 2;
-            if (!counted_less(heap[i], heap[p], lower, m)) break;
+            if (!counted_less(heap[p], heap[i], higher, m)) break;
             std::swap(heap[i], heap[p]); if (m) m->moves += 3;
             i = p;
         }
     };
     for (const T& item : input) {
         if (heap.size() < k) { heap.push_back(item); if (m) ++m->moves; sift_up(heap.size() - 1); }
-        else if (counted_less(heap.front(), item, lower, m)) {
+        else if (counted_less(item, heap.front(), higher, m)) {
             heap.front() = item; if (m) ++m->moves;
-            sift_down(heap, 0, heap.size(), lower, m);
+            sift_down(heap, 0, heap.size(), higher, m);
         }
     }
-    // Heap root is the lowest priority. In-place heapsort under `lower` makes output high-to-low.
-    heap_sort(heap, lower, m);
+    // With `higher` as the heap comparator, the root is the lowest priority; heapsort
+    // then emits the retained records in the requested high-to-low order.
+    heap_sort(heap, higher, m);
     return heap;
 }
 

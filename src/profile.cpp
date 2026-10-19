@@ -36,7 +36,7 @@ int main(int argc, char** argv) {
         for (std::size_t i = 0; i < std::min<std::size_t>(10, frequencies.size()); ++i) top_ten += frequencies[i];
 
         std::cout << "transactions," << dataset.records.size() << "\nfrauds," << frauds
-                  << "\nroll_number,2013\nK,46\namount_distinct," << amounts.size()
+                  << "\nroll_number,2013\nK," << 25 + (2013 % 226) << "\namount_distinct," << amounts.size()
                   << "\ntop_10_amount_share," << static_cast<double>(top_ten) / dataset.records.size()
                   << "\nC1_time_ascending," << (time_ascending ? "true" : "false") << "\n\nband,count,fraud_count\n";
         for (std::size_t band = 0; band < band_count.size(); ++band)

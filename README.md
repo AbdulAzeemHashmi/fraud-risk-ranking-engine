@@ -13,9 +13,21 @@ C++ implementation and experiments for the Design and Analysis of Algorithms ass
 Requires a C++17 compiler and CMake 3.16 or newer.
 
 ```powershell
+$env:Path = "C:\msys64\mingw64\bin;$env:Path"
 cmake -S . -B build
 cmake --build build --config Release
 ctest --test-dir build --output-on-failure
+```
+
+Or build the current targets directly with MinGW from PowerShell:
+
+```powershell
+$env:Path = "C:\msys64\mingw64\bin;$env:Path"
+New-Item -ItemType Directory -Force build | Out-Null
+g++ -std=c++17 -O2 -Wall -Wextra -Wpedantic -I include src\profile.cpp -o build\queue_profile.exe
+g++ -std=c++17 -O2 -Wall -Wextra -Wpedantic -I include tests\test_algorithms.cpp -o build\queue_tests.exe
+.\build\queue_tests.exe
+.\build\queue_profile.exe .\creditcard.csv
 ```
 
 The Problem A profiler accepts the dataset path as a command-line argument. Benchmark commands and `results.csv` generation will be added in the next phase; measured data is never fabricated or committed.

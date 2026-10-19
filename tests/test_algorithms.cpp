@@ -3,6 +3,7 @@
 
 #include <algorithm>
 #include <cassert>
+#include <iostream>
 #include <vector>
 
 using namespace midnight_queue;
@@ -41,6 +42,10 @@ int main() {
         const std::size_t expected_size = std::min(k, expected.size());
         assert(h.size() == expected_size && b.size() == expected_size);
         for (std::size_t i = 0; i < expected_size; ++i) {
+            if (h[i].txn_id != expected[i].txn_id) {
+                std::cerr << "heap top-K mismatch at k=" << k << " position=" << i
+                          << " actual txn=" << h[i].txn_id << " expected txn=" << expected[i].txn_id << '\n';
+            }
             assert(h[i].txn_id == expected[i].txn_id);
             assert(b[i].txn_id == expected[i].txn_id);
         }
