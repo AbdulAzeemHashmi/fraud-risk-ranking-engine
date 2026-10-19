@@ -293,7 +293,7 @@ fraud-risk-ranking-engine/
 |   `-- test_algorithms.cpp
 |-- CMakeLists.txt
 |-- PLAN.md
-`-- README.md
+|-- README.md
 ```
 
 | Path | Purpose |
