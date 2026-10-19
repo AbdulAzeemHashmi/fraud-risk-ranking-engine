@@ -61,6 +61,33 @@ int main() {
     quick_sort_hardened(tied, higher);
     for (std::size_t i = 0; i < tied.size(); ++i) assert(tied[i].txn_id == duplicate_expected[i].txn_id);
 
+    // Exercise every contender when all keys are equivalent. The comparator
+    // intentionally ignores the transaction ID so any ordering is valid.
+    const auto all_equal = [](const Record&, const Record&) { return false; };
+    std::vector<std::uint64_t> source_ids;
+    for (const auto& record : source) source_ids.push_back(record.txn_id);
+    std::sort(source_ids.begin(), source_ids.end());
+    const auto check_all_equal = [&](auto sort_fn) {
+        auto actual = source;
+        sort_fn(actual, all_equal, static_cast<Metrics*>(nullptr));
+        std::vector<std::uint64_t> actual_ids;
+        for (const auto& record : actual) actual_ids.push_back(record.txn_id);
+        std::sort(actual_ids.begin(), actual_ids.end());
+        assert(actual_ids == source_ids);
+    };
+    check_all_equal([](auto& a, auto c, auto* m) { insertion_sort(a, c, m); });
+    check_all_equal([](auto& a, auto c, auto* m) { merge_sort(a, c, m); });
+    check_all_equal([](auto& a, auto c, auto* m) { quick_sort_naive(a, c, m); });
+    check_all_equal([](auto& a, auto c, auto* m) { quick_sort_hardened(a, c, m); });
+    check_all_equal([](auto& a, auto c, auto* m) { heap_sort(a, c, m); });
+    for (const auto& top : {top_k_heap(source, 3, all_equal), top_k_buffer(source, 3, all_equal)}) {
+        assert(top.size() == 3);
+        for (std::size_t i = 0; i < top.size(); ++i) {
+            assert(std::find(source_ids.begin(), source_ids.end(), top[i].txn_id) != source_ids.end());
+            for (std::size_t j = i + 1; j < top.size(); ++j) assert(top[i].txn_id != top[j].txn_id);
+        }
+    }
+
     std::vector<Record> duplicate_heavy;
     for (std::uint64_t i = 0; i < 100; ++i)
         duplicate_heavy.push_back(Record{100 - i, 5, 8.5, 6, static_cast<int>(i % 9 == 0)});
