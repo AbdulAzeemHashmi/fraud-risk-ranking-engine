@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="640" viewBox="0 0 1000 640">
+<rect width="100%" height="100%" fill="white"/>
+<text x="500" y="34" text-anchor="middle" font-family="Arial" font-size="22">Key Comparisons vs Input Size on C2</text>
+<line x1="100" y1="70" x2="100" y2="520" stroke="#e3e3e3"/>
+<line x1="100" y1="70" x2="700" y2="70" stroke="#e3e3e3"/>
+<text x="100" y="544" text-anchor="middle" font-family="Arial" font-size="12">316</text>
+<text x="88" y="74" text-anchor="end" font-family="Arial" font-size="12">2.56e+05</text>
+<line x1="250" y1="70" x2="250" y2="520" stroke="#e3e3e3"/>
+<line x1="100" y1="182" x2="700" y2="182" stroke="#e3e3e3"/>
+<text x="250" y="544" text-anchor="middle" font-family="Arial" font-size="12">562</text>
+<text x="88" y="186" text-anchor="end" font-family="Arial" font-size="12">1.1e+05</text>
+<line x1="400" y1="70" x2="400" y2="520" stroke="#e3e3e3"/>
+<line x1="100" y1="295" x2="700" y2="295" stroke="#e3e3e3"/>
+<text x="400" y="544" text-anchor="middle" font-family="Arial" font-size="12">1e+03</text>
+<text x="88" y="299" text-anchor="end" font-family="Arial" font-size="12">4.73e+04</text>
+<line x1="550" y1="70" x2="550" y2="520" stroke="#e3e3e3"/>
+<line x1="100" y1="408" x2="700" y2="408" stroke="#e3e3e3"/>
+<text x="550" y="544" text-anchor="middle" font-family="Arial" font-size="12">1.78e+03</text>
+<text x="88" y="412" text-anchor="end" font-family="Arial" font-size="12">2.03e+04</text>
+<line x1="700" y1="70" x2="700" y2="520" stroke="#e3e3e3"/>
+<line x1="100" y1="520" x2="700" y2="520" stroke="#e3e3e3"/>
+<text x="700" y="544" text-anchor="middle" font-family="Arial" font-size="12">3.16e+03</text>
+<text x="88" y="524" text-anchor="end" font-family="Arial" font-size="12">8.73e+03</text>
+<line x1="100" y1="520" x2="700" y2="520" stroke="black"/>
+<line x1="100" y1="70" x2="100" y2="520" stroke="black"/>
+<text x="400" y="574" text-anchor="middle" font-family="Arial" font-size="15">Input size, n (transactions)</text>
+<text x="22" y="295" transform="rotate(-90 22 295)" text-anchor="middle" font-family="Arial" font-size="15">Key comparisons (count)</text>
+<circle cx="400" cy="70" r="3" fill="#2455a4"/>
+<line x1="740" y1="92" x2="765" y2="92" stroke="#2455a4" stroke-width="3"/>
+<text x="773" y="97" font-family="Arial" font-size="13">Insertion Sort</text>
+<circle cx="400" cy="520" r="3" fill="#dc7927"/>
+<line x1="740" y1="117" x2="765" y2="117" stroke="#dc7927" stroke-width="3"/>
+<text x="773" y="122" font-family="Arial" font-size="13">Merge Sort</text>
+<circle cx="400" cy="501" r="3" fill="#2a8f55"/>
+<line x1="740" y1="142" x2="765" y2="142" stroke="#2a8f55" stroke-width="3"/>
+<text x="773" y="147" font-family="Arial" font-size="13">Naive Quick Sort</text>
+<circle cx="400" cy="436" r="3" fill="#a23a8b"/>
+<line x1="740" y1="167" x2="765" y2="167" stroke="#a23a8b" stroke-width="3"/>
+<text x="773" y="172" font-family="Arial" font-size="13">Hardened Quick Sort</text>
+<circle cx="400" cy="432" r="3" fill="#555b66"/>
+<line x1="740" y1="192" x2="765" y2="192" stroke="#555b66" stroke-width="3"/>
+<text x="773" y="197" font-family="Arial" font-size="13">Heap Sort</text>
+<text x="500" y="615" text-anchor="middle" font-family="Arial" font-size="12">Figure C2. Median key comparisons. DNF results are omitted.</text>
+</svg>
