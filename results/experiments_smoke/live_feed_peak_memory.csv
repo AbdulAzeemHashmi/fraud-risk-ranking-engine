@@ -1,0 +1,7 @@
+window_minutes,strategy,peak_extra_memory_bytes,status
+60,Re-rank All with Merge Sort,992768,measured
+60,Maintain Size-K Min-Heap,14720,measured
+60,Merge Sorted Window into Top-K,269504,measured
+10,Re-rank All with Merge Sort,694016,measured
+10,Maintain Size-K Min-Heap,14720,measured
+10,Merge Sorted Window into Top-K,72896,measured

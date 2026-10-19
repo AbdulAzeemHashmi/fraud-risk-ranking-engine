@@ -2,6 +2,8 @@
 
 #include <cstddef>
 #include <cstdint>
+#include <chrono>
+#include <stdexcept>
 #include <utility>
 #include <vector>
 
@@ -10,13 +12,28 @@ namespace midnight_queue {
 struct Metrics {
     std::uint64_t comparisons{0};
     std::uint64_t moves{0};
+    std::chrono::steady_clock::time_point deadline{};
+    bool has_deadline{false};
+
+    void set_time_limit(std::chrono::seconds limit) {
+        deadline = std::chrono::steady_clock::now() + limit;
+        has_deadline = true;
+    }
+};
+
+struct RunTimeout : std::runtime_error {
+    RunTimeout() : std::runtime_error("Run exceeded its time limit") {}
 };
 
 // A move is one assignment of an input element to an algorithm-owned slot.
 // Key comparisons count calls to less(a,b); index/loop tests are not key comparisons.
 template <class T, class Less>
 bool counted_less(const T& a, const T& b, Less less, Metrics* m) {
-    if (m) ++m->comparisons;
+    if (m) {
+        ++m->comparisons;
+        if (m->has_deadline && (m->comparisons & 16383U) == 0 &&
+            std::chrono::steady_clock::now() >= m->deadline) throw RunTimeout{};
+    }
     return less(a, b);
 }
 
@@ -169,8 +186,27 @@ std::vector<T> top_k_buffer(const std::vector<T>& input, std::size_t k, Less hig
         auto it = out.begin();
         while (it != out.end() && !counted_less(item, *it, higher, m)) ++it;
         if (it == out.end() && out.size() == k) continue;
-        out.insert(it, item); if (m) ++m->moves;
-        if (out.size() > k) { out.pop_back(); if (m) ++m->moves; }
+        const auto position = static_cast<std::size_t>(it - out.begin());
+        if (out.size() < k) {
+            const auto old_size = out.size();
+            out.push_back(item);
+            if (m) ++m->moves;
+            for (std::size_t i = old_size; i > position; --i) {
+                out[i] = std::move(out[i - 1]);
+                if (m) ++m->moves;
+            }
+            if (position < old_size) {
+                out[position] = item;
+                if (m) ++m->moves;
+            }
+        } else {
+            for (std::size_t i = out.size() - 1; i > position; --i) {
+                out[i] = std::move(out[i - 1]);
+                if (m) ++m->moves;
+            }
+            out[position] = item;
+            if (m) ++m->moves;
+        }
     }
     return out;
 }
