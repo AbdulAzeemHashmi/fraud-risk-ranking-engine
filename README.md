@@ -54,10 +54,12 @@ flowchart LR
 
 ## Quick start
 
-You need a Windows computer with PowerShell, MinGW (g++), and Python. Install the Python packages into the same interpreter you use to run the scripts:
+You need a Windows computer with PowerShell, MinGW (g++), and Python. The compiler setup adds MSYS folders to `PATH`, which can make `python` select the MSYS copy. Set a variable to your regular Windows Python executable and use it for Python commands. This example matches Python 3.12 from the error output. Change the version or path if yours is different:
 
 ```powershell
-python -m pip install -r requirements.txt
+$PythonExe = "$env:LOCALAPPDATA\Programs\Python\Python312\python.exe"
+& $PythonExe -m ensurepip --upgrade
+& $PythonExe -m pip install -r requirements.txt
 ```
 
 **1. Get the data.** Download `creditcard.csv` from the [Kaggle credit card fraud page](https://www.kaggle.com/datasets/mlg-ulb/creditcardfraud) and put it in the project folder. The file is not part of this repository. Check the licence terms on the Kaggle page.
@@ -85,7 +87,7 @@ g++ -std=c++17 -O2 -Wall -Wextra -Wpedantic -I include src\analyst_console.cpp -
 ```powershell
 .\build\queue_tests.exe
 .\build\queue_profile.exe .\creditcard.csv
-python analysis\problem_a.py creditcard.csv --out results\problem_a
+& $PythonExe analysis\problem_a.py creditcard.csv --out results\problem_a
 ```
 
 If the tests pass, the test program prints nothing. The C++ profile prints the transaction count, fraud count, Amount statistics, risk band counts, and a check of the ranking order.
@@ -225,7 +227,7 @@ The Python file only serves the page and calls the C++ program. All ranking stay
 Build `analyst_console.exe` (see Quick start), then start the page from the project folder:
 
 ```powershell
-python analysis\analyst_console.py
+& $PythonExe analysis\analyst_console.py
 ```
 
 Open `http://127.0.0.1:8000` in a browser. Keep the PowerShell window open while you use the page. Press `Ctrl+C` to stop it. The server listens only on your own computer. Large K values can make the bounded insertion buffer slow.
@@ -233,7 +235,7 @@ Open `http://127.0.0.1:8000` in a browser. Keep the PowerShell window open while
 To use another data file, port, or program:
 
 ```powershell
-python analysis\analyst_console.py --data .\creditcard.csv --exe .\build\analyst_console.exe --port 8000
+& $PythonExe analysis\analyst_console.py --data .\creditcard.csv --exe .\build\analyst_console.exe --port 8000
 ```
 
 ## Run the experiments
@@ -415,7 +417,7 @@ To debug one queue run without the web page:
 To debug a request from the web page, start the server with the debug program:
 
 ```powershell
-python analysis\analyst_console.py --exe .\build\analyst_console_debug.exe
+& $PythonExe analysis\analyst_console.py --exe .\build\analyst_console_debug.exe
 ```
 
 </details>
@@ -432,7 +434,7 @@ creditcard.csv --out results/problem_a
 Or use the command line debugger:
 
 ```powershell
-python -m pdb analysis\problem_a.py creditcard.csv --out results\problem_a
+& $PythonExe -m pdb analysis\problem_a.py creditcard.csv --out results\problem_a
 ```
 
 At the `pdb` prompt: `n` runs the next line, `s` steps into a function, `p name` prints a value, and `c` continues.
