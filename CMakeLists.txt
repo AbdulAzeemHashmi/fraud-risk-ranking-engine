@@ -17,5 +17,8 @@ target_link_libraries(queue_profile PRIVATE queue_algorithms)
 add_executable(queue_experiments src/experiment_runner.cpp)
 target_link_libraries(queue_experiments PRIVATE queue_algorithms)
 
+add_executable(analyst_console src/analyst_console.cpp)
+target_link_libraries(analyst_console PRIVATE queue_algorithms)
+
 enable_testing()
 add_test(NAME queue_algorithms COMMAND queue_tests)

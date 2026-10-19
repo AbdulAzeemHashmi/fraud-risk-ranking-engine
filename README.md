@@ -88,6 +88,7 @@ Add the MinGW folder to `PATH` so the compiler and its runtime libraries can be 
 g++ -std=c++17 -O2 -Wall -Wextra -Wpedantic -I include src\profile.cpp -o build\queue_profile.exe
 g++ -std=c++17 -O2 -Wall -Wextra -Wpedantic -I include tests\test_algorithms.cpp -o build\queue_tests.exe
 g++ -std=c++17 -O2 -Wall -Wextra -Wpedantic -I include src\experiment_runner.cpp -o build\queue_experiments.exe
+g++ -std=c++17 -O2 -Wall -Wextra -Wpedantic -I include src\analyst_console.cpp -o build\analyst_console.exe
 ```
 
 Run the tests, the C++ data profile, and the Python profile:
@@ -118,6 +119,24 @@ Use a new output folder for a fresh run. If you run the problems separately, use
 
 The `--smoke` option runs a small data sample to check that the commands and output files work. Smoke results are not assignment measurements.
 
+## Analyst Console
+
+The local web console lets an analyst choose Full Sort with Merge Sort, Size-K Min-Heap, or Bounded Insertion Buffer. Set K, build the queue, and inspect transaction ID, risk band, Amount, and Time. The console shows the run time, comparison count, and move count. The Python file only serves the page and calls the C++ executable. Ranking remains in C++.
+
+After compiling `analyst_console.exe`, start the page from the project folder:
+
+```powershell
+python analysis\analyst_console.py
+```
+
+Open `http://127.0.0.1:8000` in a browser. Keep the PowerShell window open while using the page. Press Ctrl+C in that window to stop it. The server only listens on the local computer. The default queue size is K = 230. Large K values can make the bounded insertion buffer take longer.
+
+To use another data file, port, or C++ executable, pass command line options:
+
+```powershell
+python analysis\analyst_console.py --data .\creditcard.csv --exe .\build\analyst_console.exe --port 8000
+```
+
 ## Debug C++ code
 
 Use a debug build when you want readable error messages and to step through the C++ code. In the VS Code terminal, open PowerShell in the project folder and add MinGW to `PATH`:
@@ -134,6 +153,7 @@ Compile the program or tests with debug symbols. The `-g` option adds symbols, a
 g++ -std=c++17 -O0 -g -Wall -Wextra -Wpedantic -I include src\profile.cpp -o build\queue_profile_debug.exe
 g++ -std=c++17 -O0 -g -Wall -Wextra -Wpedantic -I include tests\test_algorithms.cpp -o build\queue_tests_debug.exe
 g++ -std=c++17 -O0 -g -Wall -Wextra -Wpedantic -I include src\experiment_runner.cpp -o build\queue_experiments_debug.exe
+g++ -std=c++17 -O0 -g -Wall -Wextra -Wpedantic -I include src\analyst_console.cpp -o build\analyst_console_debug.exe
 ```
 
 Run the program or test executable directly to see its output in the terminal:
@@ -184,6 +204,18 @@ If VS Code does not have a MinGW launch configuration, create `.vscode/launch.js
 
 To debug the tests instead, change `program` to `${workspaceFolder}/build/queue_tests_debug.exe` and remove the `args` field. Header files are compiled through the `.cpp` program or test that includes them. Add breakpoints in a header and start the matching `.cpp` debug configuration.
 
+To debug a console queue run without the web page, run the debug executable with the data path, method, and K:
+
+```powershell
+.\build\analyst_console_debug.exe .\creditcard.csv size_k_min_heap 230
+```
+
+To debug a request from the web page, start the server with the debug executable:
+
+```powershell
+python analysis\analyst_console.py --exe .\build\analyst_console_debug.exe
+```
+
 ### Debug the Python profile
 
 Install the Python extension in VS Code and select the Python environment that has pandas, NumPy, and Matplotlib. Open `analysis/problem_a.py`, click next to a line number to add a breakpoint, and choose Debug Python File. Set these script arguments in the launch settings:
@@ -205,6 +237,7 @@ At the `pdb` prompt, enter `n` to run the next line, `s` to enter a function, `p
 ```text
 fraud-risk-ranking-engine/
 |-- analysis/
+|   |-- analyst_console.py
 |   `-- problem_a.py
 |-- include/
 |   `-- midnight_queue/
@@ -226,6 +259,7 @@ fraud-risk-ranking-engine/
 |       |-- risk_band_histogram.png
 |       `-- summary.json
 |-- src/
+|   |-- analyst_console.cpp
 |   |-- experiment_runner.cpp
 |   `-- profile.cpp
 |-- tests/
@@ -247,7 +281,9 @@ fraud-risk-ranking-engine/
 | `include/midnight_queue/svg_plot.hpp` | SVG line and grouped bar charts for the experiments |
 | `src/profile.cpp` | C++ profile command line program |
 | `src/experiment_runner.cpp` | C++ benchmark runner for Problems C, D, and E |
+| `src/analyst_console.cpp` | C++ queue builder used by the local analyst page |
 | `tests/test_algorithms.cpp` | C++ correctness tests |
+| `analysis/analyst_console.py` | Local web page server and launcher for the C++ queue builder |
 | `analysis/problem_a.py` | Python data checks, Problem A statistics, and histogram creation |
 | `results/problem_a/risk_band_distribution.csv` | Risk band and fraud count table |
 | `results/problem_a/summary.json` | Dataset checks, Amount statistics, and input order evidence |

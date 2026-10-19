@@ -68,6 +68,8 @@ The full dataset was split into 48 one-hour windows and 288 ten-minute windows b
 
 Maintaining the heap was fastest and used the least extra memory for both window sizes. Sorting each new window and merging it into the current queue was faster than re-ranking the full feed. More frequent ten-minute updates increased the total cost of full re-ranking.
 
+The optional Analyst Console is a local web page for selecting Full Sort with Merge Sort, Size-K Min-Heap, or Bounded Insertion Buffer and setting K. It displays the top transactions with their risk band, Amount, and Time, plus the run time and comparison count. The page calls a C++ queue builder, so the ranking stays in C++. Bonus marks are conditional on Problems A to H being complete; Problems F and H are being handled separately, and the instructor has not shared Problem G yet, so bonus eligibility is pending.
+
 ## Output files
 
 - `results.csv`: trial-level results and median rows for C, D, and E.

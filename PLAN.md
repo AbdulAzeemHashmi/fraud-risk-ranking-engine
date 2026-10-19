@@ -23,9 +23,10 @@ Build and study a C++ transaction ranking engine. It ranks transactions by risk 
 | Problem C: Full Ranking Tournament | Done. All five sort contenders ran on C1 to C6 at n = 1,000, 10,000, 100,000, and 284,807. Trial data, medians, predictions, and requested charts are saved. | Use the measurements in the final conclusions. |
 | Problem D: Shift Queue | Done. Full sort, size K heap, and bounded insertion buffer ran on C1 and C2 for both required data sizes and K values. Fraud capture and half capture costs are saved. | Use the measured crossover results in the final conclusions. |
 | Problem E: Live Feed | Done. All three strategies ran with one hour and ten minute windows. Cumulative time plots and peak memory estimates are saved. | Use the results in the final recommendation. |
+| Bonus: Analyst Console | Done. A local web page selects a C++ queue method, sets K, displays the ranked transactions, and shows time and comparison counts. | Bonus marks remain conditional on Problems A to H being complete and a viva demonstration. |
 | Problem F: Mathematical Case | Not started. | Write all eight derivations and compare theoretical counts with measured counts and times. |
-| Problem G: Change Request | Waiting for the course portal to provide the new requirement. | Add the requested update and measurements after the change is available. |
-| Problem H: Recommendation | Partly supported by the C, D, and E results. | Recommend methods for daily ranking, shift queues, and live refresh. State assumptions and limits. |
+| Problem G: Change Request | Waiting for the instructor to provide the new requirement. | Add the requested update and measurements after the change is available. |
+| Problem H: Recommendation | The measured C, D, and E results are ready for the recommendation. | Being handled separately. State assumptions and limits. |
 | Final files | Source, tests, Problem A output, C to E measurements, plots, summaries, and report are present. | Complete Problems F and H, add Problem G when available, prepare the final report and demonstration, and check the package. |
 
 ## Experiment findings
