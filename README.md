@@ -1,88 +1,73 @@
-# The Midnight Queue
+<p align="center">
+  <img src="assets/header.svg" alt="Fraud Risk Ranking Engine banner" width="100%">
+</p>
 
-The Midnight Queue ranks payment transactions by estimated risk. Analysts can review only a limited number of transactions during each shift, so the highest ranked items should appear first.
+# Fraud Risk Ranking Engine
 
-This project uses the Kaggle credit card fraud data. It calculates a risk band for each transaction and orders transactions by:
+<p align="center">
+  <img alt="C++17" src="https://img.shields.io/badge/C%2B%2B-17-00599C?logo=cplusplus&logoColor=white">
+  <img alt="Python" src="https://img.shields.io/badge/Python-analysis-3776AB?logo=python&logoColor=white">
+  <img alt="Windows" src="https://img.shields.io/badge/Windows-PowerShell-0078D4?logo=windows&logoColor=white">
+  <img alt="Build" src="https://img.shields.io/badge/build-g%2B%2B%20or%20CMake-success">
+  <img alt="Dataset" src="https://img.shields.io/badge/data-Kaggle%20credit%20card%20fraud-20BEFF?logo=kaggle&logoColor=white">
+</p>
 
-1. Risk band from highest to lowest.
-2. Amount from highest to lowest.
-3. Time from earliest to latest.
-4. Transaction ID from lowest to highest.
+The Fraud Risk Ranking Engine ranks payment transactions by estimated risk. Fraud analysts can review only a limited number of transactions in each shift, so the riskiest transactions must come first.
 
-The transaction class identifies fraud for evaluation only. It is not used to calculate risk or to order transactions.
+The engine is written in C++17. It builds a risk score for every transaction, sorts the full list with five algorithms, picks the top K with two faster methods, and keeps a live queue up to date as new transactions arrive.
 
-## Risk score and data checks
+## Contents
 
-The input CSV has columns `Time`, `V1` through `V28`, `Amount`, and `Class`. For each of V1 through V28, the program calculates the mean and population standard deviation from the full file. It converts each feature value to a z score, squares the 28 z scores, and adds them to get the risk score. The risk band is the base 2 logarithm of that score, rounded down and limited to the range 0 to 9. A zero risk score is assigned to band 0.
+- [How it works](#how-it-works)
+- [Quick start](#quick-start)
+- [Risk score and ranking order](#risk-score-and-ranking-order)
+- [Algorithms](#algorithms)
+- [Test inputs](#test-inputs)
+- [Results](#results)
+- [Analyst Console](#analyst-console)
+- [Run the experiments](#run-the-experiments)
+- [Project layout](#project-layout)
+- [Debugging](#debugging)
+- [Limits and notes](#limits-and-notes)
 
-The Python profile found no missing, nonnumeric, or nonfinite values. It found 1,081 repeated full data rows. These rows are kept because each row is a separate transaction and receives its own transaction ID.
+## How it works
 
-## Personal settings
+```mermaid
+flowchart LR
+    A[creditcard.csv] --> B[Load and check data]
+    B --> C[Standardize V1 to V28]
+    C --> D[Risk score and risk band]
+    D --> E{Choose a job}
+    E --> F[Full sort<br/>nightly batch]
+    E --> G[Top K queue<br/>one shift]
+    E --> H[Live feed<br/>every window]
+    F --> I[Ranked list]
+    G --> I
+    H --> I
+```
 
-- Roll number and random seed: `2013`
-- Shift queue size: `K = 25 + (2013 mod 226) = 230`
-- Dataset file: `creditcard.csv`
+| Job | What it does | Best method found |
+|---|---|---|
+| Full sort | Ranks every transaction of a day | Merge Sort |
+| Top K queue | Finds only the first K transactions for a shift | Size K min heap |
+| Live feed | Updates the queue after every time window | Size K min heap fed with new records only |
 
-Keep the dataset in the project root when running the commands below. The file is excluded from Git and should not be included in a source package.
+## Quick start
 
-## Current features
+You need a Windows computer with PowerShell, MinGW (g++), and Python with pandas, NumPy, and Matplotlib.
 
-### Transaction processing
+**1. Get the data.** Download `creditcard.csv` from the [Kaggle credit card fraud page](https://www.kaggle.com/datasets/mlg-ulb/creditcardfraud) and put it in the project folder. The file is not part of this repository. Check the licence terms on the Kaggle page.
 
-The C++ loader reads the Kaggle CSV file, checks its columns and numeric fields, and calculates the mean and population standard deviation for features V1 through V28. It standardizes each feature, sums the squared standardized values, and maps the result to a risk band from 0 to 9.
-
-### Ranking and selection algorithms
-
-The C++ library includes these implementations:
-
-- Insertion Sort
-- Merge Sort
-- Naive Quick Sort using the last item as the Lomuto pivot
-- Hardened Quick Sort using a median of three pivot and three way partition
-- Heap Sort
-- Top K using a size K min heap
-- Top K using a bounded insertion buffer
-
-The C++ condition builder creates time ordered samples and the C1 through C6 input conditions with random seed 2013. The C++ experiment runner measures the sort and Top K methods and the live feed strategies. Unit tests check the sorting methods, Top K selection, sample repeatability, and condition construction.
-
-### Input condition methods
-
-For each required sample size, the builder selects rows uniformly without replacement and keeps them in Time order. It then creates these inputs:
-
-- C1: sampled rows in Time order.
-- C2: C1 shuffled with the seeded random number generator.
-- C3: C1 ordered by the full triage key using the project's Merge Sort.
-- C4: the exact reverse of C3.
-- C5: C3 with one percent of records selected and placed at different random positions. Other records keep their relative order.
-- C6: the C1 input with a band-only comparison key.
-
-The benchmark driver runs all five sorting methods on each condition and size. It records up to five trial times, medians, comparisons, moves, estimated extra memory, stability, and prediction results. A run that takes longer than 30 seconds is marked DNF.
-
-### Problems C, D, and E results
-
-The completed run is in `results/experiments`. Problem C includes C1 through C6 and n = 1,000, 10,000, 100,000, and 284,807. Problem D compares full sorting, a size K min heap, and a bounded insertion buffer for the requested K values. Problem E compares three live feed strategies with one hour and ten minute windows.
-
-The files `results.csv`, `C_summary.csv`, `D_summary.csv`, and `E_summary.csv` contain measurements. The prediction log records the prediction before each C round and its result afterward. SVG charts contain the requested timing, operation count, and fraud capture plots. `results/experiments/REPORT.md` explains the findings and limits.
-
-### Problem A profile
-
-The Python analysis uses pandas and NumPy to profile the full dataset. It checks for missing, nonnumeric, and nonfinite values. It does not silently drop or fill rows. Matplotlib creates the risk band histogram.
-
-The current profile contains 284,807 transactions and 492 frauds. It finds 32,767 distinct Amount values. The ten most frequent Amount values account for 16.291032 percent of transactions. The raw file is in nondecreasing Time order.
-
-The standard deviation uses the population formula with `ddof=0`. This choice is recorded in the profile output.
-
-## Build and run on Windows
-
-Open PowerShell in the project folder:
+**2. Open PowerShell in the project folder and make the compiler visible:**
 
 ```powershell
-cd "C:\Users\Azeem\Documents\fraud-risk-ranking-engine"
 $env:Path = "C:\msys64\mingw64\bin;$env:Path"
 New-Item -ItemType Directory -Force build | Out-Null
 ```
 
-Add the MinGW folder to `PATH` so the compiler and its runtime libraries can be found. Then compile the profile program and the tests:
+Change the MinGW path if you installed it somewhere else.
+
+**3. Build the programs:**
 
 ```powershell
 g++ -std=c++17 -O2 -Wall -Wextra -Wpedantic -I include src\profile.cpp -o build\queue_profile.exe
@@ -91,7 +76,7 @@ g++ -std=c++17 -O2 -Wall -Wextra -Wpedantic -I include src\experiment_runner.cpp
 g++ -std=c++17 -O2 -Wall -Wextra -Wpedantic -I include src\analyst_console.cpp -o build\analyst_console.exe
 ```
 
-Run the tests, the C++ data profile, and the Python profile:
+**4. Run the tests and the data profile:**
 
 ```powershell
 .\build\queue_tests.exe
@@ -99,17 +84,162 @@ Run the tests, the C++ data profile, and the Python profile:
 python analysis\problem_a.py creditcard.csv --out results\problem_a
 ```
 
-The C++ profile program prints the transaction count, fraud count, Amount statistics, risk band counts, and checks the triage ordering. The Python command recreates the Problem A table, summary, and histogram.
+If the tests pass, the test program prints nothing. The C++ profile prints the transaction count, fraud count, Amount statistics, risk band counts, and a check of the ranking order.
 
-The project also has a `CMakeLists.txt` for CMake 3.16 or newer. Direct MinGW commands above work without CMake.
+A `CMakeLists.txt` is also included for CMake 3.16 or newer. The direct `g++` commands above work without CMake.
 
-Run the C, D, and E experiments from PowerShell:
+## Risk score and ranking order
+
+For each feature V1 to V28, the program finds the mean and the population standard deviation (`ddof=0`) over the full file. Then for every transaction:
+
+1. Turn each feature into a z score: `(value - mean) / standard deviation`.
+2. Square the 28 z scores and add them. This is the **risk score**.
+3. Take the base 2 logarithm of the score, round down, and keep it between 0 and 9. This is the **risk band**. A score of zero goes to band 0.
+
+Transactions are ranked with this order, so every correct sort gives exactly the same output:
+
+| Step | Rule |
+|---|---|
+| 1 | Risk band, high to low |
+| 2 | Amount, high to low |
+| 3 | Time, early to late |
+| 4 | Transaction ID, low to high |
+
+The transaction ID is the row number in the file, starting at 1. The `Class` column marks fraud. It is used **only** to measure how many frauds a queue catches. It is never used to calculate risk or to sort.
+
+## Algorithms
+
+All algorithms are written from scratch in `include/midnight_queue/algorithms.hpp`. No library sort is used inside them.
+
+| Algorithm | Idea | Time (typical) | Extra memory |
+|---|---|---|---|
+| Insertion Sort | Insert each record into the sorted part | n squared, but n on ranked input | None |
+| Merge Sort | Split, sort halves, merge | n log n always | n records |
+| Naive Quick Sort | Last item as pivot, Lomuto partition | n log n, but n squared on ranked input | log n stack |
+| Hardened Quick Sort | Median of three pivot, three way partition | n log n on most inputs | log n stack |
+| Heap Sort | Build a heap, take the top again and again | n log n always | None |
+| Top K with size K min heap | Keep the best K seen so far in a small heap | about n, up to n log K | K records |
+| Top K with bounded insertion buffer | Keep a sorted list of K records | up to n times K | K records |
+
+Both Quick Sorts work on the smaller side first and loop on the larger side, so the stack stays small and sorted input does not crash them.
+
+Counting rules used in all measurements:
+
+- A **comparison** is one call of the ranking comparator.
+- A **move** is one assignment of a record into a slot owned by the algorithm. A swap counts as 3 moves.
+
+## Test inputs
+
+The same records are used to build six input conditions. Samples are drawn uniformly without replacement with seed `2013`, then put back into Time order.
+
+| ID | Name | How it is built |
+|---|---|---|
+| C1 | Arrival | Sampled rows in Time order |
+| C2 | Shuffled | C1 shuffled with the seeded random generator |
+| C3 | Pre-ranked | C1 sorted by the full ranking order |
+| C4 | Reverse-ranked | Exact reverse of C3 |
+| C5 | Nearly ranked | C3 with 1 percent of records moved to random places |
+| C6 | Band-only | C1 order, but the sort key is the risk band alone |
+
+Sample sizes are 1,000, 10,000, 100,000, and 284,807 (the full file). Every algorithm gets a fresh copy of identical input. Reported times are the median of 5 runs and exclude file reading and risk score calculation.
+
+## Results
+
+Saved measurements are in `results/experiments`. The run used MinGW GCC 16.2.0, C++17, `-O2`, on Windows 11 x64.
+
+### Building a top 230 queue
+
+<p align="center">
+  <img src="assets/topk_bars.svg" alt="Animated bars comparing the size K heap, full sort, and insertion buffer" width="100%">
+</p>
+
+The size K min heap was the fastest method at every tested point, even when K was one tenth of n. The bounded insertion buffer beats a full sort only for small K, and it hit the 30 second limit for large K.
+
+### Full sort on 284,807 shuffled transactions
+
+| Algorithm | Median time |
+|---|---|
+| Naive Quick Sort | 0.075 s |
+| Merge Sort | 0.103 s |
+| Hardened Quick Sort | 0.106 s |
+| Heap Sort | 0.144 s |
+| Insertion Sort | Did not finish (over 30 s) |
+
+Merge Sort finished every input condition at the full size, between 0.054 s and 0.134 s. Naive Quick Sort did not finish on three of the six conditions.
+
+### Live feed over 48 hours (1 hour windows)
+
+| Strategy | Final cumulative time | Peak extra memory |
+|---|---|---|
+| Re-rank everything with Merge Sort | 2.22 s | 35,006,336 bytes |
+| Merge Sort each window, merge into top K | 0.098 s | 1,055,936 bytes |
+| Size K min heap fed with new records | 0.006 s | 14,720 bytes |
+
+### How many frauds does the queue catch?
+
+Using `Class` only for evaluation:
+
+| Queue size K | Frauds caught | Share of all 492 frauds |
+|---|---|---|
+| 230 | 3 | 0.6 percent |
+| 500 | 63 | 12.8 percent |
+| 2,068 | 246 | 50 percent |
+| 5,000 | 361 | 73.4 percent |
+| 28,480 | 438 | 89.0 percent |
+
+The smallest queue that catches half of the frauds has K = 2,068. A faster algorithm does not change this number. Only a different ranking rule would.
+
+### Data profile
+
+- 284,807 transactions and 492 frauds.
+- No missing, nonnumeric, or nonfinite values. No row was dropped or filled.
+- 1,081 repeated full rows are kept, because each row is a separate transaction.
+- 32,767 distinct Amount values. The 10 most common values cover 16.29 percent of rows.
+- The raw file is in nondecreasing Time order. It is not already in ranking order or in the exact reverse.
+
+| Risk band | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 |
+|---|---|---|---|---|---|---|---|---|
+| Transactions | 21,156 | 107,410 | 113,116 | 32,084 | 6,006 | 2,797 | 1,376 | 862 |
+| Frauds | 0 | 13 | 30 | 23 | 56 | 97 | 112 | 161 |
+
+Bands 0 and 1 are empty. See `results/problem_a/risk_band_histogram.png` for the chart.
+
+For the full details and limits, read `results/experiments/REPORT.md`.
+
+## Analyst Console
+
+A small local web page lets an analyst:
+
+- choose the method: Full Sort with Merge Sort, Size K Min Heap, or Bounded Insertion Buffer
+- set K (default 230)
+- see the top K transactions with transaction ID, risk band, Amount, and Time
+- see the run time, comparison count, and move count of the run
+
+The Python file only serves the page and calls the C++ program. All ranking stays in C++.
+
+Build `analyst_console.exe` (see Quick start), then start the page from the project folder:
+
+```powershell
+python analysis\analyst_console.py
+```
+
+Open `http://127.0.0.1:8000` in a browser. Keep the PowerShell window open while you use the page. Press `Ctrl+C` to stop it. The server listens only on your own computer. Large K values can make the bounded insertion buffer slow.
+
+To use another data file, port, or program:
+
+```powershell
+python analysis\analyst_console.py --data .\creditcard.csv --exe .\build\analyst_console.exe --port 8000
+```
+
+## Run the experiments
+
+Run all experiments into a new folder:
 
 ```powershell
 .\build\queue_experiments.exe .\creditcard.csv --problem all --out results\experiments_new
 ```
 
-Use a new output folder for a fresh run. If you run the problems separately, use the same output folder so each problem appends its rows:
+Or run one part at a time. Use the same output folder so each part adds its rows:
 
 ```powershell
 .\build\queue_experiments.exe .\creditcard.csv --problem C --out results\experiments_new
@@ -117,37 +247,90 @@ Use a new output folder for a fresh run. If you run the problems separately, use
 .\build\queue_experiments.exe .\creditcard.csv --problem E --out results\experiments_new
 ```
 
-The `--smoke` option runs a small data sample to check that the commands and output files work. Smoke results are not assignment measurements.
+| Option value | Experiment |
+|---|---|
+| `C` | Full sorting of all five algorithms on every input condition and size |
+| `D` | Top K: full sort, size K min heap, bounded insertion buffer |
+| `E` | Live feed with 1 hour and 10 minute windows |
+| `all` | All of the above |
 
-## Analyst Console
+The `--smoke` option runs a small sample to check that everything works. Smoke results are not real measurements.
 
-The local web console lets an analyst choose Full Sort with Merge Sort, Size-K Min-Heap, or Bounded Insertion Buffer. Set K, build the queue, and inspect transaction ID, risk band, Amount, and Time. The console shows the run time, comparison count, and move count. The Python file only serves the page and calls the C++ executable. Ranking remains in C++.
+## Project layout
 
-After compiling `analyst_console.exe`, start the page from the project folder:
-
-```powershell
-python analysis\analyst_console.py
+```text
+fraud-risk-ranking-engine/
+|-- analysis/
+|   |-- analyst_console.py
+|   `-- problem_a.py
+|-- assets/
+|   |-- header.svg
+|   `-- topk_bars.svg
+|-- include/
+|   `-- midnight_queue/
+|       |-- algorithms.hpp
+|       |-- dataset.hpp
+|       |-- experiment_data.hpp
+|       |-- record.hpp
+|       `-- svg_plot.hpp
+|-- results/
+|   |-- experiments/
+|   |   |-- C_summary.csv
+|   |   |-- D_summary.csv
+|   |   |-- E_summary.csv
+|   |   |-- REPORT.md
+|   |   |-- prediction_log.csv
+|   |   `-- results.csv
+|   `-- problem_a/
+|       |-- risk_band_distribution.csv
+|       |-- risk_band_histogram.png
+|       `-- summary.json
+|-- src/
+|   |-- analyst_console.cpp
+|   |-- experiment_runner.cpp
+|   `-- profile.cpp
+|-- tests/
+|   `-- test_algorithms.cpp
+|-- CMakeLists.txt
+|-- PLAN.md
+`-- README.md
 ```
 
-Open `http://127.0.0.1:8000` in a browser. Keep the PowerShell window open while using the page. Press Ctrl+C in that window to stop it. The server only listens on the local computer. The default queue size is K = 230. Large K values can make the bounded insertion buffer take longer.
+| Path | Purpose |
+|---|---|
+| `include/midnight_queue/record.hpp` | Transaction record and ranking rules |
+| `include/midnight_queue/algorithms.hpp` | Sorting algorithms, Top K methods, comparison and move counters |
+| `include/midnight_queue/dataset.hpp` | CSV loading, standardizing, risk score, and risk band |
+| `include/midnight_queue/experiment_data.hpp` | Seeded sampling and the six input conditions |
+| `include/midnight_queue/svg_plot.hpp` | SVG line and bar charts for the experiments |
+| `src/profile.cpp` | Command line data profile |
+| `src/experiment_runner.cpp` | Benchmark runner for the experiments |
+| `src/analyst_console.cpp` | C++ queue builder used by the web page |
+| `tests/test_algorithms.cpp` | Correctness tests |
+| `analysis/analyst_console.py` | Local web page server |
+| `analysis/problem_a.py` | Data checks, statistics, and the risk band histogram |
+| `results/experiments/results.csv` | Every trial and median measurement |
+| `results/experiments/C_summary.csv` | Full sort summary by condition and size |
+| `results/experiments/D_summary.csv` | Top K summary by condition, size, K, and method |
+| `results/experiments/E_summary.csv` | Live feed final time and peak memory |
+| `results/experiments/prediction_log.csv` | Prediction before and result after each full sort round |
+| `results/experiments/REPORT.md` | Plain language summary of the experiment results |
+| `results/problem_a/` | Risk band table, summary file, and histogram |
+| `PLAN.md` | Project notes and known limits |
 
-To use another data file, port, or C++ executable, pass command line options:
+## Debugging
+
+<details>
+<summary><b>Build with debug symbols and step through the code in VS Code</b></summary>
+
+Open PowerShell in the project folder and make the compiler visible:
 
 ```powershell
-python analysis\analyst_console.py --data .\creditcard.csv --exe .\build\analyst_console.exe --port 8000
-```
-
-## Debug C++ code
-
-Use a debug build when you want readable error messages and to step through the C++ code. In the VS Code terminal, open PowerShell in the project folder and add MinGW to `PATH`:
-
-```powershell
-cd "C:\Users\Azeem\Documents\fraud-risk-ranking-engine"
 $env:Path = "C:\msys64\mingw64\bin;$env:Path"
 New-Item -ItemType Directory -Force build | Out-Null
 ```
 
-Compile the program or tests with debug symbols. The `-g` option adds symbols, and `-O0` keeps the code easier to follow while debugging:
+Compile with `-g` (debug symbols) and `-O0` (no optimization, easier to follow):
 
 ```powershell
 g++ -std=c++17 -O0 -g -Wall -Wextra -Wpedantic -I include src\profile.cpp -o build\queue_profile_debug.exe
@@ -156,7 +339,7 @@ g++ -std=c++17 -O0 -g -Wall -Wextra -Wpedantic -I include src\experiment_runner.
 g++ -std=c++17 -O0 -g -Wall -Wextra -Wpedantic -I include src\analyst_console.cpp -o build\analyst_console_debug.exe
 ```
 
-Run the program or test executable directly to see its output in the terminal:
+Run them directly to see output in the terminal:
 
 ```powershell
 .\build\queue_tests_debug.exe
@@ -166,13 +349,13 @@ Run the program or test executable directly to see its output in the terminal:
 
 To step through code in VS Code:
 
-1. Install the Microsoft C/C++ extension and make sure the MinGW debugger `C:\msys64\mingw64\bin\gdb.exe` exists.
-2. Open the C++ file you want to inspect and click next to a line number to add a breakpoint.
-3. Open Run and Debug, choose the C++ debug configuration, and select the debug executable as the program.
+1. Install the Microsoft C/C++ extension and check that `C:\msys64\mingw64\bin\gdb.exe` exists.
+2. Open a C++ file and click next to a line number to add a breakpoint.
+3. Open Run and Debug, choose the C++ debug configuration, and select the debug program.
 4. Set program arguments when needed. For the profile program, use `creditcard.csv`.
-5. Start debugging. Use Continue, Step Over, Step Into, and Step Out to follow the program. Check variables in the Variables panel and output in the Debug Console or terminal.
+5. Start debugging. Use Continue, Step Over, Step Into, and Step Out. Watch values in the Variables panel.
 
-If VS Code does not have a MinGW launch configuration, create `.vscode/launch.json` with this configuration. Run it from the project root:
+If VS Code has no MinGW launch configuration, create `.vscode/launch.json` like this and run it from the project root:
 
 ```json
 {
@@ -202,102 +385,47 @@ If VS Code does not have a MinGW launch configuration, create `.vscode/launch.js
 }
 ```
 
-To debug the tests instead, change `program` to `${workspaceFolder}/build/queue_tests_debug.exe` and remove the `args` field. Header files are compiled through the `.cpp` program or test that includes them. Add breakpoints in a header and start the matching `.cpp` debug configuration.
+To debug the tests, change `program` to `${workspaceFolder}/build/queue_tests_debug.exe` and remove `args`. Header files are compiled through the `.cpp` file that includes them, so set a breakpoint in the header and start the matching `.cpp` configuration.
 
-To debug a console queue run without the web page, run the debug executable with the data path, method, and K:
+To debug one queue run without the web page:
 
 ```powershell
 .\build\analyst_console_debug.exe .\creditcard.csv size_k_min_heap 230
 ```
 
-To debug a request from the web page, start the server with the debug executable:
+To debug a request from the web page, start the server with the debug program:
 
 ```powershell
 python analysis\analyst_console.py --exe .\build\analyst_console_debug.exe
 ```
 
-### Debug the Python profile
+</details>
 
-Install the Python extension in VS Code and select the Python environment that has pandas, NumPy, and Matplotlib. Open `analysis/problem_a.py`, click next to a line number to add a breakpoint, and choose Debug Python File. Set these script arguments in the launch settings:
+<details>
+<summary><b>Debug the Python profile</b></summary>
+
+Install the Python extension in VS Code and pick the environment that has pandas, NumPy, and Matplotlib. Open `analysis/problem_a.py`, add a breakpoint, and choose Debug Python File with these arguments:
 
 ```text
 creditcard.csv --out results/problem_a
 ```
 
-You can also use Python's command line debugger from PowerShell:
+Or use the command line debugger:
 
 ```powershell
 python -m pdb analysis\problem_a.py creditcard.csv --out results\problem_a
 ```
 
-At the `pdb` prompt, enter `n` to run the next line, `s` to enter a function, `p variable_name` to print a value, and `c` to continue to the next breakpoint or program end.
+At the `pdb` prompt: `n` runs the next line, `s` steps into a function, `p name` prints a value, and `c` continues.
 
-## Project files
+</details>
 
-```text
-fraud-risk-ranking-engine/
-|-- analysis/
-|   |-- analyst_console.py
-|   `-- problem_a.py
-|-- include/
-|   `-- midnight_queue/
-|       |-- algorithms.hpp
-|       |-- dataset.hpp
-|       |-- experiment_data.hpp
-|       |-- svg_plot.hpp
-|       `-- record.hpp
-|-- results/
-|   |-- experiments/
-|   |   |-- C_summary.csv
-|   |   |-- D_summary.csv
-|   |   |-- E_summary.csv
-|   |   |-- REPORT.md
-|   |   |-- results.csv
-|   |   `-- prediction_log.csv
-|   `-- problem_a/
-|       |-- risk_band_distribution.csv
-|       |-- risk_band_histogram.png
-|       `-- summary.json
-|-- src/
-|   |-- analyst_console.cpp
-|   |-- experiment_runner.cpp
-|   `-- profile.cpp
-|-- tests/
-|   `-- test_algorithms.cpp
-|-- .gitignore
-|-- 2013-A2-Report.pdf
-|-- CMakeLists.txt
-|-- PLAN.md
-|-- README.md
-```
+## Limits and notes
 
-### File guide
-
-| Path | Purpose |
-|---|---|
-| `include/midnight_queue/record.hpp` | Transaction record and triage comparison rules |
-| `include/midnight_queue/algorithms.hpp` | Sorting algorithms, Top K methods, and comparison and move counters |
-| `include/midnight_queue/dataset.hpp` | CSV loading, feature standardization, risk score, and risk band calculation |
-| `include/midnight_queue/experiment_data.hpp` | Seeded sampling and C1 through C6 input condition construction |
-| `include/midnight_queue/svg_plot.hpp` | SVG line and grouped bar charts for the experiments |
-| `src/profile.cpp` | C++ profile command line program |
-| `src/experiment_runner.cpp` | C++ benchmark runner for Problems C, D, and E |
-| `src/analyst_console.cpp` | C++ queue builder used by the local analyst page |
-| `tests/test_algorithms.cpp` | C++ correctness tests |
-| `analysis/analyst_console.py` | Local web page server and launcher for the C++ queue builder |
-| `analysis/problem_a.py` | Python data checks, Problem A statistics, and histogram creation |
-| `results/problem_a/risk_band_distribution.csv` | Risk band and fraud count table |
-| `results/problem_a/summary.json` | Dataset checks, Amount statistics, and input order evidence |
-| `results/problem_a/risk_band_histogram.png` | Labelled risk band chart |
-| `results/experiments/results.csv` | Trial measurements and median rows for Problems C, D, and E |
-| `results/experiments/C_summary.csv` | Full sort summary by condition and size |
-| `results/experiments/D_summary.csv` | Top K summary by condition, size, K, and method |
-| `results/experiments/E_summary.csv` | Final live feed time and peak memory summary |
-| `results/experiments/REPORT.md` | Plain language summary of the experiment results |
-| `CMakeLists.txt` | Optional CMake build setup |
-| `PLAN.md` | Work completed, known limits, and remaining work |
-| `.gitignore` | Keeps the dataset and local build files out of Git |
-
-## Work still needed
-
-Problems C, D, and E are complete and their measured outputs are in `results/experiments`. Problems F, G, and H remain. Problem G depends on a change request from the course portal. See [PLAN.md](PLAN.md) for the remaining work.
+- `creditcard.csv` stays out of Git and out of any source package.
+- Full sort and Top K runs stop at 30 seconds. A run that does not finish is marked DNF and is never used as a median.
+- Memory values are estimates of algorithm storage. They are not operating system readings.
+- Hardened Quick Sort was slow on ranked input in these tests (1.1 to 1.6 s at the full size, against 0.054 s for Merge Sort). It handles many equal keys well, but not ranked input.
+- With the current ranking rule, a queue of 230 catches only 3 of 492 frauds. The algorithm choice cannot fix this. A different ranking rule would be needed.
+- Results depend on the computer. Run the experiments again on your own machine to compare.
+- No machine learning model, extra dataset, or library sort is used.
