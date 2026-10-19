@@ -265,9 +265,10 @@ fraud-risk-ranking-engine/
 |-- tests/
 |   `-- test_algorithms.cpp
 |-- .gitignore
+|-- 2013-A2-Report.pdf
 |-- CMakeLists.txt
 |-- PLAN.md
-`-- README.md
+|-- README.md
 ```
 
 ### File guide
