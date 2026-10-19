@@ -8,7 +8,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 ARCHIVE = ROOT / "2013-A2-A.zip"
 FILES = [
-    "README.md", "PLAN.md", "CMakeLists.txt", "results.csv", "2013-A2-A.pdf",
+    "README.md", "PLAN.md", "CMakeLists.txt", "requirements.txt", "results.csv", "2013-A2-A.pdf",
     "assets/header.svg",
     "include", "src", "tests",
     "analysis/analyst_console.py", "analysis/problem_a.py",

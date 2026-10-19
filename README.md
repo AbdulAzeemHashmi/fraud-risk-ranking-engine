@@ -54,7 +54,11 @@ flowchart LR
 
 ## Quick start
 
-You need a Windows computer with PowerShell, MinGW (g++), and Python with pandas, NumPy, and Matplotlib.
+You need a Windows computer with PowerShell, MinGW (g++), and Python. Install the Python packages into the same interpreter you use to run the scripts:
+
+```powershell
+python -m pip install -r requirements.txt
+```
 
 **1. Get the data.** Download `creditcard.csv` from the [Kaggle credit card fraud page](https://www.kaggle.com/datasets/mlg-ulb/creditcardfraud) and put it in the project folder. The file is not part of this repository. Check the licence terms on the Kaggle page.
 
@@ -302,6 +306,7 @@ fraud-risk-ranking-engine/
 |-- 2013-A2-A.zip
 |-- results.csv
 |-- PLAN.md
+|-- requirements.txt
 `-- README.md
 ```
 
